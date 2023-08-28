@@ -8,6 +8,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/.gitignore
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -188,3 +189,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/JIC-3110-Breaking-Barriers.iml
