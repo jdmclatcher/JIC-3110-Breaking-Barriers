@@ -189,7 +189,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-.idea/vcs.xml
-.idea/modules.xml
-.idea/misc.xml
-.idea/JIC-3110-Breaking-Barriers.iml
+
+# Extra JetBrains xml workspace files
+.idea/**/vcs.xml
+.idea/**/modules.xml
+.idea/**/misc.xml
+.idea/**/JIC-3110-Breaking-Barriers.iml
+.idea/**/sqldialects.xml
+.idea/**/dataSources.xml
+
