@@ -1,0 +1,7 @@
+.quiz-form {
+    display: flex;
+    flex-direction: column;
+    border: solid;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}

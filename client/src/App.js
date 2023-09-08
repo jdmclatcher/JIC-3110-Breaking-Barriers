@@ -2,19 +2,24 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Home from "./routes/home";
+import Home from "./routes/Home";
+import CreateQuiz from "./routes/CreateQuiz"
 import './App.css';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>
+    element: <Home />
   },
+  {
+    path: "/create-quiz",
+    element: <CreateQuiz />
+  }
 ]);
 
-function App() {
+const App = () => {
   return (
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   );
 }
 
