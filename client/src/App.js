@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import Home from "./routes/Home";
 import CreateQuiz from "./routes/CreateQuiz"
+import AccountMenu from "./routes/AccountMenu"
 import './App.css';
 
 const router = createBrowserRouter([
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/create-quiz",
     element: <CreateQuiz />
+  },
+  {
+    path: "/account-menu",
+    element: <AccountMenu />
   }
 ]);
 
