@@ -1,0 +1,30 @@
+[
+    {
+        "quizName": "Physics 1",
+        "instructorName": "Mrs. Black"
+    },
+    
+    {
+        "quizName": "Physics 2",
+        "instructorName": "Mr. White"
+
+    },
+
+    {
+        "quizName": "Chemistry 1",
+        "instructorName": "Mr. Blue"
+
+    },
+
+    {
+        "quizName": "Chemistry 2",
+        "instructorName": "Mrs. Purple"
+
+    },
+    {
+        "quizName": "Chemistry 3",
+        "instructorName": "Mrs. Purple"
+
+    }
+
+]
