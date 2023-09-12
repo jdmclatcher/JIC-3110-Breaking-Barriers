@@ -72,3 +72,16 @@ CALL edit_quiz(1, 'Edited Quiz', 'Edited Quiz Description', '[
 
 SELECT * FROM view_questions_for_quiz WHERE quiz_id = 1;
 
+CALL submit_quiz('trainee1', 1, '[
+    {
+        "question_id": "3",
+        "selected_option_id": "0"
+    },
+    {
+        "question_id": "4",
+        "selected_option_id": "2"
+    }
+]');
+
+SELECT * FROM view_trainee_quiz_responses WHERE quiz_id = 1 AND trainee_id = 1;
+

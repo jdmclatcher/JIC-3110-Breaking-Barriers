@@ -67,5 +67,32 @@ INNER JOIN
 INNER JOIN
     person p ON i.per_id = p.per_id;
 
+-- View responses for a specific quiz made by a specific trainee
+DROP VIEW IF EXISTS view_trainee_quiz_responses;
+CREATE OR REPLACE VIEW view_trainee_quiz_responses AS
+SELECT
+    qr.response_id AS quiz_response_id,
+    qr.quiz_id,
+    qr.user_id AS trainee_id,
+    p.first_name AS trainee_first_name,
+    p.last_name AS trainee_last_name,
+    qr.created_at AS quiz_response_created_at,
+    p2.first_name AS instructor_first_name,
+    p2.last_name AS instructor_last_name,
+    q.question_id,
+    q.question_text,
+    q.question_type,
+    qr2.response_text,
+    qr2.selected_option_id
+FROM quiz_responses qr
+JOIN trainee t ON qr.user_id = t.trainee_id
+JOIN person p ON t.per_id = p.per_id
+JOIN quizzes qz ON qr.quiz_id = qz.quiz_id
+JOIN instructor i ON qz.instructor_id = i.instructor_id
+JOIN person p2 ON i.per_id = p2.per_id
+JOIN question_responses qr2 ON qr.response_id = qr2.response_id
+JOIN questions q ON qr2.question_id = q.question_id;
+
+
 
 
