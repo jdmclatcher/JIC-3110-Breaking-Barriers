@@ -16,6 +16,9 @@ VALUES ('instructor1');
 INSERT INTO person (per_id, first_name, last_name, password)
 VALUES ('trainee1', 'Alice', 'Johnson', 'trainee_password');
 
+INSERT INTO trainee (per_id)
+VALUES ('trainee1');
+
 -- Assign the trainee to the instructor using the procedure
 CALL assign_trainee_to_instructor('trainee1', 'instructor1');
 
@@ -40,6 +43,11 @@ CALL create_quiz('instructor1', 'Test Quiz', 'Quiz created for testing purposes.
         ]
     }
 ]');
+
+-- Output the view of quizzes for the instructor
+SELECT *
+FROM view_quizzes_for_instructor
+WHERE instructor_per_id = 'instructor1';
 
 -- Output the view of quizzes for the trainee
 SELECT *
@@ -83,5 +91,4 @@ CALL submit_quiz('trainee1', 1, '[
     }
 ]');
 
-SELECT * FROM view_trainee_quiz_responses WHERE quiz_id = 1 AND trainee_id = 1;
-
+SELECT * FROM view_trainee_quiz_responses WHERE quiz_id = 1 AND trainee_id = 'trainee1';

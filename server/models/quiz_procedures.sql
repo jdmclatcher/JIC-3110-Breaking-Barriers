@@ -35,7 +35,7 @@ BEGIN
     -- Insert the quiz information into the 'quizzes' table and assign it to the instructor
     INSERT INTO quizzes (instructor_id, title, description)
     VALUES (
-            (SELECT instructor_id FROM instructor WHERE per_id = p_instructor_per_id),
+            (SELECT per_id FROM instructor WHERE per_id = p_instructor_per_id),
             p_title,
             p_description
     ) RETURNING quiz_id INTO d_quiz_id;
@@ -96,6 +96,7 @@ BEGIN
     WHERE quiz_id = p_quiz_id;
 
     -- Delete existing questions and options for the quiz
+    -- TODO fix question id numbering issue
     DELETE FROM questions WHERE quiz_id = p_quiz_id;
     DELETE FROM options WHERE question_id IN (SELECT question_id FROM questions WHERE quiz_id = p_quiz_id);
 
@@ -139,10 +140,10 @@ DECLARE
     d_response JSONB;
 BEGIN
     -- Insert a new quiz response record
-    INSERT INTO quiz_responses (quiz_id, user_id)
+    INSERT INTO quiz_responses (quiz_id, trainee_id)
     VALUES (
         i_quiz_id,
-        (SELECT t.trainee_id FROM trainee t WHERE t.per_id = i_trainee_id)
+        (SELECT per_id FROM trainee WHERE per_id = i_trainee_id)
     )
     RETURNING response_id INTO d_response_id;
 

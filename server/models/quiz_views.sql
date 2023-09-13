@@ -21,7 +21,7 @@ SELECT
 FROM
     quizzes q
 INNER JOIN
-    instructor i ON q.instructor_id = i.instructor_id
+    instructor i ON q.instructor_id = i.per_id
 INNER JOIN
     person p ON i.per_id = p.per_id;
 
@@ -40,7 +40,7 @@ SELECT
 FROM
     quizzes q
 INNER JOIN
-    instructor i ON q.instructor_id = i.instructor_id
+    instructor i ON q.instructor_id = i.per_id
 INNER JOIN
     person p ON i.per_id = p.per_id;
 
@@ -55,17 +55,13 @@ SELECT
     q.quiz_id,
     q.title,
     q.description,
-    p.first_name AS instructor_first_name,
-    p.last_name AS instructor_last_name,
     t.per_id AS trainee_per_id
 FROM
-    quizzes q
+    trainee t
 INNER JOIN
-    instructor i ON q.instructor_id = i.instructor_id
+    instructor i ON t.instructor_id = i.per_id
 INNER JOIN
-    trainee t ON i.instructor_id = t.instructor_id
-INNER JOIN
-    person p ON i.per_id = p.per_id;
+    quizzes q ON i.per_id = q.instructor_id;
 
 -- View responses for a specific quiz made by a specific trainee
 DROP VIEW IF EXISTS view_trainee_quiz_responses;
@@ -73,7 +69,7 @@ CREATE OR REPLACE VIEW view_trainee_quiz_responses AS
 SELECT
     qr.response_id AS quiz_response_id,
     qr.quiz_id,
-    qr.user_id AS trainee_id,
+    qr.trainee_id AS trainee_id,
     p.first_name AS trainee_first_name,
     p.last_name AS trainee_last_name,
     qr.created_at AS quiz_response_created_at,
@@ -85,10 +81,10 @@ SELECT
     qr2.response_text,
     qr2.selected_option_id
 FROM quiz_responses qr
-JOIN trainee t ON qr.user_id = t.trainee_id
+JOIN trainee t ON qr.trainee_id = t.per_id
 JOIN person p ON t.per_id = p.per_id
 JOIN quizzes qz ON qr.quiz_id = qz.quiz_id
-JOIN instructor i ON qz.instructor_id = i.instructor_id
+JOIN instructor i ON qz.instructor_id = i.per_id
 JOIN person p2 ON i.per_id = p2.per_id
 JOIN question_responses qr2 ON qr.response_id = qr2.response_id
 JOIN questions q ON qr2.question_id = q.question_id;
