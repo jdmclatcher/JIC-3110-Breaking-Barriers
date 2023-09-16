@@ -10,7 +10,6 @@ CREATE TABLE person (
 -- ADMINISTRATORS
 DROP TABLE IF EXISTS administrator CASCADE;
 CREATE TABLE administrator (
-    admin_id SERIAL UNIQUE,
     per_id VARCHAR(100) NOT NULL,
     PRIMARY KEY (per_id),
     CONSTRAINT admin_per FOREIGN KEY (per_id) REFERENCES person(per_id)
@@ -19,7 +18,6 @@ CREATE TABLE administrator (
 -- INSTRUCTORS
 DROP TABLE IF EXISTS instructor CASCADE;
 CREATE TABLE instructor (
-    instructor_id SERIAL UNIQUE,
     per_id VARCHAR(100) NOT NULL,
     PRIMARY KEY (per_id),
     CONSTRAINT instr_per FOREIGN KEY (per_id) REFERENCES person(per_id)
@@ -28,12 +26,11 @@ CREATE TABLE instructor (
 -- TRAINEES
 DROP TABLE IF EXISTS trainee CASCADE;
 CREATE TABLE trainee (
-    trainee_id SERIAL UNIQUE,
     per_id VARCHAR(100) NOT NULL,
     PRIMARY KEY (per_id),
-    instructor_id INT, -- store reference to the instructor trainee is assigned to
-    CONSTRAINT train_per FOREIGN KEY (per_id) REFERENCES person(per_id),
-    CONSTRAINT instr_train FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id)
+    instructor_id VARCHAR(100), -- store reference to the instructor trainee is assigned to
+    CONSTRAINT trainee_per FOREIGN KEY (per_id) REFERENCES person(per_id),
+    CONSTRAINT instr_trainee FOREIGN KEY (instructor_id) REFERENCES instructor(per_id) -- store reference to the instructor trainee is assigned to
 );
 
 -- QUIZZES
@@ -44,8 +41,7 @@ CREATE TABLE quizzes (
     description TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
-    instructor_id INT REFERENCES instructor(instructor_id), -- assign quizzes to instructor
-    CONSTRAINT fk_quizzes_instructor FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id)
+    instructor_id VARCHAR(100) NOT NULL REFERENCES instructor(per_id) -- assigns quiz to instructor
 );
 
 -- QUESTIONS (within quizzes)
@@ -75,7 +71,7 @@ DROP TABLE IF EXISTS quiz_responses CASCADE;
 CREATE TABLE quiz_responses (
     response_id SERIAL PRIMARY KEY,
     quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
-    user_id INT REFERENCES trainee(trainee_id),
+    trainee_id VARCHAR(100) NOT NULL REFERENCES trainee(per_id), -- per_id of trainee responsing to quiz
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );

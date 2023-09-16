@@ -14,9 +14,9 @@ BEGIN
     END IF;
 
     -- Assign the trainee to the instructor
-    INSERT INTO trainee (per_id, instructor_id)
-    VALUES (p_trainee_per_id, (SELECT instructor_id FROM instructor WHERE per_id = p_instructor_per_id));
-
+    UPDATE trainee t
+    SET instructor_id = (SELECT i.per_id FROM instructor i WHERE per_id = p_instructor_per_id)
+    WHERE t.per_id = p_trainee_per_id;
     COMMIT;
 END;
 $$;
