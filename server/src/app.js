@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const port = 3001;
 require('dotenv').config();
+const PORT = process.env.PORT;
 const app = express();
 
 // general app setup
@@ -13,8 +13,8 @@ app.get('/ping', (req, res) => {
     res.send("pong");
 })
 
-app.listen(port, () => {
-    console.log(`App running on port ${port}.`);
+app.listen(PORT, () => {
+    console.log(`App running on port ${PORT}.`);
 });
 
 module.exports = app;
