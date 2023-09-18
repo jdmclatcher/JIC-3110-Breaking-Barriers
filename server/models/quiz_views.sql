@@ -89,6 +89,38 @@ JOIN person p2 ON i.per_id = p2.per_id
 JOIN question_responses qr2 ON qr.response_id = qr2.response_id
 JOIN questions q ON qr2.question_id = q.question_id;
 
+-- View score for a specific quiz taken by a trainee
+DROP VIEW IF EXISTS trainee_single_quiz_score_view;
+CREATE OR REPLACE VIEW trainee_single_quiz_score_view AS
+SELECT
+    qr.response_id AS quiz_response_id,
+    qr.created_at AS submission_time,
+    qr.quiz_score AS score,
+    q.title AS quiz_title,
+    p.first_name AS trainee_first_name,
+    p.last_name AS trainee_last_name
+FROM
+    quiz_responses qr
+    JOIN trainee t ON qr.trainee_id = t.per_id
+    JOIN person p ON t.per_id = p.per_id
+    JOIN quizzes q ON qr.quiz_id = q.quiz_id;
 
-
+-- View a list of all quizzes and scores for a trainee
+DROP VIEW IF EXISTS trainee_all_quizzes_score_view;
+CREATE OR REPLACE VIEW trainee_all_quizzes_score_view AS
+SELECT
+    tr.first_name AS trainee_first_name,
+    tr.last_name AS trainee_last_name,
+    ir.first_name AS instructor_first_name,
+    ir.last_name AS instructor_last_name,
+    q.quiz_id,
+    q.title AS quiz_title,
+    qr.quiz_score
+FROM
+    trainee t
+    JOIN quiz_responses qr ON t.per_id = qr.trainee_id
+    JOIN quizzes q ON qr.quiz_id = q.quiz_id
+    JOIN person tr ON t.per_id = tr.per_id
+    JOIN instructor i ON t.instructor_id = i.per_id
+    JOIN person ir ON i.per_id = ir.per_id;
 

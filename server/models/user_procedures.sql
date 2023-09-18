@@ -20,3 +20,29 @@ BEGIN
     COMMIT;
 END;
 $$;
+
+-- Create a procedure to assign a score to a trainee for a specific quiz
+CREATE OR REPLACE PROCEDURE assign_score_to_quiz(
+    p_trainee_per_id VARCHAR(100),
+    p_quiz_response_id INT,
+    p_quiz_score INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Check if the provided trainee and response id exist
+    IF NOT EXISTS (SELECT 1 FROM person WHERE per_id = p_trainee_per_id) THEN
+        RAISE EXCEPTION 'Trainee with per_id % does not exist', p_trainee_per_id;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM quiz_responses WHERE response_id = p_quiz_response_id) THEN
+        RAISE EXCEPTION 'Quiz with response id % does not exist', p_quiz_response_id;
+    END IF;
+
+    -- Assign the quiz_responses table with the quiz score
+    UPDATE quiz_responses q
+    SET quiz_score = p_quiz_score
+    WHERE q.trainee_id = p_trainee_per_id
+    AND q.response_id = p_quiz_response_id;
+    COMMIT;
+END;
+$$;
+
