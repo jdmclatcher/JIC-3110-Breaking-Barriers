@@ -73,7 +73,8 @@ CREATE TABLE quiz_responses (
     quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
     trainee_id VARCHAR(100) NOT NULL REFERENCES trainee(per_id), -- per_id of trainee responsing to quiz
     created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    quiz_score INT CHECK (quiz_score >= 0 AND quiz_score <= 100)
 );
 
 -- QUESTION RESPONSES (for individual question responses in quizzes)

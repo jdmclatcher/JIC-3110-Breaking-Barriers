@@ -92,3 +92,9 @@ CALL submit_quiz('trainee1', 1, '[
 ]');
 
 SELECT * FROM view_trainee_quiz_responses WHERE quiz_id = 1 AND trainee_id = 'trainee1';
+
+CALL assign_score_to_quiz('trainee1', 1, 95);
+
+SELECT * FROM trainee_single_quiz_score_view;
+
+SELECT * FROM trainee_all_quizzes_score_view;
