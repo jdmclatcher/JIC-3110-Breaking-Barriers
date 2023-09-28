@@ -6,6 +6,7 @@ import "./QuizForm.css"
 const QuizForm = ({ prevQuizName, prevQuestionList }) => {
     const [questionList, setQuestionList] = useState(prevQuestionList);
     const questionNameRef = useRef();
+    console.log(questionList);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,8 +26,8 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
             {questionList.map((_, idx) => {
                 return (
                     <QuestionForm
-                        id={idx}
                         questionList={questionList}
+                        questionData={questionList[idx]}
                         setQuestionList={setQuestionList}
                         idx={idx}
                     />
