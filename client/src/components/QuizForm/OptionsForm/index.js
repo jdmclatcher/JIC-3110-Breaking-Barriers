@@ -9,8 +9,8 @@ const OptionsForm = ({ questionType, optionsList, questionList, setQuestionList,
         setOptionsList(filteredOptionsList);
         let newQuestionList = [...questionList];
         newQuestionList[questionIdx] = {
-            questionText:  questionList[questionIdx].questionText,
-            questionType: questionList[questionIdx].questionType,
+            question_text:  questionList[questionIdx].question_text,
+            question_type: questionList[questionIdx].question_type,
             options: filteredOptionsList,
         }
         setQuestionList(newQuestionList);
@@ -19,14 +19,14 @@ const OptionsForm = ({ questionType, optionsList, questionList, setQuestionList,
     const handleOptionText = (e, idx) => {
         let newOptionsList = [...optionsList];
         newOptionsList[idx] = {
-            optionText: e.target.value,
-            isCorrect: optionsList[idx].isCorrect,
+            option_text: e.target.value,
+            is_correct: optionsList[idx].is_correct,
         }
         setOptionsList(newOptionsList);
         let newQuestionList = [...questionList];
         newQuestionList[questionIdx] = {
-            questionText:  questionList[questionIdx].questionText,
-            questionType: questionList[questionIdx].questionType,
+            question_text:  questionList[questionIdx].question_text,
+            question_type: questionList[questionIdx].question_type,
             options: newOptionsList,
         }
         setQuestionList(newQuestionList);
@@ -35,14 +35,14 @@ const OptionsForm = ({ questionType, optionsList, questionList, setQuestionList,
     const handleCorrectOption = (e, idx) => {
         let newOptionsList = [...optionsList];
         newOptionsList[idx] = {
-            optionText: optionsList[idx].optionText,
-            isCorrect: e.target.checked,
+            option_text: optionsList[idx].option_text,
+            is_correct: e.target.checked,
         }
         setOptionsList(newOptionsList);
         let newQuestionList = [...questionList];
         newQuestionList[questionIdx] = {
-            questionText:  questionList[questionIdx].questionText,
-            questionType: questionList[questionIdx].questionType,
+            question_text:  questionList[questionIdx].question_text,
+            question_type: questionList[questionIdx].question_type,
             options: newOptionsList,
         }
         setQuestionList(newQuestionList);
@@ -54,14 +54,14 @@ const OptionsForm = ({ questionType, optionsList, questionList, setQuestionList,
 
     return (
         <>
-            {optionsList.map(({ optionText, isCorrect }, idx) => {
+            {optionsList.map(({ option_text, is_correct }, idx) => {
                 return (
                     <div>
                         <label>Option Text:</label>
-                        <input onChange={(e) => handleOptionText(e, idx)} type="text" required value={optionText} />
+                        <input onChange={(e) => handleOptionText(e, idx)} type="text" required value={option_text} />
 
                         <label>Is Correct:</label>
-                        <input onChange={(e) => handleCorrectOption(e, idx)} type="checkbox" value={isCorrect} />
+                        <input onChange={(e) => handleCorrectOption(e, idx)} type="checkbox" value={is_correct} />
 
                         <button className="remove-option-button" type="button" onClick={() => handleRemoveOption(idx)}>x</button>
                     </div>

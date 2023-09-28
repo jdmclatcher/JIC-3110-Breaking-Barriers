@@ -4,16 +4,16 @@ import RemoveQuestionButton from "../RemoveQuestionButton";
 import "./QuestionForm.css"
 
 const QuestionForm = ({ questionList, questionData, setQuestionList, idx }) => {
-    const prevQuestionText = questionData.questionText;
-    const prevQuestionType = questionData.questionType;
+    const prevQuestionText = questionData.question_text;
+    const prevQuestionType = questionData.question_type;
     const prevOptionsList = questionData.options;
     const [optionsList, setOptionsList] = useState(prevOptionsList);
 
     const handleQuestionTextChange = (e) => {
         let newQuestionList = [...questionList];
         newQuestionList[idx] = {
-            questionText:  e.target.value,
-            questionType: questionList[idx].questionType,
+            question_text:  e.target.value,
+            question_type: questionList[idx].question_type,
             options: optionsList,
         }
         setQuestionList(newQuestionList);
@@ -22,8 +22,8 @@ const QuestionForm = ({ questionList, questionData, setQuestionList, idx }) => {
     const handleQuestionTypeChange = (e) => {
         let newQuestionList = [...questionList];
         newQuestionList[idx] = {
-            questionText:  questionList[idx].questionText,
-            questionType: e.target.value,
+            question_text:  questionList[idx].question_text,
+            question_type: e.target.value,
             options: optionsList,
         }
         setQuestionList(newQuestionList);
@@ -58,7 +58,7 @@ const QuestionForm = ({ questionList, questionData, setQuestionList, idx }) => {
                 />
             </div>
             <OptionsForm
-                questionType={questionList[idx].questionType}
+                questionType={questionList[idx].question_type}
                 optionsList={optionsList}
                 questionList={questionList}
                 setQuestionList={setQuestionList}

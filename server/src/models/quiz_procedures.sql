@@ -51,7 +51,7 @@ BEGIN
         INSERT INTO questions (quiz_id, question_text, question_type)
         VALUES (d_quiz_id, d_question_text, d_question_type);
 
-        IF d_question_type = 'multiple_choice' THEN
+        IF d_question_type = 'multiple_choice' or d_question_type= 'select_all' THEN
             -- Loop over the options for multiple choice questions
             FOR d_option_record IN SELECT * FROM jsonb_array_elements(d_question_record->'options')
             LOOP
@@ -111,7 +111,7 @@ BEGIN
         INSERT INTO questions (quiz_id, question_text, question_type)
         VALUES (p_quiz_id, d_question_text, d_question_type);
 
-        IF d_question_type = 'multiple_choice' THEN
+        IF d_question_type = 'multiple_choice' or d_question_type= 'select_all' THEN
             -- Loop over the options for multiple choice questions
             FOR d_option_record IN SELECT * FROM jsonb_array_elements(d_question_record->'options')
             LOOP

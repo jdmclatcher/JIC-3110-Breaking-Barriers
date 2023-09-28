@@ -5,15 +5,15 @@ const AddOptionButton = ({ optionsList, setOptionsList, questionList, setQuestio
         let newOptionsList = [
             ...optionsList,
             {
-                optionText: "",
-                isCorrect: false,
+                option_text: "",
+                is_correct: false,
             },
         ];
         setOptionsList(newOptionsList);
         let newQuestionList = [...questionList];
         newQuestionList[questionIdx] = {
-            questionText:  questionList[questionIdx].questionText,
-            questionType: questionList[questionIdx].questionType,
+            question_text:  questionList[questionIdx].question_text,
+            question_type: questionList[questionIdx].question_type,
             options: newOptionsList,
         }
         setQuestionList(newQuestionList);

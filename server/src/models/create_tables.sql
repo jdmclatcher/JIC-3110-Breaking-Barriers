@@ -50,7 +50,7 @@ CREATE TABLE questions (
     question_id SERIAL PRIMARY KEY,
     quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
     question_text TEXT NOT NULL,
-    question_type VARCHAR(20) NOT NULL CHECK (question_type IN ('multiple_choice', 'text_box')),
+    question_type VARCHAR(20) NOT NULL CHECK (question_type IN ('multiple_choice', 'free_response', 'select_all')),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
