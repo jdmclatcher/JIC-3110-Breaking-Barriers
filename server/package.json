@@ -1,6 +1,6 @@
 {
   "name": "breaking-barriers-server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Server for the breaking barriers training application",
   "main": "app.js",
   "scripts": {
@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/jdmclatcher/JIC-3110-Breaking-Barriers#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "pg": "^8.11.3"
   }
 }

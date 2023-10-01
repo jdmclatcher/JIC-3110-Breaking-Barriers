@@ -1,20 +1,32 @@
 import { useState, useRef } from "react";
 import OptionsForm from "../OptionsForm";
 import RemoveQuestionButton from "../RemoveQuestionButton";
-import SaveQuestionButton from "../SaveQuestionButton";
 import "./QuestionForm.css"
 
-const QuestionForm = ({ questionList, setQuestionList, idx }) => {
-    const prevQuestionData = questionList[idx];
-    const prevQuestionText = prevQuestionData.questionText;
-    const prevQuestionType = prevQuestionData.questionType;
-    const prevOptionsList = prevQuestionData.options;
-    const [questionText, setQuestionText] = useState(prevQuestionText);
-    const [questionType, setQuestionType] = useState(prevQuestionType);
-    const [optionsList, setOptionsList] = useState(prevOptionsList)
+const QuestionForm = ({ questionList, questionData, setQuestionList, idx }) => {
+    const prevQuestionText = questionData.question_text;
+    const prevQuestionType = questionData.question_type;
+    const prevOptionsList = questionData.options;
+    const [optionsList, setOptionsList] = useState(prevOptionsList);
+
+    const handleQuestionTextChange = (e) => {
+        let newQuestionList = [...questionList];
+        newQuestionList[idx] = {
+            question_text:  e.target.value,
+            question_type: questionList[idx].question_type,
+            options: optionsList,
+        }
+        setQuestionList(newQuestionList);
+    }
 
     const handleQuestionTypeChange = (e) => {
-        setQuestionType(e.target.value);
+        let newQuestionList = [...questionList];
+        newQuestionList[idx] = {
+            question_text:  questionList[idx].question_text,
+            question_type: e.target.value,
+            options: optionsList,
+        }
+        setQuestionList(newQuestionList);
     }
 
     return (
@@ -24,13 +36,15 @@ const QuestionForm = ({ questionList, setQuestionList, idx }) => {
                 <label>Question Text:</label>
                 <input
                     required
-                    onChange={e => setQuestionText(e.target.value)}
+                    onChange={(e) => handleQuestionTextChange(e)}
+                    value={prevQuestionText}
                 />
 
                 <label>Question Type:</label>
                 <select
-                    onChange={handleQuestionTypeChange}
+                    onChange={(e) => handleQuestionTypeChange(e)}
                     required
+                    value={prevQuestionType}
                 >
                     <option value="">Select Below</option>
                     <option value="multiple_choice">Multiple Choice</option>
@@ -44,17 +58,12 @@ const QuestionForm = ({ questionList, setQuestionList, idx }) => {
                 />
             </div>
             <OptionsForm
-                questionType={questionType}
+                questionType={questionList[idx].question_type}
                 optionsList={optionsList}
-                setOptionsList={setOptionsList}
-            />
-            <SaveQuestionButton
                 questionList={questionList}
                 setQuestionList={setQuestionList}
-                questionText={questionText}
-                questionType={questionType}
-                optionsList={optionsList}
-                idx={idx}
+                questionIdx={idx}
+                setOptionsList={setOptionsList}
             />
         </div>
     )

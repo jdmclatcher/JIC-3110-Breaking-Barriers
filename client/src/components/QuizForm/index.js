@@ -5,28 +5,51 @@ import "./QuizForm.css"
 
 const QuizForm = ({ prevQuizName, prevQuestionList }) => {
     const [questionList, setQuestionList] = useState(prevQuestionList);
-    const questionNameRef = useRef();
+    const quizTitleRef = useRef();
+    const quizDescriptionRef = useRef();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({
-            questionName: questionNameRef.current.value,
-            questionList: questionList,
+        let quizData = {
+            instructor_id: "instructor1",
+            quiz_title: quizTitleRef.current.value,
+            quiz_description: quizDescriptionRef.current.value,
+            quiz_questions: questionList,
+        }
+        console.log(quizData);
+        // Remove hardcoded url
+        let response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/quiz/create`, {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(quizData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
+        if (response.status === 200) {
+            alert("Quiz created successfully");
+        } else if (response.status === 500) {
+            alert("Failed to create quiz.")
+        }
     }
 
     return (
         <form className="quiz-form" onSubmit={e => handleSubmit(e)}>
             <div className="quiz-name-input">
                 <label>Quiz Name:</label>
-                <input type="text" ref={questionNameRef} required/>
+                <input type="text" ref={quizTitleRef} required/>
+            </div>
+
+            <div className="quiz-description-input">
+                <label>Quiz Description:</label>
+                <input type="text" ref={quizDescriptionRef} required/>
             </div>
             
             {questionList.map((_, idx) => {
                 return (
                     <QuestionForm
-                        id={idx}
                         questionList={questionList}
+                        questionData={questionList[idx]}
                         setQuestionList={setQuestionList}
                         idx={idx}
                     />

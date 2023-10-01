@@ -1,16 +1,23 @@
 import "./AddOptionButton.css"
 
-const AddOptionButton = ({ optionsList, setOptionsList }) => {
+const AddOptionButton = ({ optionsList, setOptionsList, questionList, setQuestionList, questionIdx }) => {
     const handleAddOption = () => {
-        setOptionsList([
+        let newOptionsList = [
             ...optionsList,
             {
-                optionText: "",
-                isCorrect: false,
+                option_text: "",
+                is_correct: false,
             },
-        ]);
+        ];
+        setOptionsList(newOptionsList);
+        let newQuestionList = [...questionList];
+        newQuestionList[questionIdx] = {
+            question_text:  questionList[questionIdx].question_text,
+            question_type: questionList[questionIdx].question_type,
+            options: newOptionsList,
+        }
+        setQuestionList(newQuestionList);
     }
-    console.log("===", optionsList);
     
     return (
         <button className="add-option-button" type="button" onClick={handleAddOption}>+</button>

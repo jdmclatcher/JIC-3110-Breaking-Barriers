@@ -6,8 +6,8 @@ const AddQuestionButton = ({ questionList, setQuestionList }) => {
         setQuestionList([
             ...questionList,
             { 
-                questionText:  "",
-                questionType: "",
+                question_text:  "",
+                question_type: "",
                 options: [],
             }
         ])
