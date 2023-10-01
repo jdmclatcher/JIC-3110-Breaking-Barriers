@@ -5,6 +5,7 @@ import {
 import Home from "./routes/Home";
 import CreateQuiz from "./routes/CreateQuiz"
 import AccountMenu from "./routes/AccountMenu"
+import Login from "./routes/Login";
 import './App.css';
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/account-menu",
     element: <AccountMenu />
+  },
+  {
+    path: "/login",
+    element: <Login />
   }
 ]);
 
