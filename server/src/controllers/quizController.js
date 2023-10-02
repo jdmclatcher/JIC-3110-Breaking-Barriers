@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../configs/config");
 
-// Create Quiz
+// Instructor Create Quiz
 exports.quiz_create_post = asyncHandler(async (req, res, next) => {
     try {
         let {
@@ -29,7 +29,7 @@ exports.quiz_create_post = asyncHandler(async (req, res, next) => {
     }
 });
 
-// Edit Quiz
+// Instructor Edit Quiz
 exports.quiz_edit_patch = asyncHandler(async (req, res, next) => {
     try {
         let {
@@ -57,7 +57,29 @@ exports.quiz_edit_patch = asyncHandler(async (req, res, next) => {
     }
 });
 
-// Assign Quiz
-exports.quiz_assign_post = asyncHandler(async (req, res, next) => {
-    res.send("hi");
+// Trainee Submit Quiz
+exports.quiz_submit_post = asyncHandler(async (req, res, next) => {
+    try {
+        let {
+            trainee_id,
+            quiz_id,
+            question_responses
+        } = req.body;
+        question_responses = JSON.stringify(question_responses);
+
+        let queryString = "CALL submit_quiz($1, $2, $3)";
+        let queryParameters = [trainee_id, quiz_id, question_responses];
+        db.query(queryString, queryParameters, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500);
+                res.json({success: false, message: "Failed to submit quiz"});
+            } else {
+                res.status(200);
+                res.json({success: true, message: "Quiz successfully submitted."});
+            }
+        })
+    } catch {
+        console.log("error");
+    }
 });
