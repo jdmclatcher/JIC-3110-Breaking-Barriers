@@ -31,6 +31,10 @@ const router = createBrowserRouter([
     path: "/quiz-results",
     element: <QuizResults />
   },
+  {
+    path: "/take-quiz",
+    element: <TakeQuiz />
+  }
 ]);
 
 const App = () => {
