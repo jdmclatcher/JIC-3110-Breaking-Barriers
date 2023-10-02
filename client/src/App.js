@@ -1,3 +1,5 @@
+import Login from "./routes/Login";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +21,10 @@ const router = createBrowserRouter([
     path: "/quiz-results",
     element: <QuizResults />
   },
+  {
+    path: "/login",
+    element: <Login />
+  }
 ]);
 
 const App = () => {
