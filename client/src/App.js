@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     element: <QuizResults />
   },
   {
+    path: "/login",
+    element: <Login />
+  },
+  {
     path: "/take-quiz",
     element: <TakeQuiz />
   }
