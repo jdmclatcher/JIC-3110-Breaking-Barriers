@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from './firebaseAuth'; // Import the login function from your Firebase authentication service
+import { login } from '../firebaseAuth'; // Import the login function from your Firebase authentication service
 
 
 const Login = () => {

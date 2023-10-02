@@ -1,11 +1,12 @@
 // firebaseConfig.js
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyC167vRvahOHwcXRjEuLwsPOoqhUKiiKXE",
+    authDomain: "breaking-barriers-e787e.firebaseapp.com",
+    projectId: "breaking-barriers-e787e",
+    storageBucket: "breaking-barriers-e787e.appspot.com",
+    messagingSenderId: "1091466718229",
+    appId: "1:1091466718229:web:b594d80df1aa0adcd0721c",
+    measurementId: "G-HETQ6EN2G3"
 };
 
 export default firebaseConfig;

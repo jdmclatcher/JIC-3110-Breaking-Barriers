@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from './firebase'; // Import the Firebase authentication object
-import { register, login } from './firebaseAuth'; // Import your Firebase authentication functions
+import { auth } from '../firebase'; // Import the Firebase authentication object
+import { register, login } from '../firebaseAuth'; // Import your Firebase authentication functions
 
 const UserProfile = () => {
     const [userData, setUserData] = useState({
         username: '',
+        email: '',
         password: '',
     });
 
@@ -23,6 +24,10 @@ const UserProfile = () => {
             await user.updateProfile({
                 displayName: userData.username,
             });
+
+            if (userData.password) {
+                await user.updatePassword(userData.password);
+            }
 
             // You can also update user data in Firestore here if needed
 
