@@ -7,6 +7,7 @@ import CreateQuiz from "./routes/CreateQuiz"
 import AccountMenu from "./routes/AccountMenu"
 import QuizStats from "./routes/QuizStats"
 import QuizResults from "./routes/QuizResults"
+import
 import './App.css';
 
 const router = createBrowserRouter([
