@@ -6,6 +6,8 @@ import QuizStats from "./routes/QuizStats";
 import QuizResults from "./routes/QuizResults";
 import Login from "./routes/Login";
 import TakeQuiz from "./routes/TakeQuiz";
+import CreateAccount from "./routes/CreateAccount";
+import './App.css';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,9 @@ const router = createBrowserRouter([
     element: <AccountMenu />
   },
   {
+    path: "/create-account",
+    element: <CreateAccount />
+  },
     path: "/quiz-stats",
     element: <QuizStats />
   },
