@@ -18,8 +18,8 @@
 
 ## v0.1
 ### Features
-* *Back-end*: Administrator, Instructor, and Trainee Login
-* *Front-end*: User Login Form
+* *Back-end*: Administrator, Instructor, and Trainee OldLogin
+* *Front-end*: User OldLogin Form
 * *Front-end*: Quiz Creation Form
 * *Front-end*: Display List of Quizzes (as Trainee/Instructor)
 * *Database*: Database Scaffolding Complete for Users and Quizzes

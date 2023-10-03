@@ -1,3 +1,12 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./routes/Home";
+import CreateQuiz from "./routes/CreateQuiz";
+import AccountMenu from "./routes/AccountMenu";
+import QuizStats from "./routes/QuizStats";
+import QuizResults from "./routes/QuizResults";
+import Login from "./routes/Login";
+import TakeQuiz from "./routes/TakeQuiz";
+import Blank from "./routes/Blank";
 
 
 const router = createBrowserRouter([
@@ -14,6 +23,9 @@ const router = createBrowserRouter([
     element: <AccountMenu />
   },
   {
+    path: "/create-account",
+    element: <CreateAccount />
+  },
     path: "/quiz-stats",
     element: <QuizStats />
   },
@@ -28,8 +40,13 @@ const router = createBrowserRouter([
   {
     path: "/take-quiz",
     element: <TakeQuiz />
+  },
+  {
+    path: "/blank",
+    element: <Blank />
   }
 ]);
+
 
 const App = () => {
   return (

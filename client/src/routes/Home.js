@@ -12,12 +12,23 @@ const Home = () => {
     const navigateToAccountMenu = () => {
         navigate('/account-menu');
     }
+    const navigateToCreateAccount = () => {
+        navigate('/create-account')
+    }
+
+    const navigateToLoginMenu = () => {
+        navigate('/login');
+    }
 
     return (
         <div className="home-container">
             <div>Home</div>
             <button onClick={navigateToCreateQuiz}>Create Quiz</button>
             <button onClick={navigateToAccountMenu}>Account Menu</button>
+            <button onClick={navigateToLoginMenu}>Login</button>
+
+
+
         </div>
     );
 }

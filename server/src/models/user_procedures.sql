@@ -1,3 +1,90 @@
+-- Create a procedure to create a person
+CREATE OR REPLACE PROCEDURE create_person(
+    p_per_id VARCHAR(100),
+    p_email VARCHAR(100),
+    p_first_name VARCHAR(50),
+    p_last_name VARCHAR(50),
+    p_password VARCHAR(50)
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Check if the person exists already
+    IF EXISTS (SELECT 1 FROM person WHERE per_id = p_per_id) THEN
+        RAISE EXCEPTION 'Person already exists : %', p_per_id;
+    END IF;
+
+    -- Insert new person into person table
+    INSERT INTO person (per_id, email, first_name, last_name, password)
+    VALUES (
+        p_per_id,
+        p_email,
+        p_first_name,
+        p_last_name,
+        p_password
+    );
+END;
+$$;
+
+-- Create procedure to add a new admin to administrator table
+CREATE OR REPLACE PROCEDURE create_admin(
+    p_per_id VARCHAR(100)
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Check if the admin exists already
+    IF EXISTS (SELECT 1 FROM administrator WHERE per_id = p_per_id) THEN
+        RAISE EXCEPTION 'Admin already exists : %', p_per_id;
+    END IF;
+
+    -- Insert new admin into admin table
+    INSERT INTO administrator (per_id)
+    VALUES (
+        p_per_id
+    );
+END;
+$$;
+
+-- Create procedure to add a new instructor to instructor table
+CREATE OR REPLACE PROCEDURE create_instructor(
+    p_per_id VARCHAR(100)
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Check if the instructor exists already
+    IF EXISTS (SELECT 1 FROM instructor WHERE per_id = p_per_id) THEN
+        RAISE EXCEPTION 'Instructor already exists : %', p_per_id;
+    END IF;
+
+    -- Insert new admin into admin table
+    INSERT INTO instructor (per_id)
+    VALUES (
+        p_per_id
+    );
+END;
+$$;
+
+-- Create procedure to add a new trainee to trainee table
+CREATE OR REPLACE PROCEDURE create_trainee(
+    p_per_id VARCHAR(100),
+    p_instructor_id VARCHAR(100)
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Check if the trainee exists already
+    IF EXISTS (SELECT 1 FROM trainee WHERE per_id = p_per_id) THEN
+        RAISE EXCEPTION 'Trainee already exists : %', p_per_id;
+    END IF;
+
+    -- Check if instructor does not exist
+    IF NOT EXISTS (SELECT 1 FROM instructor WHERE per_id = p_instructor_id) THEN
+        RAISE EXCEPTION 'Instructor does not exist : %', p_instructor_id;
+    END IF;
+
+    -- Insert new admin into admin table
+    INSERT INTO trainee (per_id, instructor_id)
+    VALUES (
+        p_per_id,
+        p_instructor_id
+    );
+END;
+$$;
+
 -- Create a procedure to assign a trainee to an instructor
 CREATE OR REPLACE PROCEDURE assign_trainee_to_instructor(
     p_trainee_per_id VARCHAR(100),

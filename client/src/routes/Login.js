@@ -1,46 +1,54 @@
 import React, { useState } from 'react';
-import firebase from "./firebase";
+
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
-    const [error, setError] = useState('');
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
+    });
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            if (user) {
-                await user.updateProfile({
-                    displayName: username,
-                });
-            }
-            // Redirect to home or dashboard page after successful login
-        } catch (error) {
-            setError(error.message);
-        }
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setLoginData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
+    const navigate = useNavigate();
+    const navigateToHome = () => {
+        // need logic to check credentials
+        navigate('/');
+    }
+
+    const navigateToBlank = () => {
+        // need logic to check credentials
+        navigate('/blank');
+    }
+
     return (
-        <div>
+        <div style={{ padding: '20px', width: '300px', border: '1px solid gray', borderRadius: '5px' }}>
             <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Username: </label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                {/* ... rest of the code remains the same */}
-            </form>
-            {error && <p>{error}</p>}
+
+            <div style={{ marginBottom: '10px' }}>
+                <label>Email: </label>
+                <input type="email" name="email" value={loginData.email} onChange={handleChange} />
+            </div>
+
+            <div style={{ marginBottom: '10px' }}>
+                <label>Password: </label>
+                <input type="password" name="password" value={loginData.password} onChange={handleChange} />
+            </div>
+
+            <div style={{ marginTop: '20px' }}>
+                <button onClick={navigateToBlank}>Login</button>
+            </div>
         </div>
     );
-};
+}
 
 export default Login;
