@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import firebase from './firebase'; // make sure to provide the correct path
+import firebase from '../firebase'; // make sure to provide the correct path
 
 const UserProfile = () => {
     const [userData, setUserData] = useState({
