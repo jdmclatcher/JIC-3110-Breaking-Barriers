@@ -6,6 +6,7 @@ const PORT = process.env.PORT;
 const app = express();
 
 const quizRouter = require("./routes/quiz");
+const accountRouter = require("./routes/account")
 
 // general app setup
 app.use(bodyParser.json());
@@ -24,6 +25,8 @@ app.get('/ping', (req, res) => {
 
 // Set up Quiz routes
 app.use("/quiz", quizRouter);
+
+app.use("/account", accountRouter);
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}.`);
