@@ -1,12 +1,13 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/Home";
-import CreateQuiz from "./routes/CreateQuiz"
-import AccountMenu from "./routes/AccountMenu"
-import './App.css';
+import CreateQuiz from "./routes/CreateQuiz";
+import AccountMenu from "./routes/AccountMenu";
+import QuizStats from "./routes/QuizStats";
+import QuizResults from "./routes/QuizResults";
+import Login from "./routes/Login";
+import TakeQuiz from "./routes/TakeQuiz";
 import CreateAccount from "./routes/CreateAccount";
+import './App.css';
 
 const router = createBrowserRouter([
   {
