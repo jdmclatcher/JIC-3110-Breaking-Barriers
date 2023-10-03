@@ -1,0 +1,15 @@
+{
+  "userId": 1,
+  "quizzes": [
+    {
+      "quizId": 101,
+      "quizName": "Math Quiz",
+      "scores": [85, 92, 78, 90]
+    },
+    {
+      "quizId": 102,
+      "quizName": "Science Quiz",
+      "scores": [72, 88, 95, 79]
+    }
+  ]
+}

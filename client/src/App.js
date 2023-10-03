@@ -24,6 +24,21 @@ const router = createBrowserRouter([
   {
     path: "/create-account",
     element: <CreateAccount />
+  },
+    path: "/quiz-stats",
+    element: <QuizStats />
+  },
+  {
+    path: "/quiz-results",
+    element: <QuizResults />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/take-quiz",
+    element: <TakeQuiz />
   }
 ]);
 
