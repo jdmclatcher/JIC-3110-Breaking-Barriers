@@ -8,6 +8,7 @@ import Login from "./routes/Login";
 import TakeQuiz from "./routes/TakeQuiz";
 import Blank from "./routes/Blank";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,9 @@ const router = createBrowserRouter([
     element: <AccountMenu />
   },
   {
+    path: "/create-account",
+    element: <CreateAccount />
+  },
     path: "/quiz-stats",
     element: <QuizStats />
   },
