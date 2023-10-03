@@ -25,27 +25,20 @@ const AccountForm = () => {
     const submitUser = async (e) => {
         e.preventDefault();
         if (isLogin) {
-            // Create an account
+            // Login to an account
             let loginInfo = {
             username: userData.username,
             password: userData.password,
             }
-            let response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/account/login`, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(loginInfo),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            });
+            alert('login not yet implemented');
         } else {
-            // Sign into an account
+            // Sign up an account
             let signupInfo = {
-            email: userData.email,
-            username: userData.username,
-            password: userData.password
+                email: userData.email,
+                username: userData.username,
+                password: userData.password,
             }
-            let response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/account/signup`, {
+            let response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/account/create_account`, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(signupInfo),
