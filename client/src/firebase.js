@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyC167vRvahOHwcXRjEuLwsPOoqhUKiiKXE",
     authDomain: "breaking-barriers-e787e.firebaseapp.com",

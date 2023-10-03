@@ -6,8 +6,8 @@ import QuizStats from "./routes/QuizStats";
 import QuizResults from "./routes/QuizResults";
 import Login from "./routes/Login";
 import TakeQuiz from "./routes/TakeQuiz";
-import CreateAccount from "./routes/CreateAccount";
-import './App.css';
+import Blank from "./routes/Blank";
+
 
 const router = createBrowserRouter([
   {
@@ -40,8 +40,13 @@ const router = createBrowserRouter([
   {
     path: "/take-quiz",
     element: <TakeQuiz />
+  },
+  {
+    path: "/blank",
+    element: <Blank />
   }
 ]);
+
 
 const App = () => {
   return (

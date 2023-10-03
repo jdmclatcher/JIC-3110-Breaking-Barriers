@@ -16,12 +16,19 @@ const Home = () => {
         navigate('/create-account')
     }
 
+    const navigateToLoginMenu = () => {
+        navigate('/login');
+    }
+
     return (
         <div className="home-container">
             <div>Home</div>
             <button onClick={navigateToCreateQuiz}>Create Quiz</button>
             <button onClick={navigateToAccountMenu}>Account Menu</button>
-            <button onClick={navigateToCreateAccount}>Create Account</button>
+            <button onClick={navigateToLoginMenu}>Login</button>
+
+
+
         </div>
     );
 }
