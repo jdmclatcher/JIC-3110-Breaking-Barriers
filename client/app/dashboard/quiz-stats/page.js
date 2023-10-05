@@ -1,6 +1,6 @@
-// src/components/QuizStats.js
+'use client';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import './QuizStats.css';
 function QuizStats() {
 
@@ -32,9 +32,9 @@ const userData = {
   const calculateMinScore = (scores) => {
     return scores.length > 0 ? Math.min(...scores) : 0;
   };
-  const navigate = useNavigate();
+  const router = useRouter();
   const navigateToHome = () => {
-    navigate('/');
+    router.push("/dashboard", { scroll: false });
   };
 
   return (

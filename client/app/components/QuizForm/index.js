@@ -1,3 +1,4 @@
+'use client';
 import { useState, useRef } from "react";
 import QuestionForm from "./QuestionForm";
 import AddQuestionButton from "./AddQuestionButton";
@@ -18,7 +19,7 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
         }
         console.log(quizData);
         // Remove hardcoded url
-        let response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/quiz/create`, {
+        let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/quiz/create`, {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(quizData),
@@ -63,12 +64,6 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
         </form>
     )
 
-}
-
-
-QuizForm.defaultProps = {
-    prevQuizName: "",
-    prevQuestionList: [],
 }
 
 export default QuizForm;

@@ -1,7 +1,7 @@
-// src/components/QuizResults.js
+'use client';
 import React from 'react';
 import './QuizResults.css';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 function QuizResults() {
   
     const quizData = {
@@ -10,7 +10,7 @@ function QuizResults() {
         answers: ["Answer 1", "Answer 2", "Answer 3"],
         userAnswers: ["Answer 1", "Wrong Answer", "Answer 3"], // Replace with user's answers
       };  
-const { quizName, questions, answers, userAnswers } = quizData;
+    const { quizName, questions, answers, userAnswers } = quizData;
 
   const calculateScore = () => {
     let score = 0;
@@ -31,9 +31,9 @@ const { quizName, questions, answers, userAnswers } = quizData;
     }
     return incorrectCount;
   };
-  const navigate = useNavigate();
+  const router = useRouter();
   const navigateToHome = () => {
-    navigate('/');
+    router.push("/dashboard", { scroll: false });
   };
 
   return (
