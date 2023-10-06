@@ -1,10 +1,11 @@
+'use client';
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
 
 const CreateAccount = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const navigateToHome = () => {
-        navigate('/');
+        router.push("/",  { scroll: false });
     }
 
     const [userData, setUserData] = useState({
@@ -41,7 +42,7 @@ const CreateAccount = () => {
                 password: userData.password,
                 traineeInstructorId: userData.traineeInstructorId
             }
-            let response = await fetch(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/account/create-account`, {
+            let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/account/create-account`, {
                     method: 'POST',
                     mode: 'cors',
                     body: JSON.stringify(data),
