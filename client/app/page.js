@@ -14,37 +14,49 @@ export default function Home() {
 
   return (
     <main>
-      <div>
-        <h1>Breaking Barriers Training Application</h1>
-        <div>
-          <h2>Login</h2>
-
-          <div style={{ marginBottom: '10px' }}>
-              <label>Username:</label>
-              <input
-                type="text"
-                name="username"
-                ref={usernameRef}
-                required
-              />
+      <div className='bg-gradient-to-r from-gray-400 to-gray-300 p-4 h-screen flex justify-center items-center'>
+        <div className='bg-gradient-to-r from-orange-400 to-orange-300 rounded-lg h-5/6 w-1/3 p-5'>
+          <h1 className='text-xl text-white font-bold flex justify-center p-5'>Breaking Barriers Training Application</h1>
+          <div class="relative mb-3" data-te-input-wrapper-init>
+            <input
+              type="text"
+              class="peer block min-h-[auto] w-full rounded border-0 bg-gradient-to-r from-orange-300 to-orange-200 px-3 py-[0.32rem] leading-[1.6] font-medium"
+              required
+              ref={usernameRef}
+              placeholder="Username" />
           </div>
 
-          <div style={{ marginBottom: '10px' }}>
-              <label>Password:</label>
-              <input
-                type="password"
-                name="password"
-                ref={passwordRef}
-                required
-              />
+
+          <div class="relative mb-3" data-te-input-wrapper-init>
+            <input
+              type="password"
+              class="peer block min-h-[auto] w-full rounded border-0 bg-gradient-to-r from-orange-300 to-orange-200 px-3 py-[0.32rem] leading-[1.6] font-medium"
+              id="exampleFormControlInputPassword"
+              ref={passwordRef}
+              required
+              placeholder="Password" />
+
           </div>
 
-          <div style={{ marginTop: '20px' }}>
-              <button onClick={handleLogin}>Login</button>
+          <div class="flex justify-center p-5">
+            <button onClick={handleLogin}
+              type="button"
+              class="inline-block rounded-full bg-gradient-to-r from-orange-500 to-orange-400 w-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700"
+              >
+              Login
+            </button>
           </div>
-          <Link href="/create-account">Create Account</Link>
+          <div class="flex justify-center p-2">
+            <Link 
+              class="inline-block rounded-full bg-gradient-to-r from-orange-500 to-orange-400 w-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700
+              flex justify-center" 
+              href="/create-account">Create Account
+            </Link>
+          </div>
         </div>
+
       </div>
     </main>
+
   )
 }
