@@ -98,3 +98,7 @@ CALL assign_score_to_quiz('trainee1', 1, 95);
 SELECT * FROM trainee_single_quiz_score_view;
 
 SELECT * FROM trainee_all_quizzes_score_view;
+
+CALL upload_file('instructor1', 'test_file', 'firebase://test_file.pdf');
+
+SELECT * FROM view_instructor_files;
