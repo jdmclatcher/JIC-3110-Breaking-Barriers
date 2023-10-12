@@ -89,3 +89,13 @@ CREATE TABLE question_responses (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- FILES
+DROP TABLE IF EXISTS files CASCADE;
+CREATE TABLE files (
+    file_id SERIAL PRIMARY KEY,
+    instructor_id VARCHAR(100) REFERENCES instructor(per_id),
+    file_name TEXT NOT NULL,
+    file_url TEXT NOT NULL, -- Firebase URL where the file is stored
+    uploaded_at TIMESTAMP DEFAULT NOW()
+);
