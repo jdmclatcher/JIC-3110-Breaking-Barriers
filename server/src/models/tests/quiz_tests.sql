@@ -102,3 +102,5 @@ SELECT * FROM trainee_all_quizzes_score_view;
 CALL upload_file('instructor1', 'test_file', 'firebase://test_file.pdf');
 
 SELECT * FROM view_instructor_files;
+
+SELECT * FROM view_trainee_files;
