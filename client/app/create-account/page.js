@@ -66,52 +66,96 @@ const CreateAccount = () => {
     }
 
     return (
-        <div>
-            <button onClick={navigateToHome}>Back to Home</button>
-            <div style={{ padding: '20px', width: '400px', border: '1px solid gray', borderRadius: '5px' }}>
-                <div style={{ marginBottom: '10px' }}>
-                    <label>User Type: </label>
-                    <select
-                        onChange={(e) => handleAccountTypeChange(e)}
-                        required
-                        value={userData.userType}
-                    >
-                        <option value="admin">Administrator</option>
-                        <option value="instructor">Instructor</option>
-                        <option value="trainee">Trainee</option>
-                    </select>
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Email: </label>
-                    <input type="text" name="email" value={userData.email} onChange={handleChange} />
-                </div>
-                {userData.userType === 'trainee' && 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Instructor Username: </label>
-                    <input type="text" name="traineeInstructorId" value={userData.traineeInstructorId} onChange={handleChange} />
-                </div>}
-                <div style={{ marginBottom: '10px' }}>
-                    <label>First Name: </label>
-                    <input type="text" name="firstName" value={userData.firstName} onChange={handleChange} />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Last Name: </label>
-                    <input type="text" name="lastName" value={userData.lastName} onChange={handleChange} />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Username: </label>
-                    <input type="text" name="username" value={userData.username} onChange={handleChange} />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Password: </label>
-                    <input type="password" name="password" value={userData.password} onChange={handleChange} />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Confirm Password: </label>
-                    <input type="password" name="confirmPassword" value={userData.confirmPassword} onChange={handleChange} />
-                </div>
-                <div style={{ marginTop: '20px' }}>
-                    <button onClick={createAccount}>Create Account</button>
+        <div className='bg-gradient-to-r from-gray-400 to-gray-300 h-screen flex justify-center items-center'>
+
+            <div className='bg-gradient-to-r from-orange-400 to-orange-400 rounded-lg h-5/6 w-1/3 p-5 flex flex-col'>
+                <button 
+                className='inline-block  rounded-full bg-gradient-to-r from-orange-500 to-orange-500 fw-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700'
+                onClick={navigateToHome}>Back to Home</button>
+                <div className='justify-center items-center p-4 h-5/6 items-center'>
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>User Type: </label>
+                        <select
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            onChange={(e) => handleAccountTypeChange(e)}
+                            required
+                            value={userData.userType}
+                        >
+                            <option value="admin">Administrator</option>
+                            <option value="instructor">Instructor</option>
+                            <option value="trainee">Trainee</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
+                            Email: 
+                        </label>
+                        <input
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            type="text" 
+                            name="email" 
+                            value={userData.email} 
+                            onChange={handleChange}
+                         />
+                    </div>
+                    {userData.userType === 'trainee' && 
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Instructor Username: </label>
+                        <input 
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            type="text" 
+                            name="traineeInstructorId" 
+                            value={userData.traineeInstructorId} 
+                            onChange={handleChange} />
+                    </div>}
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>First Name: </label>
+                        <input 
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            type="text" 
+                            name="firstName" 
+                            value={userData.firstName} 
+                            onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Last Name: </label>
+                        <input 
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            type="text" 
+                            name="lastName" 
+                            value={userData.lastName} 
+                            onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Username: </label>
+                        <input 
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            type="text" 
+                            name="username" 
+                            value={userData.username} 
+                            onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Password: </label>
+                        <input
+                            className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                            type="password" 
+                            name="password" 
+                            value={userData.password} 
+                            onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Confirm Password: </label>
+                        <input 
+                        className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
+                        type="password" 
+                        name="confirmPassword" 
+                        value={userData.confirmPassword} 
+                        onChange={handleChange} />
+                    </div>
+                    <div>
+                        <button className='inline-block flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-orange-500 fw-5/6 px-3 pb-1 pt-1 text-md font-medium uppercase leading-normal text-primary-700' onClick={createAccount}>Create Account</button>
+                    </div>
                 </div>
             </div>
         </div>
