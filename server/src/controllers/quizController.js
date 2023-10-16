@@ -57,6 +57,27 @@ exports.quiz_edit_patch = asyncHandler(async (req, res, next) => {
     }
 });
 
+// Get Trainee Quizzes
+exports.quiz_trainee_get = asyncHandler(async (req, res, next) => {
+    try {
+        let { trainee_id } = req.query;
+        let queryString = "SELECT * FROM view_quizzes_for_trainee WHERE trainee_per_id = $1";
+        let queryParameters = [trainee_id];
+        db.query(queryString, queryParameters, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500);
+                res.json({success: false, message: "Failed to fetch quizzes."});
+            } else {
+                res.status(200);
+                res.json({ quizList: result.rows });
+            }
+        })
+    } catch {
+        console.log("error");
+    }
+});
+
 // Trainee Submit Quiz
 exports.quiz_submit_post = asyncHandler(async (req, res, next) => {
     try {
