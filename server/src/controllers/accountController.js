@@ -1,35 +1,46 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../configs/config");
 
+const create_person = async (query, parameters) => {
+    const res = await db.query(query, parameters)
+
+    await db.query(query, parameters, (err, result) => {
+        if (err) {
+            console.log(err);
+            
+        } else {
+            console.log('person created')
+            // res.status(200);
+            // res.json({success: true, message: "Person successfully added"});
+        }
+    })
+}
+
 exports.create_account = asyncHandler(async (req, res, next) => {
+    let {
+        userType,
+        email,
+        firstName,
+        lastName,
+        username,
+        password,
+        traineeInstructorId
+    } = req.body
+    // First add new person to person table
     try {
-        let {
-            userType,
-            email,
-            firstName,
-            lastName,
-            username,
-            password,
-            traineeInstructorId
-        } = req.body
-        
-        // First add new person to person table
         let queryString = "CALL create_person($1, $2, $3, $4, $5)";
         let queryParameters = [username, email, firstName, lastName, password]
-        db.query(queryString, queryParameters, (err, result) => {
-            if (err) {
-                console.log(err);
-                // res.status(500);
-                // res.json({success: false, message: "Failed to add to person table"});
-            } else {
-                console.log('person created')
-                // res.status(200);
-                // res.json({success: true, message: "Person successfully added"});
-            }
-        })
+        await db.query(queryString, queryParameters)
+    } catch(err) {
+        console.log(err)
+        res.status(500);
+        res.json({success: false, message: "Failed to add to person table"});
+    }
 
-        // Then add new person to corresponding user type table
-        queryParameters = [username];
+    // Then add new person to corresponding user type table
+    try {
+        let queryString = ""
+        let queryParameters = [username];
         if (userType === "admin") {
             queryString = "CALL create_admin($1)"
         } else if (userType === "instructor") {
@@ -38,18 +49,12 @@ exports.create_account = asyncHandler(async (req, res, next) => {
             queryString = "CALL create_trainee($1, $2)"
             queryParameters.push(traineeInstructorId)
         }
-        
-        db.query(queryString, queryParameters, (err, result) => {
-            if (err) {
-                console.log(err);
-                res.status(500);
-                res.json({success: false, message: "Failed to create quiz"});
-            } else {
-                res.status(200);
-                res.json({success: true, message: `${username} successfully added`});
-            }
-        })
-    } catch {
-        console.log("error when creating account");
+        await db.query(queryString, queryParameters)
+    } catch(err) {
+        console.log(err);
+        res.status(500);
+        res.json({success: false, message: "Failed to create account"});
     }
+    res.status(200);
+    res.json({success: true, message: `account ${username} successfully created`});
 });
