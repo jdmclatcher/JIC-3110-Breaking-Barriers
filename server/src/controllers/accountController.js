@@ -1,21 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../configs/config");
 
-const create_person = async (query, parameters) => {
-    const res = await db.query(query, parameters)
-
-    await db.query(query, parameters, (err, result) => {
-        if (err) {
-            console.log(err);
-            
-        } else {
-            console.log('person created')
-            // res.status(200);
-            // res.json({success: true, message: "Person successfully added"});
-        }
-    })
-}
-
 exports.create_account = asyncHandler(async (req, res, next) => {
     let {
         userType,
