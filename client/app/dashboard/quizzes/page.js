@@ -5,7 +5,6 @@ import "./quizzes.css"
 
 const QuizzesPage = () => {
     const [quizList, setQuizList] = useState([]);
-    console.log(quizList);
 
     const getQuizzes = async () => {
         let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/quiz/trainee_get?trainee_id=${"trainee1"}`, {

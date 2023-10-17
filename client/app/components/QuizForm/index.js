@@ -17,7 +17,6 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
             quiz_description: quizDescriptionRef.current.value,
             quiz_questions: questionList,
         }
-        console.log(quizData);
         // Remove hardcoded url
         let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/quiz/create`, {
             method: 'POST',

@@ -78,6 +78,63 @@ exports.quiz_trainee_get = asyncHandler(async (req, res, next) => {
     }
 });
 
+// Get Quiz details
+exports.quiz_get = asyncHandler(async (req, res, next) => {
+    try {
+        let { quiz_id } = req.query;
+        let queryString = "SELECT * FROM quizzes WHERE quiz_id = $1";
+        let queryParameters = [quiz_id];
+        db.query(queryString, queryParameters, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500);
+                res.json({success: false, message: "Failed to fetch questions."});
+            } else {
+                res.status(200);
+                res.json({ ...result.rows[0] });
+            }
+        })
+    } catch {
+        console.log("error");
+    }
+});
+
+// Get questions for quiz
+exports.quiz_questions_get = asyncHandler(async (req, res, next) => {
+    try {
+        let { quiz_id } = req.query;
+        let queryString = "SELECT * FROM view_questions_and_options_for_quiz WHERE quiz_id = $1";
+        let queryParameters = [quiz_id];
+        db.query(queryString, queryParameters, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500);
+                res.json({success: false, message: "Failed to fetch questions."});
+            } else {
+                res.status(200);
+                questionsData = {}
+                result.rows.forEach((q) => {
+                    if (!Object.hasOwn(questionsData, q.question_id)) {
+                        questionsData[q.question_id] = {
+                            question_id: q.question_id,
+                            question_text: q.question_text,
+                            question_type: q.question_type,
+                            options: [],
+                        }
+                    }
+                    questionsData[q.question_id].options.push({
+                        option_id: q.option_id,
+                        option_text: q.option_text,
+                    });
+                });
+                res.json({ questionList: Object.values(questionsData) });
+            }
+        })
+    } catch {
+        console.log("error");
+    }
+});
+
 // Trainee Submit Quiz
 exports.quiz_submit_post = asyncHandler(async (req, res, next) => {
     try {
