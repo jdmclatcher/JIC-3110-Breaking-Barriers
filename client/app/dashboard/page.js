@@ -13,6 +13,8 @@ const DashboardPage = () => {
               href="/dashboard/quiz-stats">Quiz Stats</Link>
         <Link class="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-1/6 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
               href="/dashboard/quizzes">Quizzes</Link>
+        <Link class="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-1/6 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
+              href="/dashboard/files">Files</Link>
       </h1>
     </div>
   );
