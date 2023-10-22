@@ -1,0 +1,14 @@
+.quiz-container {
+    background-color: bisque;
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
+}
+
+.quiz-title {
+    font-size: 3rem;
+}
+
+.quiz-description {
+    font-size: 1.5rem;
+}

@@ -7,6 +7,22 @@ SELECT
     q.question_text
 FROM
     questions q;
+	
+-- Create a view to display questions with options of a quiz by quiz_id
+DROP VIEW IF EXISTS view_questions_and_options_for_quiz;
+CREATE OR REPLACE VIEW view_questions_and_options_for_quiz AS
+SELECT
+    q.question_id,
+    q.quiz_id,
+    q.question_text,
+    q.question_type,
+	o.option_id,
+	o.option_text
+FROM
+    questions q
+LEFT JOIN
+	options o ON q.question_id = o.question_id
+ORDER BY question_id;
 
 
 -- View all quizzes (for admin use)
