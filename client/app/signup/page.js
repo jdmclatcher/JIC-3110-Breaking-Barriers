@@ -2,6 +2,9 @@
 import React from "react";
 import signUp from "@/firebase/auth/signup";
 import { useRouter } from 'next/navigation'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase"; // Adjust the path according to your file structure
+
 
 function Page() {
     const navigateToHome = () => {
@@ -15,15 +18,17 @@ function Page() {
     const handleForm = async (event) => {
         event.preventDefault()
 
-        const { result, error } = await signUp(email, password);
-
-        if (error) {
-            return console.log(error)
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log("Account created:", user);
+            // You can now save additional user data to your database if needed
+            // Redirect or show a success message
+            router.push("/");
+        } catch (error) {
+            console.error("Error creating account:", error);
+            alert("Failed to create user");
         }
-
-        // else successful
-        console.log(result)
-        return router.push("/")
     }
     return (<div className="wrapper">
         <div className="form-wrapper">

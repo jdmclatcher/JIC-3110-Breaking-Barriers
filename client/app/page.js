@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
 import signIn from "@/firebase/auth/signin";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "@/firebase/firebase";
 
 export default function Home() {
   const usernameRef = useRef();
@@ -12,15 +14,18 @@ export default function Home() {
   const handleForm = async (event) => {
     event.preventDefault()
 
-    const { result, error } = await signIn(usernameRef, passwordRef);
+    const email = usernameRef.current.value;
+    const password = passwordRef.current.value;
 
-    if (error) {
-      return console.log(error)
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("Logged in:", user);
+      router.push('/dashboard', { scroll: false });
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Failed to log in");
     }
-
-    // else successful
-    console.log(result)
-    router.push('/dashboard', { scroll: false });
   }
 
   return (
