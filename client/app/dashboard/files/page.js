@@ -74,6 +74,7 @@ const FilesPage = () => {
 
 
     return (
+        <div className='bg-gradient-to-r from-gray-400 to-gray-300 p-4 h-screen flex justify-center items-center'>
         <div className="files-container">
             <h2 className="files-header">Files</h2>
             {/* File input to select a file */}
@@ -95,6 +96,7 @@ const FilesPage = () => {
             ))}
             {/* Button to return to the dashboard */}
             <button onClick={navigateToDashboard}>Return to Dashboard</button>
+        </div>
         </div>
     );
 }
