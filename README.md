@@ -2,6 +2,20 @@
 
 # Release Notes
 
+## v0.3
+### Features
+* Upload Files (as Instructor)
+* Delete Files (as Instructor)
+* View Files
+* Download Files
+* Quiz Submission (as Trainee)
+
+### Bug Fixes
+* Fixed quiz submission issues
+
+### Known Issues
+* Backend - 'Sessions' needs rework & optimization
+
 ## v0.2
 ### Features
 * View Quiz Results Page (as Trainee)
