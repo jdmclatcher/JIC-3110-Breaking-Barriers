@@ -6,6 +6,7 @@ const PORT = process.env.PORT;
 const app = express();
 
 const quizRouter = require("./routes/quiz");
+const fileRouter = require("./routes/file");
 const accountRouter = require("./routes/account")
 
 // general app setup
@@ -25,7 +26,7 @@ app.get('/ping', (req, res) => {
 
 // Set up Quiz routes
 app.use("/quiz", quizRouter);
-
+app.use("/file", fileRouter);
 app.use("/account", accountRouter);
 
 app.listen(PORT, () => {
