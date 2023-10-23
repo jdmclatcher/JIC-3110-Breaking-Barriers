@@ -31,6 +31,8 @@ function Page() {
         }
     }
     return (<div className="wrapper">
+        <div className='bg-gradient-to-r from-gray-400 to-gray-300 p-4 h-screen flex justify-center items-center'>
+            <div className='bg-gradient-to-r from-orange-400 to-orange-300 rounded-lg h-5/6 w-1/3 p-5'>
         <div className="form-wrapper">
             <h1 className="mt-60 mb-30">Sign up</h1>
             <form onSubmit={handleForm} className="form">
@@ -44,6 +46,8 @@ function Page() {
                 </label>
                 <button type="submit">Sign up</button>
             </form>
+        </div>
+    </div>
         </div>
     </div>);
 }
