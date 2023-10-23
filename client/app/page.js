@@ -2,13 +2,24 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
+import signIn from "@/firebase/auth/signin";
 
 export default function Home() {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const router = useRouter()
 
-  const handleLogin = () => {
+  const handleForm = async (event) => {
+    event.preventDefault()
+
+    const { result, error } = await signIn(usernameRef, passwordRef);
+
+    if (error) {
+      return console.log(error)
+    }
+
+    // else successful
+    console.log(result)
     router.push('/dashboard', { scroll: false });
   }
 
@@ -23,7 +34,7 @@ export default function Home() {
               class="peer block min-h-[auto] w-full rounded border-0 bg-gradient-to-r from-orange-300 to-orange-200 px-3 py-[0.32rem] leading-[1.6] font-medium"
               required
               ref={usernameRef}
-              placeholder="Username" />
+              placeholder="Email" />
           </div>
 
 
@@ -39,7 +50,7 @@ export default function Home() {
           </div>
 
           <div class="flex justify-center p-5">
-            <button onClick={handleLogin}
+            <button onClick={handleForm}
               type="button"
               class="inline-block rounded-full bg-gradient-to-r from-orange-500 to-orange-400 w-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700"
               >
@@ -50,7 +61,7 @@ export default function Home() {
             <Link 
               class="inline-block rounded-full bg-gradient-to-r from-orange-500 to-orange-400 w-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700
               flex justify-center" 
-              href="/create-account">Create Account
+              href="/signup">Create Account
             </Link>
           </div>
         </div>
