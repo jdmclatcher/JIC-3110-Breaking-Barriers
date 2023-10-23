@@ -68,12 +68,14 @@ const CreateAccount = () => {
     return (
         <div className='bg-gradient-to-r from-gray-400 to-gray-300 h-screen flex justify-center items-center'>
 
-            <div className='bg-gradient-to-r from-orange-400 to-orange-400 rounded-lg h-5/6 w-1/3 p-5 flex flex-col'>
+            <div className='bg-gradient-to-r from-orange-400 to-orange-400 rounded-lg h-full w-1/3 p-5 flex flex-col'>
+                
                 <button 
                 className='inline-block  rounded-full bg-gradient-to-r from-orange-500 to-orange-500 fw-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700'
                 onClick={navigateToHome}>Back to Home</button>
-                <div className='justify-center items-center p-4 h-5/6 items-center'>
-                    <div>
+
+                <div className='justify-center items-center p-4 h-full items-center'>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>User Type: </label>
                         <select
                             className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
@@ -86,7 +88,7 @@ const CreateAccount = () => {
                             <option value="trainee">Trainee</option>
                         </select>
                     </div>
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
                             Email: 
                         </label>
@@ -99,7 +101,7 @@ const CreateAccount = () => {
                          />
                     </div>
                     {userData.userType === 'trainee' && 
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Instructor Username: </label>
                         <input 
                             className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
@@ -108,7 +110,7 @@ const CreateAccount = () => {
                             value={userData.traineeInstructorId} 
                             onChange={handleChange} />
                     </div>}
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>First Name: </label>
                         <input 
                             className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
@@ -117,7 +119,7 @@ const CreateAccount = () => {
                             value={userData.firstName} 
                             onChange={handleChange} />
                     </div>
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Last Name: </label>
                         <input 
                             className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
@@ -126,7 +128,7 @@ const CreateAccount = () => {
                             value={userData.lastName} 
                             onChange={handleChange} />
                     </div>
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Username: </label>
                         <input 
                             className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
@@ -135,7 +137,7 @@ const CreateAccount = () => {
                             value={userData.username} 
                             onChange={handleChange} />
                     </div>
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Password: </label>
                         <input
                             className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
@@ -144,7 +146,7 @@ const CreateAccount = () => {
                             value={userData.password} 
                             onChange={handleChange} />
                     </div>
-                    <div>
+                    <div className='h-24'>
                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Confirm Password: </label>
                         <input 
                         className = "bg-gray-50 mb-5 border border-gray-300 text-gray-600 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-orange-300 dark:placeholder-gray-400"
