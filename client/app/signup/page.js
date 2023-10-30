@@ -1,9 +1,7 @@
 'use client'
 import React from "react";
-import signUp from "@/firebase/auth/signup";
 import { useRouter } from 'next/navigation'
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase"; // Adjust the path according to your file structure
+import { supabase } from "../../supabase/supabaseClient";
 
 
 function Page() {
@@ -18,16 +16,16 @@ function Page() {
     const handleForm = async (event) => {
         event.preventDefault()
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+        const { user, error } = await supabase.auth.signUp({ email, password });
+
+        if (error) {
+            console.error("Error creating account:", error);
+            alert("Failed to create user");
+        } else {
             console.log("Account created:", user);
             // You can now save additional user data to your database if needed
             // Redirect or show a success message
             router.push("/");
-        } catch (error) {
-            console.error("Error creating account:", error);
-            alert("Failed to create user");
         }
     }
     return (<div className="wrapper">

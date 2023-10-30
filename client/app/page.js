@@ -3,9 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
-import signIn from "@/firebase/auth/signin";
-import {signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from "@/firebase/firebase";
+import { supabase } from "@/supabase/supabaseClient";
 
 export default function Home() {
   const usernameRef = useRef();
@@ -18,14 +16,14 @@ export default function Home() {
     const email = usernameRef.current.value;
     const password = passwordRef.current.value;
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("Logged in:", user);
-      router.push('/dashboard', { scroll: false });
-    } catch (error) {
+    const { user, error } = await supabase.auth.signInWithPassword({email, password});
+
+    if (error) {
       console.error("Error logging in:", error);
       alert("Failed to log in");
+    } else {
+      console.log("Logged in:", user);
+      router.push('/dashboard', { scroll: false });
     }
   }
 
