@@ -99,3 +99,35 @@ CREATE TABLE files (
     file_url TEXT NOT NULL, -- Firebase URL where the file is stored
     uploaded_at TIMESTAMP DEFAULT NOW()
 );
+
+-- MODULES
+DROP TABLE IF EXISTS modules CASCADE;
+CREATE TABLE modules (
+    module_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    details TEXT,
+    administrator_id VARCHAR(100) NOT NULL, -- reference to the administrator who created the module
+    CONSTRAINT module_admin FOREIGN KEY (administrator_id) REFERENCES administrator(per_id)
+);
+
+-- COURSES
+DROP TABLE IF EXISTS courses CASCADE;
+CREATE TABLE courses (
+    course_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    instructor_id VARCHAR(100) NOT NULL, -- reference to the instructor who created the course
+    module_id INT NOT NULL, -- reference to the module this course belongs to
+    CONSTRAINT course_instr FOREIGN KEY (instructor_id) REFERENCES instructor(per_id),
+    CONSTRAINT course_module FOREIGN KEY (module_id) REFERENCES modules(module_id)
+);
+
+-- PAGES
+DROP TABLE IF EXISTS pages CASCADE;
+CREATE TABLE pages (
+    page_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    content TEXT,
+    course_id INT NOT NULL, -- reference to the course this page belongs to
+    CONSTRAINT page_course FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
