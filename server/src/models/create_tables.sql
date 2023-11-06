@@ -107,7 +107,9 @@ CREATE TABLE modules (
     title VARCHAR(100) NOT NULL,
     details TEXT,
     administrator_id VARCHAR(100) NOT NULL, -- reference to the administrator who created the module
-    CONSTRAINT module_admin FOREIGN KEY (administrator_id) REFERENCES administrator(per_id)
+    instructor_id VARCHAR(100) NOT NULL, -- reference to the instructor who is assigned to the module
+    CONSTRAINT module_admin FOREIGN KEY (administrator_id) REFERENCES administrator(per_id),
+    CONSTRAINT assigned_instructor FOREIGN KEY (instructor_id) REFERENCES instructor(per_id)
 );
 
 -- COURSES
