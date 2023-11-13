@@ -25,7 +25,7 @@ CREATE OR REPLACE PROCEDURE create_course(
 ) LANGUAGE plpgsql AS $$
 BEGIN
     -- Ensure the instructor is assigned to the module
-    IF EXISTS (SELECT 1 FROM modules WHERE module_id = i_module_id AND administrator_id = i_instructor_id) THEN
+    IF EXISTS (SELECT 1 FROM modules WHERE module_id = i_module_id AND instructor_id = i_instructor_id) THEN
         -- Insert a new course
         INSERT INTO courses (title, description, instructor_id, module_id)
         VALUES (i_course_title, i_course_description, i_instructor_id, i_module_id);

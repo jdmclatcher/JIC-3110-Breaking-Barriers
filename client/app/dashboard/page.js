@@ -10,7 +10,7 @@ const DashboardPage = () => {
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
               href="/dashboard/quiz-results">Quiz Results</Link>
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
-              href="/dashboard/quiz-stats">Quiz Stats</Link>
+              href="/dashboard/courses">Courses</Link>
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
               href="/dashboard/quizzes">Quizzes</Link>
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
