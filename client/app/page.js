@@ -23,23 +23,7 @@ export default function Home() {
       alert("Failed to log in");
     } else {
       console.log("Logged in:", user);
-      // Fetch additional user data, including role
-      const { data, error: fetchError } = await supabase
-          .from('profiles') // Replace 'profiles' with your user table name
-          .select('role')   // Adjust if your role field has a different name
-          //.eq('id', user.id)
-          .single();
-
-      if (fetchError) {
-        console.error("Error fetching user role:", fetchError);
-        // Handle error
-      } else {
-        if (data.role === 'administrator') {
-          router.push('/admin-dashboard', {scroll: false});
-        } else {
-          router.push('/dashboard', {scroll: false});
-        }
-      }
+      router.push('/dashboard', { scroll: false });
     }
   }
 
