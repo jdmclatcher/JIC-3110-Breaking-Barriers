@@ -68,6 +68,30 @@ const FilesPage = () => {
         }
     };
 
+    // Function to handle file download
+    const downloadFile = async (fileName) => {
+        try {
+            const { data, error } = await supabase.storage.from(bucketName).download('files/' + fileName);
+
+            if (error) {
+                throw error;
+            }
+
+            // Create a URL for the blob
+            const url = URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName || 'download';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading file:', error.message);
+        }
+    };
+
+
     const navigateToDashboard = () => {
         router.push("/dashboard", { scroll: false });
     }
@@ -90,7 +114,7 @@ const FilesPage = () => {
                             query: { fileId: file.fileId, fileName: file.name },
                         }}
                         className='file-name'>{file.name}</Link>
-                    <a href={file.ref} target="_blank" rel="noopener noreferrer">Download</a>
+                    <button onClick={() => downloadFile(file.name)}>Download</button>
                     <button onClick={() => deleteFile('files/' + file.name)}>Delete</button>
                 </div>
             ))}
