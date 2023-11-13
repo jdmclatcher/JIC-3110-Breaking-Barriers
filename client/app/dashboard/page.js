@@ -9,9 +9,9 @@ const DashboardPage = () => {
 
   useEffect(() => {
     const fetchUserRole = async () => {
-      const user = supabase.auth.user();
+      const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        const {data, error} = await supabase
+        const { data, error } = await supabase
             .from('profiles') // Replace with your table name
             .select('role')   // Replace with your role column name
             .eq('id', user.id)
@@ -40,15 +40,10 @@ const DashboardPage = () => {
               href="/dashboard/quizzes">Quizzes</Link>
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
               href="/dashboard/files">Files</Link>
-        <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
-              href="/dashboard/uploadFiles">Upload Files</Link>
-        {/* Admin Dashboard Button */}
         {userRole === 'administrator' && (
-            <button
-                className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700"
-                onClick={() => router.push('/admin-dashboard')}>
-              Go to Admin Dashboard
-            </button>
+            <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700"
+                  href="/dashboard/uploadFiles">Upload Files</Link>
+
         )}
       </h1>
     </div>
