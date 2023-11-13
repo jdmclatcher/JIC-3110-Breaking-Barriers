@@ -5,6 +5,7 @@ import './Files.css'
 import { useRouter } from 'next/navigation';
 import { supabase } from "@/supabase/supabaseClient";
 
+
 const FilesPage = () => {
 
     const router = useRouter();
