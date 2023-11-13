@@ -2,9 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
 import './Files.css'
-import { storage } from '@/firebase/firebase';
 import { useRouter } from 'next/navigation';
-import {ref, uploadBytes, getDownloadURL, getStorage, listAll, deleteObject} from "firebase/storage";
 
 const FilesPage = () => {
 
