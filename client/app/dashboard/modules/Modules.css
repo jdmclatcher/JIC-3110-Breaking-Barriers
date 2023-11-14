@@ -1,0 +1,45 @@
+.modules-header {
+    font-size: 2rem;
+}
+
+.modules-list {
+    background-color: antiquewhite;
+    border-style: solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0.5rem;
+}
+
+.module-item {
+    border-style: solid;
+    border-radius: 1rem;
+    background-color: darkgrey;
+    padding: 1rem;
+    border-color: black;
+    margin: 1rem;
+
+}
+
+.module-title {
+    font-size: 1.5rem;
+}
+
+.module-description {
+    font-size: 1rem;
+}
+
+.create-module-button {
+    border-style: solid;
+    background-color: greenyellow;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    margin: 1rem;
+}
+
+.delete-module-button {
+    border-style: solid;
+    background-color: rgb(207, 102, 102);
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+
+}

@@ -16,7 +16,7 @@ const DashboardPage = () => {
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
               href="/dashboard/files">Files</Link>
         <Link className="items-center justify-center inline-block bg-gradient-to-r rounded-lg from-orange-500 to-orange-400 flex flex-col mt-5 w-full h-32 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700" 
-              href="/dashboard/uploadFiles">Upload Files</Link>
+              href="/dashboard/modules">Modules</Link>
       </h1>
     </div>
   );
