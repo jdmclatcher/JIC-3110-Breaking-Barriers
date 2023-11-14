@@ -133,3 +133,14 @@ CREATE TABLE pages (
     course_id INT NOT NULL, -- reference to the course this page belongs to
     CONSTRAINT page_course FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );
+
+-- MESSAGES
+DROP TABLE IF EXISTS messages CASCADE;
+CREATE TABLE messages (
+    message_id SERIAL PRIMARY KEY,
+    text_content TEXT NOT NULL,
+    instructor_id VARCHAR(100) NOT NULL,
+    resolved BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT message_instructor FOREIGN KEY (instructor_id) REFERENCES instructor(per_id)
+);
