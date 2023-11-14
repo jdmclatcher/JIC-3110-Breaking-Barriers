@@ -1,21 +1,24 @@
 'use client';
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 const CreateModulePage = () => {
     const router = useRouter();
+    const [instructorList, setInstructorList] = useState([]);
     const titleRef = useRef();
-    const descriptionRef = useRef();
+    const detailsRef = useRef();
+    const instructorRef = useRef();
 
 
     const handleSubmit = async () => {
         const moduleData = {
-            administrator_id: "administrator1",
-            module_id: 1,
+            administrator_id: "admin1",
+            instructor_id: instructorRef.current.value,
             module_title: titleRef.current.value,
-            module_description: descriptionRef.current.value,
+            module_details: detailsRef.current.value,
         }
+        console.log(moduleData);
         let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/create`, {
             method: 'POST',
             body: JSON.stringify(moduleData),
@@ -26,11 +29,27 @@ const CreateModulePage = () => {
         });
         if (response.status === 200) {
             alert("module created successfully");
-            router.push('/dashboard');
         } else if (response.status === 500) {
             alert("Failed to create module");
         }
     }
+
+    const getInstructors = async () => {
+        let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/account/instructors`, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        let responseData = await response.json();
+        setInstructorList(responseData.instructorList);
+    }
+
+    useEffect(() => {
+        getInstructors();
+    }, []);
 
     return (
         <div className="modules-container">
@@ -46,10 +65,23 @@ const CreateModulePage = () => {
                         <input ref={titleRef} required type="text" />
                     </label>
                     <label htmlFor="password">
-                        <p>Module Description</p>
-                        <input ref={descriptionRef} required type="text" />
+                        <p>Module Details</p>
+                        <input ref={detailsRef} required type="text" />
                     </label>
-                    <button type="submit">Create Module</button>
+                    <label htmlFor="password">
+                        <p>Assigned Instructor</p>
+                        <select ref={instructorRef} required type="text">
+                            <option value="">Select Below</option>
+                            {instructorList.map((instructor) => {
+                                return (
+                                    <option value={instructor.per_id}>{instructor.first_name} {instructor.last_name}</option>
+                                );
+                            })}
+                        </select>
+                    </label>
+                    <div>
+                        <button type="submit">Create Module</button>
+                    </div>
                 </form>
             </div>
         </div>

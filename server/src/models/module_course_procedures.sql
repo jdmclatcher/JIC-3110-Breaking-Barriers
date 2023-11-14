@@ -61,17 +61,17 @@ $$;
 DROP PROCEDURE IF EXISTS delete_module(INT);
 
 -- Create or replace the procedure
-CREATE OR REPLACE PROCEDURE delete_module(module_id INT) LANGUAGE plpgsql AS $$
+CREATE OR REPLACE PROCEDURE delete_module(i_module_id INT) LANGUAGE plpgsql AS $$
 BEGIN
     -- Delete pages associated with courses in the module
     DELETE FROM pages
-    WHERE course_id IN (SELECT course_id FROM courses WHERE module_id = module_id);
+    WHERE course_id IN (SELECT course_id FROM courses WHERE module_id = i_module_id);
 
     -- Delete courses in the module
-    DELETE FROM courses WHERE module_id = module_id;
+    DELETE FROM courses WHERE courses.module_id = i_module_id;
 
     -- Delete the module
-    DELETE FROM modules WHERE module_id = module_id;
+    DELETE FROM modules WHERE modules.module_id = i_module_id;
 END;
 $$;
 
@@ -79,13 +79,13 @@ $$;
 DROP PROCEDURE IF EXISTS delete_course(INT);
 
 -- Create or replace the procedure
-CREATE OR REPLACE PROCEDURE delete_course(course_id INT) LANGUAGE plpgsql AS $$
+CREATE OR REPLACE PROCEDURE delete_course(i_course_id INT) LANGUAGE plpgsql AS $$
 BEGIN
     -- Delete pages associated with the course
-    DELETE FROM pages WHERE course_id = course_id;
+    DELETE FROM pages WHERE course_id = i_course_id;
 
     -- Delete the course
-    DELETE FROM courses WHERE course_id = course_id;
+    DELETE FROM courses WHERE course_id = i_course_id;
 END;
 $$;
 

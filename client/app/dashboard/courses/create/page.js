@@ -1,18 +1,21 @@
 'use client';
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 const CreateCoursePage = () => {
+    const [moduleList, setModuleList] = useState([]);
     const router = useRouter();
     const titleRef = useRef();
     const descriptionRef = useRef();
+    const moduleRef = useRef();
+    console.log(moduleList);
 
 
     const handleSubmit = async () => {
         const courseData = {
             instructor_id: "instructor1",
-            module_id: 1,
+            module_id: moduleRef.current.value,
             course_title: titleRef.current.value,
             course_description: descriptionRef.current.value,
         }
@@ -32,6 +35,32 @@ const CreateCoursePage = () => {
         }
     }
 
+    const getModules = async () => {
+        const administrator_id = "admin1";
+
+        let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/get-administrator?administrator_id=${administrator_id}`, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response) {
+            console.error('No response from fetch');
+            return;
+        }
+        let responseData = await response.json();
+        if (!responseData || !responseData.moduleList) {
+            console.error('Invalid or empty response data');
+            return;
+        }
+        setModuleList(responseData.moduleList);
+    }
+
+    useEffect(() => {
+        getModules();
+    }, [])
+
     return (
         <div className="courses-container">
             <Link href="/dashboard">Back to Dashboard</Link>
@@ -49,7 +78,20 @@ const CreateCoursePage = () => {
                         <p>Course Description</p>
                         <input ref={descriptionRef} required type="text" />
                     </label>
-                    <button type="submit">Create Course</button>
+                    <label htmlFor="module">
+                        <p>Module</p>
+                        <select ref={moduleRef} required type="text">
+                            <option value="">Select Below</option>
+                            {moduleList.map((module) => {
+                                return (
+                                    <option value={module.module_id}>{module.module_title}</option>
+                                );
+                            })}
+                        </select>
+                    </label>
+                    <div>
+                        <button type="submit">Create Course</button>
+                    </div>
                 </form>
             </div>
         </div>

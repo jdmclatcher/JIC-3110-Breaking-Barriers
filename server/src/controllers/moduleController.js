@@ -28,13 +28,13 @@ exports.module_create_post = asyncHandler(async (req, res, next) => {
     try {
         let {
             administrator_id,
-            module_id,
+            instructor_id,
             module_title,
             module_details,
         } = req.body;
 
-        let queryString = "CALL create_module($1, $2, $3, $4)";
-        let queryParameters = [administrator_id, module_id, module_title, module_details];
+        let queryString = "CALL create_module_and_assign_instructor($1, $2, $3, $4)";
+        let queryParameters = [administrator_id, module_title, module_details, instructor_id];
         db.query(queryString, queryParameters, (err, result) => {
             if (err) {
                 console.log(err);
@@ -53,11 +53,9 @@ exports.module_create_post = asyncHandler(async (req, res, next) => {
 // Administrator Delete Module
 exports.module_delete_post = asyncHandler(async (req, res, next) => {
     try {
-        let {
-            module_id
-        } = req.query;
+        let { module_id } = req.query;
 
-        let queryString = "DELETE FROM modules WHERE module_id = $1";
+        let queryString = "CALL delete_module($1)";
         let queryParameters = [module_id];
         db.query(queryString, queryParameters, (err, result) => {
             if (err) {
