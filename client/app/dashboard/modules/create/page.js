@@ -36,17 +36,17 @@ const CreateModulePage = () => {
         <div className="modules-container">
             <Link href="/dashboard">Back to Dashboard</Link>
             <div>
-                <Link href="/dashboard/modules">Back to modules</Link>
+                <Link href="/dashboard/modules">Back to Modules</Link>
             </div>
-            <h1 className="modules-header">Create module</h1>
+            <h1 className="modules-header">Create Module</h1>
             <div className="modules-list">
                 <form onSubmit={handleSubmit} className="form">
                     <label htmlFor="email">
-                        <p>module Title</p>
+                        <p>Module Title</p>
                         <input ref={titleRef} required type="text" />
                     </label>
                     <label htmlFor="password">
-                        <p>module Description</p>
+                        <p>Module Description</p>
                         <input ref={descriptionRef} required type="text" />
                     </label>
                     <button type="submit">Create Module</button>

@@ -15,7 +15,15 @@ const ModulesPage = () => {
                 'Content-Type': 'application/json'
             }
         });
+        if (!response) {
+            console.error('No response from fetch');
+            return;
+        }
         let responseData = await response.json();
+        if (!responseData || !responseData.moduleList) {
+            console.error('Invalid or empty response data');
+            return;
+        }
         setmoduleList(responseData.moduleList);
     }
 
