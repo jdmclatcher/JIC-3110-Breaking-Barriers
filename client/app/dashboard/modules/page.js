@@ -5,7 +5,7 @@ import "./Modules.css"
 
 const ModulesPage = () => {
     const [moduleList, setmoduleList] = useState([]);
-    const administrator_id = "administrator1";
+    const administrator_id = "admin1";
 
     const getmodules = async () => {
         let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/get-administrator?administrator_id=${administrator_id}`, {
@@ -56,7 +56,7 @@ const ModulesPage = () => {
                     return (
                         <div className="module-item">
                             <h2 className="module-title">{module.module_title}</h2>
-                            <p className="module-description">{module.module_description}</p>
+                            <p className="module-description">{module.module_details}</p>
                             <button className="delete-module-button" onClick={() => {handleDelete(module.module_id)}}>Delete</button>
                         </div>
                     )

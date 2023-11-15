@@ -53,11 +53,9 @@ exports.course_create_post = asyncHandler(async (req, res, next) => {
 // Instructor Delete Course
 exports.course_delete_post = asyncHandler(async (req, res, next) => {
     try {
-        let {
-            course_id
-        } = req.query;
+        let { course_id } = req.query;
 
-        let queryString = "DELETE FROM courses WHERE course_id = $1";
+        let queryString = "CALL delete_course($1)";
         let queryParameters = [course_id];
         db.query(queryString, queryParameters, (err, result) => {
             if (err) {

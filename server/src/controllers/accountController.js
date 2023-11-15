@@ -43,3 +43,22 @@ exports.create_account = asyncHandler(async (req, res, next) => {
     res.status(200);
     res.json({success: true, message: `account ${username} successfully created`});
 });
+
+exports.instructor_get = asyncHandler(async (req, res, next) => {
+    try {
+        let queryString = "SELECT first_name, last_name, instructor.per_id from instructor INNER JOIN person ON instructor.per_id = person.per_id";
+        let queryParameters = [];
+        db.query(queryString, queryParameters, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500);
+                res.json({success: false, message: "Failed to get instructors"});
+            } else {
+                res.status(200);
+                res.json({ instructorList: result.rows });
+            }
+        })
+    } catch {
+        console.log("error");
+    }
+});
