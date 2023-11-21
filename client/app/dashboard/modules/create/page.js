@@ -44,6 +44,7 @@ const CreateModulePage = () => {
         });
 
         let responseData = await response.json();
+        console.log("things: " + responseData.instructorList);
         setInstructorList(responseData.instructorList);
     }
 

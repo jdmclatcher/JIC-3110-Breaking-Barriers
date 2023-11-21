@@ -1,64 +1,66 @@
 const asyncHandler = require("express-async-handler");
-const db = require("../configs/config");
+const { db } = require("../configs/config");
 
 exports.create_account = asyncHandler(async (req, res, next) => {
-    let {
-        userType,
-        email,
-        firstName,
-        lastName,
-        username,
-        password,
-        traineeInstructorId
-    } = req.body
-    // First add new person to person table
     try {
-        let queryString = "CALL create_person($1, $2, $3, $4, $5)";
-        let queryParameters = [username, email, firstName, lastName, password]
-        await db.query(queryString, queryParameters)
-    } catch(err) {
-        console.log(err)
-        res.status(500);
-        res.json({success: false, message: "Failed to add to person table"});
-    }
-
-    // Then add new person to corresponding user type table
-    try {
-        let queryString = ""
-        let queryParameters = [username];
-        if (userType === "admin") {
-            queryString = "CALL create_admin($1)"
-        } else if (userType === "instructor") {
-            queryString = "CALL create_instructor($1)"
-        } else if (userType === "trainee") {
-            queryString = "CALL create_trainee($1, $2)"
-            queryParameters.push(traineeInstructorId)
+        const { userType, p_per_id, email, firstName, lastName, password, p_instructor_id } = req.body;
+        // First, add a new person to the person table
+        const { data: personData, error: personError } = await db.rpc('f_create_person', {
+          p_per_id,
+          p_email: email,
+          p_first_name: firstName,
+          p_last_name: lastName,
+          p_password: password,
+        });
+    
+        if (personError || !personData) {
+          console.error('Failed to add to person table:', personError?.message || 'No data returned');
+          return { success: false, message: 'Failed to add to person table' };
         }
-        await db.query(queryString, queryParameters)
-    } catch(err) {
-        console.log(err);
-        res.status(500);
-        res.json({success: false, message: "Failed to create account"});
+    
+        let queryString = "";
+        let queryParameters =  { p_per_id };
+    
+        // Then, add the new person to the corresponding user type table
+        if (userType === "admin") {
+          queryString = "f_create_admin";
+        } else if (userType === "instructor") {
+          queryString = "f_create_instructor";
+        } else if (userType === "trainee") {
+          queryString = "f_create_trainee";
+          queryParameters.push(p_instructor_id);
+        }
+    
+        const { data: userTypeData, error: userTypeError } = await db.rpc(queryString, queryParameters);
+    
+        if (userTypeError || !userTypeData) {
+          console.error('Failed to create account:', userTypeError?.message || 'No data returned');
+          return { success: false, message: 'Failed to create account' };
+        }
+    
+        return { success: true, message: `Account ${p_per_id} successfully created` };
+      } catch (error) {
+        console.error('Unexpected error:', error.message);
+        return { success: false, message: 'An unexpected error occurred' };
+      }
     }
-    res.status(200);
-    res.json({success: true, message: `account ${username} successfully created`});
-});
+);
 
 exports.instructor_get = asyncHandler(async (req, res, next) => {
     try {
-        let queryString = "SELECT first_name, last_name, instructor.per_id from instructor INNER JOIN person ON instructor.per_id = person.per_id";
-        let queryParameters = [];
-        db.query(queryString, queryParameters, (err, result) => {
-            if (err) {
-                console.log(err);
-                res.status(500);
-                res.json({success: false, message: "Failed to get instructors"});
-            } else {
-                res.status(200);
-                res.json({ instructorList: result.rows });
-            }
-        })
-    } catch {
-        console.log("error");
+        const { data, error } = await db
+        .from('instructor')
+        .select('per_id');
+    
+        if (error) {
+          console.error('Error getting instructors:', error.message);
+          return { success: false, message: 'Failed to get instructors' };
+        } else {
+          return { success: true, instructorList: data };
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error.message);
+        return { success: false, message: 'An unexpected error occurred' };
+      }
     }
-});
+);
