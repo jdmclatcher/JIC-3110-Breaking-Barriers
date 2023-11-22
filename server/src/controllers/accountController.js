@@ -3,9 +3,9 @@ const { db } = require("../configs/config");
 
 exports.create_account = asyncHandler(async (req, res, next) => {
     try {
-        const { userType, p_per_id, email, firstName, lastName, password, p_instructor_id } = req.body;
+        const { userType, p_per_id, email, firstName, lastName, password } = req.body;
         // First, add a new person to the person table
-        const { data: personData, error: personError } = await db.rpc('f_create_person', {
+        let { data, error } = await db.rpc('f_create_person', {
           p_per_id,
           p_email: email,
           p_first_name: firstName,
@@ -13,9 +13,10 @@ exports.create_account = asyncHandler(async (req, res, next) => {
           p_password: password,
         });
     
-        if (personError || !personData) {
-          console.error('Failed to add to person table:', personError?.message || 'No data returned');
-          return { success: false, message: 'Failed to add to person table' };
+        if (error) {
+          console.error('Failed to add to person table:', error?.message || 'No data returned');
+          res.json({ success: false, message: `Failed to add to person table ${error?.message}` });
+          return;
         }
     
         let queryString = "";
@@ -28,20 +29,20 @@ exports.create_account = asyncHandler(async (req, res, next) => {
           queryString = "f_create_instructor";
         } else if (userType === "trainee") {
           queryString = "f_create_trainee";
-          queryParameters.push(p_instructor_id);
         }
     
-        const { data: userTypeData, error: userTypeError } = await db.rpc(queryString, queryParameters);
+        let { data: userTypeData, error: userTypeError } = await db.rpc(queryString, queryParameters);
     
-        if (userTypeError || !userTypeData) {
+        if (userTypeError) {
           console.error('Failed to create account:', userTypeError?.message || 'No data returned');
-          return { success: false, message: 'Failed to create account' };
+          res.json({ success: false, message: `Failed to create account: ${userTypeError?.message}` });
+          return;
         }
     
-        return { success: true, message: `Account ${p_per_id} successfully created` };
+        res.json({ success: true, message: `Account ${p_per_id} successfully created` });
       } catch (error) {
         console.error('Unexpected error:', error.message);
-        return { success: false, message: 'An unexpected error occurred' };
+        res.json({ success: false, message: 'An unexpected error occurred' });
       }
     }
 );
