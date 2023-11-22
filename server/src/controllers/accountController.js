@@ -1,16 +1,20 @@
 const asyncHandler = require("express-async-handler");
 const { db } = require("../configs/config");
+let bcrypt = require('bcryptjs');
 
 exports.create_account = asyncHandler(async (req, res, next) => {
     try {
         const { userType, p_per_id, email, firstName, lastName, password } = req.body;
+        let salt = bcrypt.genSaltSync(10);
+        let hash = bcrypt.hashSync(password, salt);
+
         // First, add a new person to the person table
         let { data, error } = await db.rpc('f_create_person', {
           p_per_id,
           p_email: email,
           p_first_name: firstName,
           p_last_name: lastName,
-          p_password: password,
+          p_password: hash,
         });
     
         if (error) {
