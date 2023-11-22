@@ -63,7 +63,6 @@ $$;
 -- Create procedure to add a new trainee to trainee table
 CREATE OR REPLACE PROCEDURE create_trainee(
     p_per_id VARCHAR(100),
-    p_instructor_id VARCHAR(100)
 ) LANGUAGE plpgsql AS $$
 BEGIN
     -- Check if the trainee exists already
@@ -71,16 +70,10 @@ BEGIN
         RAISE EXCEPTION 'Trainee already exists : %', p_per_id;
     END IF;
 
-    -- Check if instructor does not exist
-    IF NOT EXISTS (SELECT 1 FROM instructor WHERE per_id = p_instructor_id) THEN
-        RAISE EXCEPTION 'Instructor does not exist : %', p_instructor_id;
-    END IF;
-
     -- Insert new admin into admin table
-    INSERT INTO trainee (per_id, instructor_id)
+    INSERT INTO trainee (per_id)
     VALUES (
         p_per_id,
-        p_instructor_id
     );
 END;
 $$;
@@ -100,11 +93,17 @@ BEGIN
         RAISE EXCEPTION 'Instructor with per_id % does not exist', p_instructor_per_id;
     END IF;
 
+    -- Check if trainee is already assigned to instructor
+    IF EXISTS (SELECT 1 FROM trainee WHERE per_id = p_per_id AND instructor_id = p_instructor_per_id) THEN
+        RAISE EXCEPTION 'Trainee already assigned to instructor';
+    END IF;
+
     -- Assign the trainee to the instructor
-    UPDATE trainee t
-    SET instructor_id = (SELECT i.per_id FROM instructor i WHERE per_id = p_instructor_per_id)
-    WHERE t.per_id = p_trainee_per_id;
-    COMMIT;
+    INSERT INTO assigned_to (trainee_id, instructor_id)
+    VALUES (
+        p_trainee_per_id,
+        p_instructor_per_id,
+    )
 END;
 $$;
 

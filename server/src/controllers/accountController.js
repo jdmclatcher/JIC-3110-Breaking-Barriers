@@ -3,7 +3,7 @@ const { db } = require("../configs/config");
 
 exports.create_account = asyncHandler(async (req, res, next) => {
     try {
-        const { userType, p_per_id, email, firstName, lastName, password, p_instructor_id } = req.body;
+        const { userType, p_per_id, email, firstName, lastName, password } = req.body;
         // First, add a new person to the person table
         const { data: personData, error: personError } = await db.rpc('f_create_person', {
           p_per_id,
@@ -28,7 +28,6 @@ exports.create_account = asyncHandler(async (req, res, next) => {
           queryString = "f_create_instructor";
         } else if (userType === "trainee") {
           queryString = "f_create_trainee";
-          queryParameters.push(p_instructor_id);
         }
     
         const { data: userTypeData, error: userTypeError } = await db.rpc(queryString, queryParameters);
