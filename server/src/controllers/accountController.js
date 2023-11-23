@@ -1,21 +1,26 @@
 const asyncHandler = require("express-async-handler");
 const { db } = require("../configs/config");
+let bcrypt = require('bcryptjs');
 
 exports.create_account = asyncHandler(async (req, res, next) => {
     try {
         const { userType, p_per_id, email, firstName, lastName, password } = req.body;
+        let salt = bcrypt.genSaltSync(10);
+        let hash = bcrypt.hashSync(password, salt);
+
         // First, add a new person to the person table
-        const { data: personData, error: personError } = await db.rpc('f_create_person', {
+        let { data, error } = await db.rpc('f_create_person', {
           p_per_id,
           p_email: email,
           p_first_name: firstName,
           p_last_name: lastName,
-          p_password: password,
+          p_password: hash,
         });
     
-        if (personError || !personData) {
-          console.error('Failed to add to person table:', personError?.message || 'No data returned');
-          return { success: false, message: 'Failed to add to person table' };
+        if (error) {
+          console.error('Failed to add to person table:', error?.message || 'No data returned');
+          res.json({ success: false, message: `Failed to add to person table ${error?.message}` });
+          return;
         }
     
         let queryString = "";
@@ -30,17 +35,18 @@ exports.create_account = asyncHandler(async (req, res, next) => {
           queryString = "f_create_trainee";
         }
     
-        const { data: userTypeData, error: userTypeError } = await db.rpc(queryString, queryParameters);
+        let { data: userTypeData, error: userTypeError } = await db.rpc(queryString, queryParameters);
     
-        if (userTypeError || !userTypeData) {
+        if (userTypeError) {
           console.error('Failed to create account:', userTypeError?.message || 'No data returned');
-          return { success: false, message: 'Failed to create account' };
+          res.json({ success: false, message: `Failed to create account: ${userTypeError?.message}` });
+          return;
         }
     
-        return { success: true, message: `Account ${p_per_id} successfully created` };
+        res.json({ success: true, message: `Account ${p_per_id} successfully created` });
       } catch (error) {
         console.error('Unexpected error:', error.message);
-        return { success: false, message: 'An unexpected error occurred' };
+        res.json({ success: false, message: 'An unexpected error occurred' });
       }
     }
 );

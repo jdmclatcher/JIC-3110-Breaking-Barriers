@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS administrator CASCADE;
 CREATE TABLE administrator (
     per_id VARCHAR(100) NOT NULL,
     PRIMARY KEY (per_id),
-    CONSTRAINT admin_per FOREIGN KEY (per_id) REFERENCES person(per_id)
+    CONSTRAINT admin_per FOREIGN KEY (per_id) REFERENCES person(per_id) ON DELETE CASCADE
 );
 
 -- INSTRUCTORS
@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS instructor CASCADE;
 CREATE TABLE instructor (
     per_id VARCHAR(100) NOT NULL,
     PRIMARY KEY (per_id),
-    CONSTRAINT instr_per FOREIGN KEY (per_id) REFERENCES person(per_id)
+    CONSTRAINT instr_per FOREIGN KEY (per_id) REFERENCES person(per_id) ON DELETE CASCADE
 );
 
 -- TRAINEES
@@ -29,17 +29,17 @@ DROP TABLE IF EXISTS trainee CASCADE;
 CREATE TABLE trainee (
     per_id VARCHAR(100) NOT NULL,
     PRIMARY KEY (per_id),
-    CONSTRAINT trainee_per FOREIGN KEY (per_id) REFERENCES person(per_id)
+    CONSTRAINT trainee_per FOREIGN KEY (per_id) REFERENCES person(per_id) ON DELETE CASCADE
 );
 
 -- ASSIGN TRAINEES TO INSTRUCTORS
 DROP TABLE IF EXISTS assigned_to CASCADE;
 CREATE TABLE assigned_to (
     trainee_id VARCHAR(100) NOT NULL,
-    instructor_id VARCHAR(100), -- store reference to the instructor trainee is assigned to
+    instructor_id VARCHAR(100) NOT NULL, -- store reference to the instructor trainee is assigned to
     PRIMARY KEY (trainee_id, instructor_id),
-    CONSTRAINT trainee_per FOREIGN KEY (trainee_id) REFERENCES trainee(per_id),
-    CONSTRAINT instr_trainee FOREIGN KEY (instructor_id) REFERENCES instructor(per_id) -- store reference to the instructor trainee is assigned to
+    CONSTRAINT trainee_per FOREIGN KEY (trainee_id) REFERENCES trainee(per_id) ON DELETE CASCADE,
+    CONSTRAINT instr_trainee FOREIGN KEY (instructor_id) REFERENCES instructor(per_id) ON DELETE CASCADE -- store reference to the instructor trainee is assigned to
 );
 
 -- QUIZZES

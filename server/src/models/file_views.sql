@@ -16,6 +16,7 @@ SELECT
     f.file_id,
     f.file_name,
     f.uploaded_at,
-    t.instructor_id AS instructor_per_id
+    a.instructor_id AS instructor_per_id,
+    a.trainee_id as trainee_per_id
 FROM files AS f
-JOIN trainee AS t ON f.instructor_id = t.instructor_id;
+JOIN assigned_to AS a ON f.instructor_id = a.instructor_id;

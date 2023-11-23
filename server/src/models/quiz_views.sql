@@ -71,11 +71,11 @@ SELECT
     q.quiz_id,
     q.title,
     q.description,
-    t.per_id AS trainee_per_id
+    a.trainee_id AS trainee_per_id
 FROM
-    trainee t
+    assigned_to a
 INNER JOIN
-    instructor i ON t.instructor_id = i.per_id
+    instructor i ON a.instructor_id = i.per_id
 INNER JOIN
     quizzes q ON i.per_id = q.instructor_id;
 
@@ -133,10 +133,9 @@ SELECT
     q.title AS quiz_title,
     qr.quiz_score
 FROM
-    trainee t
-    JOIN quiz_responses qr ON t.per_id = qr.trainee_id
+    assigned_to a
+    JOIN quiz_responses qr ON a.trainee_id = qr.trainee_id
     JOIN quizzes q ON qr.quiz_id = q.quiz_id
-    JOIN person tr ON t.per_id = tr.per_id
-    JOIN instructor i ON t.instructor_id = i.per_id
-    JOIN person ir ON i.per_id = ir.per_id;
+    JOIN person tr ON a.trainee_id = tr.per_id
+    JOIN person ir ON a.instructor_id = ir.per_id;
 

@@ -12,6 +12,10 @@ BEGIN
         RAISE EXCEPTION 'Person already exists : %', p_per_id;
     END IF;
 
+    IF EXISTS (SELECT 1 FROM person WHERE email = p_email) THEN
+        RAISE EXCEPTION 'Email already in use : %', p_email;
+    END IF;
+
     -- Insert new person into person table
     INSERT INTO person (per_id, email, first_name, last_name, password)
     VALUES (
@@ -62,7 +66,7 @@ $$;
 
 -- Create procedure to add a new trainee to trainee table
 CREATE OR REPLACE PROCEDURE create_trainee(
-    p_per_id VARCHAR(100),
+    p_per_id VARCHAR(100)
 ) LANGUAGE plpgsql AS $$
 BEGIN
     -- Check if the trainee exists already
@@ -73,7 +77,7 @@ BEGIN
     -- Insert new admin into admin table
     INSERT INTO trainee (per_id)
     VALUES (
-        p_per_id,
+        p_per_id
     );
 END;
 $$;
@@ -102,8 +106,8 @@ BEGIN
     INSERT INTO assigned_to (trainee_id, instructor_id)
     VALUES (
         p_trainee_per_id,
-        p_instructor_per_id,
-    )
+        p_instructor_per_id
+    );
 END;
 $$;
 

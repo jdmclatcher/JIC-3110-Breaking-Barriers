@@ -1,49 +1,89 @@
 'use client'
-import React from "react";
+import { useRef } from "react";
 import { useRouter } from 'next/navigation'
 import { supabase } from "../../supabase/supabaseClient";
+import Link from "next/link";
 
 
 function Page() {
-    const navigateToHome = () => {
-        router.push("/",  { scroll: false });
-    }
-
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    const usernameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const firstNameRef = useRef();
+    const lastNameRef = useRef();
+    const userTypeRef = useRef();
     const router = useRouter()
 
-    const handleForm = async (event) => {
-        event.preventDefault()
+    const handleForm = async (e) => {
+        e.preventDefault()
 
-        const { user, error } = await supabase.auth.signUp({ email, password });
-
-        if (error) {
-            console.error("Error creating account:", error);
-            alert("Failed to create user");
-        } else {
-            console.log("Account created:", user);
-            // You can now save additional user data to your database if needed
-            // Redirect or show a success message
-            router.push("/");
+        let accountData = {
+            p_per_id: usernameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            firstName: firstNameRef.current.value,
+            lastName: lastNameRef.current.value,
+            userType: userTypeRef.current.value
         }
+        // Remove hardcoded url
+        let response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/account/create`, {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(accountData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(response);
+        let responseData = await response.json();
+        console.log(responseData);
+        alert(responseData.message);
     }
+
     return (<div className="wrapper">
         <div className='bg-gradient-to-r from-gray-400 to-gray-300 p-4 h-screen flex justify-center items-center'>
             <div className='bg-gradient-to-r from-orange-400 to-orange-300 rounded-lg h-5/6 w-1/3 p-5'>
         <div className="form-wrapper">
             <h1 className="mt-60 mb-30">Sign up</h1>
             <form onSubmit={handleForm} className="form">
+                <label htmlFor="username">
+                    Username
+                </label>
+                <input ref={usernameRef} required type="text" name="username" id="username" placeholder="Username" />
+                
                 <label htmlFor="email">
-                    <p>Email</p>
-                    <input onChange={(e) => setEmail(e.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
+                    Email
                 </label>
+                <input ref={emailRef} required type="email" name="email" id="email" placeholder="example@mail.com" />
+
                 <label htmlFor="password">
-                    <p>Password</p>
-                    <input onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
+                    Password
                 </label>
+                <input ref={passwordRef} required type="password" name="password" id="password" placeholder="password" />
+                
+                <label htmlFor="firstname">
+                    First Name
+                </label>
+                <input ref={firstNameRef} type="text" name="firstname" id="firstname" placeholder="First Name" />
+
+                <label htmlFor="lastname">
+                    Last Name
+                </label>
+                <input ref={lastNameRef} type="text" name="lastname" id="lastname" placeholder="Last Name" />
+
+                <label htmlFor="usertype">
+                    Last Name
+                </label>
+                <select ref={userTypeRef} required type="text" name="usertype" id="userType">
+                    <option value="">Select Below</option>
+                    <option value="trainee">Trainee</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="admin">Admin</option>
+                </select>
+                
                 <button type="submit">Sign up</button>
             </form>
+            <Link href="/">Return to Login</Link>
         </div>
     </div>
         </div>
