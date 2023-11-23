@@ -4,7 +4,8 @@ CREATE OR REPLACE PROCEDURE create_person(
     p_email VARCHAR(100),
     p_first_name VARCHAR(50),
     p_last_name VARCHAR(50),
-    p_password VARCHAR(50)
+    p_password VARCHAR(50),
+    p_role VARCHAR(10),
 ) LANGUAGE plpgsql AS $$
 BEGIN
     -- Check if the person exists already
@@ -17,13 +18,14 @@ BEGIN
     END IF;
 
     -- Insert new person into person table
-    INSERT INTO person (per_id, email, first_name, last_name, password)
+    INSERT INTO person (per_id, email, first_name, last_name, password, role)
     VALUES (
         p_per_id,
         p_email,
         p_first_name,
         p_last_name,
-        p_password
+        p_password,
+        p_role
     );
 END;
 $$;
