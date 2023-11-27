@@ -5,14 +5,13 @@ import "./Modules.css";
 
 const ModulesPage = () => {
   const [moduleList, setmoduleList] = useState([]);
-  const administrator_id = "admin1";
+  const administrator_id = "pkim";
 
-  const getmodules = async () => {
+  const getModules = async () => {
     let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/get-administrator?administrator_id=${administrator_id}`,
+      `/api/module?administrator_id=${administrator_id}`,
       {
         method: "GET",
-        mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
@@ -31,26 +30,24 @@ const ModulesPage = () => {
   };
 
   const handleDelete = async (module_id) => {
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/delete?module_id=${module_id}`,
-      {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let moduleData = { module_id: module_id };
+    let response = await fetch("/api/module", {
+      method: "DELETE",
+      body: JSON.stringify(moduleData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (response.status === 200) {
-      alert("Successfully deleted module");
-      getmodules();
+      alert("Successfully deleted modules");
+      getModules();
     } else if (response.status === 500) {
       alert("Failed to delete module");
     }
   };
 
   useEffect(() => {
-    getmodules();
+    getModules();
   }, []);
 
   return (
@@ -61,8 +58,8 @@ const ModulesPage = () => {
         {moduleList.map((module, idx) => {
           return (
             <div className="module-item" key={`module-${idx}`}>
-              <h2 className="module-title">{module.module_title}</h2>
-              <p className="module-description">{module.module_details}</p>
+              <h2 className="module-title">{module.title}</h2>
+              <p className="module-description">{module.details}</p>
               <button
                 className="delete-module-button"
                 onClick={() => {

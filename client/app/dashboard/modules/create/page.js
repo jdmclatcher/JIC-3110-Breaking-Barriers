@@ -10,46 +10,36 @@ const CreateModulePage = () => {
   const detailsRef = useRef();
   const instructorRef = useRef();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const moduleData = {
-      administrator_id: "admin1",
+      administrator_id: "pkim",
       instructor_id: instructorRef.current.value,
       module_title: titleRef.current.value,
       module_details: detailsRef.current.value,
     };
-    console.log(moduleData);
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/create`,
-      {
-        method: "POST",
-        body: JSON.stringify(moduleData),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.status === 200) {
-      alert("module created successfully");
-    } else if (response.status === 500) {
-      alert("Failed to create module");
-    }
+
+    let response = await fetch("/api/module", {
+      method: "POST",
+      body: JSON.stringify(moduleData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let responseData = await response.json();
+    alert(responseData.message);
   };
 
   const getInstructors = async () => {
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/account/instructors`,
-      {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch("/api/instructor", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     let responseData = await response.json();
-    console.log("things: " + responseData.instructorList);
     setInstructorList(responseData.instructorList);
   };
 

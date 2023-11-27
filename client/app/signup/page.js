@@ -23,10 +23,8 @@ function Page() {
       lastName: lastNameRef.current.value,
       userType: userTypeRef.current.value,
     };
-    // Remove hardcoded url
     let response = await fetch("/api/account", {
       method: "POST",
-      mode: "cors",
       body: JSON.stringify(accountData),
       headers: {
         "Content-Type": "application/json",
