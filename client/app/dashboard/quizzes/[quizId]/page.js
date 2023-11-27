@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import TraineeQuizForm from "@/app/components/TraineeQuizForm";
+import TraineeQuizForm from "@/components/TraineeQuizForm";
 import "./quizId.css";
 
 const TakeQuiz = ({ params }) => {
@@ -10,32 +10,25 @@ const TakeQuiz = ({ params }) => {
   const [questionList, setQuestionList] = useState([]);
 
   const getQuizQuestions = async () => {
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/quiz/questions?quiz_id=${quizId}`,
-      {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(`/api/quiz/question?quiz_id=${quizId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     let responseData = await response.json();
     setQuestionList(responseData.questionList);
   };
 
   const getQuizDetails = async () => {
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/quiz?quiz_id=${quizId}`,
-      {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(`/api/quiz/detail?quiz_id=${quizId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     let responseData = await response.json();
+
     setQuizTitle(responseData.title);
     setQuizDescription(responseData.description);
   };
@@ -43,7 +36,7 @@ const TakeQuiz = ({ params }) => {
   useEffect(() => {
     getQuizQuestions();
     getQuizDetails();
-  });
+  }, []);
 
   return (
     <div className="quiz-container">
