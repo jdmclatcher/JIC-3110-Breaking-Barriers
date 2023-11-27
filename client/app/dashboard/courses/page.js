@@ -5,34 +5,26 @@ import "./Courses.css";
 
 const CoursesPage = () => {
   const [courseList, setCourseList] = useState([]);
-  const instructor_id = "instructor1";
+  const instructor_id = "pkim2";
 
   const getCourses = async () => {
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/course/get-instructor?instructor_id=${instructor_id}`,
-      {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(`/api/course?instructor_id=${instructor_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     let responseData = await response.json();
     setCourseList(responseData.courseList);
   };
 
   const handleDelete = async (course_id) => {
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/course/delete?course_id=${course_id}`,
-      {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch(`/api/course?course_id=${course_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (response.status === 200) {
       alert("Successfully deleted course");
       getCourses();
@@ -53,8 +45,8 @@ const CoursesPage = () => {
         {courseList.map((course, idx) => {
           return (
             <div className="course-item" key={`course-${idx}`}>
-              <h2 className="course-title">{course.course_title}</h2>
-              <p className="course-description">{course.course_description}</p>
+              <h2 className="course-title">{course.title}</h2>
+              <p className="course-description">{course.description}</p>
               <button
                 className="delete-course-button"
                 onClick={() => {

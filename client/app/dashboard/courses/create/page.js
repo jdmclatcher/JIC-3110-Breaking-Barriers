@@ -11,40 +11,34 @@ const CreateCoursePage = () => {
   const moduleRef = useRef();
   console.log(moduleList);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const courseData = {
-      instructor_id: "instructor1",
+      instructor_id: "pkim2",
       module_id: moduleRef.current.value,
       course_title: titleRef.current.value,
       course_description: descriptionRef.current.value,
     };
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/course/create`,
-      {
-        method: "POST",
-        body: JSON.stringify(courseData),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.status === 200) {
-      alert("Course created successfully");
-      router.push("/dashboard");
-    } else if (response.status === 500) {
-      alert("Failed to create course");
-    }
+    let response = await fetch("/api/course", {
+      method: "POST",
+      body: JSON.stringify(courseData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let responseData = await response.json();
+
+    alert(responseData.message);
   };
 
   const getModules = async () => {
-    const administrator_id = "admin1";
+    const administrator_id = "pkim";
 
     let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/module/get-administrator?administrator_id=${administrator_id}`,
+      `/api/module?administrator_id=${administrator_id}`,
       {
         method: "GET",
-        mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
@@ -90,7 +84,7 @@ const CreateCoursePage = () => {
               {moduleList.map((module, idx) => {
                 return (
                   <option key={`module-${idx}`} value={module.module_id}>
-                    {module.module_title}
+                    {module.title}
                   </option>
                 );
               })}
