@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
-import { supabase } from "@/supabase/supabaseClient";
 
 export default function Home() {
   const emailRef = useRef();
@@ -17,21 +16,17 @@ export default function Home() {
       password: passwordRef.current.value,
     };
 
-    let response = await fetch(
-      `http://localhost:${process.env.NEXT_PUBLIC_SERVER_PORT}/account/login`,
-      {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify(loginData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let response = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(loginData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     let responseData = await response.json();
     alert(responseData.message);
-    if (responseData.success) {
+    if (response.status === 200) {
       router.push("/dashboard");
     }
   };

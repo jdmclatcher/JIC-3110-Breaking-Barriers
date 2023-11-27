@@ -102,12 +102,21 @@ exports.login = asyncHandler(async (req, res, next) => {
         });
         return;
       }
+      req.session.userid = req.body.username;
       res.status(200);
       res.json({
         success: true,
         message: "Login successful",
       });
     }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+exports.logout = asyncHandler(async (req, res, next) => {
+  try {
+    res.redirect("/login");
   } catch (e) {
     console.log(e);
   }
