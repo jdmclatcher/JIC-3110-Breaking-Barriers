@@ -9,7 +9,6 @@ const CreateCoursePage = () => {
   const titleRef = useRef();
   const descriptionRef = useRef();
   const moduleRef = useRef();
-  console.log(moduleList);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,7 +1,8 @@
 "use client";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useRef } from "react";
 
 export default function Home() {
   const emailRef = useRef();
@@ -16,17 +17,39 @@ export default function Home() {
       password: passwordRef.current.value,
     };
 
-    let response = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(loginData),
+    const callbackUrl = "/dashboard";
+
+    const result = await signIn("credentials", {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      callbackUrl: callbackUrl,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      alert(result.error);
+    }
+
+    if (result?.ok) {
+      router.push(callbackUrl);
+    }
+  };
+
+  useEffect(() => {
+    getSession();
+  }, []);
+
+  const getSession = async () => {
+    const res = await fetch("/api/auth/session", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    let responseData = await response.json();
-    alert(responseData.message);
-    if (response.status === 200) {
+    const { session } = await res.json();
+
+    if (session?.user) {
       router.push("/dashboard");
     }
   };
