@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { SessionProvider } from "next-auth/react";
 
 export default function DashboardLayout({ children }) {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -9,8 +10,8 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     (async () => {
-      const { user, error } = await getUser();
-      if (error) {
+      const validSession = await checkSession();
+      if (!validSession) {
         router.push("/");
       }
 
@@ -22,24 +23,25 @@ export default function DashboardLayout({ children }) {
     return <div>Loading...</div>;
   }
 
-  return <main>{children}</main>;
+  return (
+    <SessionProvider>
+      <main>{children}</main>
+    </SessionProvider>
+  );
 }
 
-const getUser = async () => {
+const checkSession = async () => {
   try {
-    const response = await fetch("/api/auth/check", { method: "GET" });
-    if (response.status !== 200) {
-      return { user: null, error: true };
-    }
+    const response = await fetch("/api/auth/session", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    return {
-      user: response,
-      error: null,
-    };
+    const responseData = await response.json();
+    return responseData?.session !== null;
   } catch (e) {
-    return {
-      user: null,
-      error: e,
-    };
+    return false;
   }
 };

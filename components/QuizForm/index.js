@@ -17,8 +17,6 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
       quiz_description: quizDescriptionRef.current.value,
       quiz_questions: questionList,
     };
-    console.log(quizData);
-    // Remove hardcoded url
     let response = await fetch("/api/quiz", {
       method: "POST",
       body: JSON.stringify(quizData),
