@@ -1,13 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import "./quizzes.css";
 
 const QuizzesPage = () => {
   const [quizList, setQuizList] = useState([]);
-  const trainee_id = "test";
+
+  const { data: session } = useSession();
+  const user = session?.session?.user;
 
   const getQuizzes = async () => {
+    const trainee_id = user.per_id;
+
     let response = await fetch(`/api/quiz?trainee_id=${trainee_id}`, {
       method: "GET",
       headers: {

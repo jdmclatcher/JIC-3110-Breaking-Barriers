@@ -1,20 +1,26 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const CreateCoursePage = () => {
   const [moduleList, setModuleList] = useState([]);
-  const router = useRouter();
   const titleRef = useRef();
   const descriptionRef = useRef();
   const moduleRef = useRef();
 
+  const { data: session } = useSession();
+  const user = session?.session?.user;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (user.role !== "instructor") {
+      alert("Error: You are not an instructor");
+      return;
+    }
 
     const courseData = {
-      instructor_id: "pkim2",
+      instructor_id: user.per_id,
       module_id: moduleRef.current.value,
       course_title: titleRef.current.value,
       course_description: descriptionRef.current.value,
@@ -32,7 +38,7 @@ const CreateCoursePage = () => {
   };
 
   const getModules = async () => {
-    const administrator_id = "pkim";
+    const administrator_id = user.per_id;
 
     let response = await fetch(
       `/api/module?administrator_id=${administrator_id}`,

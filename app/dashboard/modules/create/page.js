@@ -1,20 +1,26 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const CreateModulePage = () => {
-  const router = useRouter();
   const [instructorList, setInstructorList] = useState([]);
   const titleRef = useRef();
   const detailsRef = useRef();
   const instructorRef = useRef();
 
+  const { data: session } = useSession();
+  const user = session?.session?.user;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (user.role !== "admin") {
+      alert("Error: Only admins can create modules");
+      return;
+    }
 
     const moduleData = {
-      administrator_id: "pkim",
+      administrator_id: user.per_id,
       instructor_id: instructorRef.current.value,
       module_title: titleRef.current.value,
       module_details: detailsRef.current.value,

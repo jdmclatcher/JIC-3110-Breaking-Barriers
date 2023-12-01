@@ -1,11 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import "./Courses.css";
 
 const CoursesPage = () => {
+  const { data: session } = useSession();
+  const user = session?.session?.user;
   const [courseList, setCourseList] = useState([]);
-  const instructor_id = "pkim2";
+  const instructor_id = user.per_id;
 
   const getCourses = async () => {
     let response = await fetch(`/api/course?instructor_id=${instructor_id}`, {
