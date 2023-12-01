@@ -1,13 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import "./Modules.css";
 
 const ModulesPage = () => {
   const [moduleList, setmoduleList] = useState([]);
-  const administrator_id = "pkim";
+  const { data: session } = useSession();
+  const user = session?.session?.user;
 
   const getModules = async () => {
+    const administrator_id = user.per_id;
     let response = await fetch(
       `/api/module?administrator_id=${administrator_id}`,
       {

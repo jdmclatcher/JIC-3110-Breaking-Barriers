@@ -2,17 +2,25 @@
 import { useState, useRef } from "react";
 import QuestionForm from "./QuestionForm";
 import AddQuestionButton from "./AddQuestionButton";
+import { useSession } from "next-auth/react";
 import "./QuizForm.css";
 
 const QuizForm = ({ prevQuizName, prevQuestionList }) => {
   const [questionList, setQuestionList] = useState(prevQuestionList);
   const quizTitleRef = useRef();
   const quizDescriptionRef = useRef();
+  const { data: session } = useSession();
+  const user = session?.session?.user;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (user.role !== "instructor") {
+      alert("Error: You are not an instructor");
+      return;
+    }
+
     let quizData = {
-      instructor_id: "pkim2",
+      instructor_id: user.per_id,
       quiz_title: quizTitleRef.current.value,
       quiz_description: quizDescriptionRef.current.value,
       quiz_questions: questionList,
