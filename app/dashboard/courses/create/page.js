@@ -2,12 +2,14 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CreateCoursePage = () => {
   const [moduleList, setModuleList] = useState([]);
   const titleRef = useRef();
   const descriptionRef = useRef();
   const moduleRef = useRef();
+  const router = useRouter();
 
   const { data: session } = useSession();
   const user = session?.session?.user;
@@ -38,6 +40,9 @@ const CreateCoursePage = () => {
   };
 
   const getModules = async () => {
+    if (!user || !user.per_id) {
+      router.push("/");
+    }
     const administrator_id = user.per_id;
 
     let response = await fetch(
