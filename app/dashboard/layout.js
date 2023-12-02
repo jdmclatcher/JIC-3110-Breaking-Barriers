@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
+import SideBar from "@/components/SideBar";
 
 export default function DashboardLayout({ children }) {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -25,7 +26,12 @@ export default function DashboardLayout({ children }) {
 
   return (
     <SessionProvider>
-      <main>{children}</main>
+      <main>
+        <div className="flex h-screen">
+          <SideBar />
+          <div>{children}</div>
+        </div>
+      </main>
     </SessionProvider>
   );
 }
