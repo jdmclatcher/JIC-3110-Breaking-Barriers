@@ -51,7 +51,9 @@ CREATE TABLE quizzes (
     description TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
-    instructor_id VARCHAR(100) NOT NULL REFERENCES instructor(per_id) -- assigns quiz to instructor
+    instructor_id VARCHAR(100) NOT NULL REFERENCES instructor(per_id), -- assigns quiz to instructor
+    module_id INT NOT NULL REFERENCES modules(module_id) ON DELETE CASCADE,
+    course_id INT REFERENCES courses(course_id) ON DELETE SET NULL
 );
 
 -- QUESTIONS (within quizzes)
@@ -106,7 +108,9 @@ CREATE TABLE files (
     instructor_id VARCHAR(100) REFERENCES instructor(per_id),
     file_name TEXT NOT NULL,
     file_url TEXT NOT NULL, -- Firebase URL where the file is stored
-    uploaded_at TIMESTAMP DEFAULT NOW()
+    uploaded_at TIMESTAMP DEFAULT NOW(),
+    module_id INT NOT NULL REFERENCES modules(module_id) ON DELETE CASCADE,
+    course_id INT REFERENCES courses(course_id) ON DELETE SET NULL
 );
 
 -- MODULES
@@ -153,3 +157,12 @@ CREATE TABLE messages (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT message_instructor FOREIGN KEY (instructor_id) REFERENCES instructor(per_id)
 );
+
+DROP TABLE IF EXISTS trainee_assigned_to_module CASCADE;
+CREATE TABLE trainee_assigned_to_module (
+    module_id INT NOT NULL,
+    trainee_id VARCHAR(100) NOT NULL, -- store reference to the instructor trainee is assigned to
+    PRIMARY KEY (module_id, trainee_id),
+    CONSTRAINT module_trainee FOREIGN KEY (module_id) REFERENCES modules(module_id) ON DELETE CASCADE,
+    CONSTRAINT trainee_per FOREIGN KEY (trainee_id) REFERENCES trainee(per_id) ON DELETE CASCADE
+)
