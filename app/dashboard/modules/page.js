@@ -10,7 +10,7 @@ const ModulesPage = () => {
   const user = session?.session?.user;
 
   const getModules = async () => {
-    const administrator_id = user.per_id;
+    const administrator_id = user?.per_id;
     let response = await fetch(
       `/api/module?administrator_id=${administrator_id}`,
       {

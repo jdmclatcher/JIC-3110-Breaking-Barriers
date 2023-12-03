@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "@/contexts/UserContext";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
@@ -21,7 +21,8 @@ import {
 const SideBar = ({ setModule }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [moduleList, setModuleList] = useState([]);
-  const user = useContext(UserContext);
+  const { data: session } = useSession();
+  const user = session?.session?.user;
 
   // Route links
   const homeLink = "/dashboard";
@@ -63,7 +64,6 @@ const SideBar = ({ setModule }) => {
       console.error("Invalid or empty response data");
       return;
     }
-    console.log(responseData);
     setModuleList(responseData.moduleList);
   };
 
@@ -96,7 +96,6 @@ const SideBar = ({ setModule }) => {
               className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer bg-secondary hover:bg-primary w-full text-white"
               onChange={handleModuleChange}
             >
-              <AiOutlineFileMarkdown className="text-white" size="20px" />
               <option
                 className="text-[15px] ml-4 text-gray-200 font-bold float-right hover:bg-current"
                 value=""
@@ -104,7 +103,11 @@ const SideBar = ({ setModule }) => {
                 Modules
               </option>
               {moduleList.map((m) => {
-                return <option value={m.module_id}>{m.module_title}</option>;
+                return (
+                  <option key={m.module_id} value={m.module_id}>
+                    {m.module_title}
+                  </option>
+                );
               })}
             </select>
           )}

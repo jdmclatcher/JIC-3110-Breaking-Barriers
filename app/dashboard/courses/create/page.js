@@ -22,7 +22,7 @@ const CreateCoursePage = () => {
     }
 
     const courseData = {
-      instructor_id: user.per_id,
+      instructor_id: user?.per_id,
       module_id: moduleRef.current.value,
       course_title: titleRef.current.value,
       course_description: descriptionRef.current.value,
@@ -43,7 +43,7 @@ const CreateCoursePage = () => {
     if (!user || !user.per_id) {
       router.push("/");
     }
-    const administrator_id = user.per_id;
+    const administrator_id = user?.per_id;
 
     let response = await fetch(
       `/api/module?administrator_id=${administrator_id}`,

@@ -14,13 +14,13 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user.role !== "instructor") {
+    if (user?.role !== "instructor") {
       alert("Error: You are not an instructor");
       return;
     }
 
     let quizData = {
-      instructor_id: user.per_id,
+      instructor_id: user?.per_id,
       quiz_title: quizTitleRef.current.value,
       quiz_description: quizDescriptionRef.current.value,
       quiz_questions: questionList,
