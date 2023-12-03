@@ -11,7 +11,7 @@ const MessageForm = ({ updateMessageList }) => {
 
   const messageSubject = useRef("");
   const messageContent = useRef();
-  const instructorId = user.per_id;
+  const instructorId = user?.per_id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

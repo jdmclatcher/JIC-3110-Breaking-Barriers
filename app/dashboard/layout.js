@@ -4,13 +4,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ModuleContext } from "@/contexts/ModuleContext";
-import { UserContext } from "@/contexts/UserContext";
 import SideBar from "@/components/SideBar";
 
 export default function DashboardLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [module, setModule] = useState(null);
-  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,8 +34,8 @@ export default function DashboardLayout({ children }) {
       },
     });
 
-    const { session } = await res.json();
-    setUser(session?.user);
+    const resData = await res.json();
+    setSession(resData.session);
   };
 
   if (isLoading) {
@@ -45,15 +44,13 @@ export default function DashboardLayout({ children }) {
 
   return (
     <main>
-      <SessionProvider>
-        <UserContext.Provider value={user}>
-          <div className="flex h-screen">
-            <SideBar setModule={setModule} />
-            <ModuleContext.Provider value={module}>
-              <div className="w-full">{children}</div>
-            </ModuleContext.Provider>
-          </div>
-        </UserContext.Provider>
+      <SessionProvider session={session}>
+        <div className="flex h-screen">
+          <SideBar setModule={setModule} />
+          <ModuleContext.Provider value={module}>
+            <div className="w-full">{children}</div>
+          </ModuleContext.Provider>
+        </div>
       </SessionProvider>
     </main>
   );

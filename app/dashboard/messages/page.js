@@ -9,12 +9,12 @@ import { revalidatePath } from "next/cache";
 const MessagesPage = () => {
   const { data: session } = useSession();
   const user = session?.session?.user;
-  const role = user.role;
+  const role = user?.role;
 
   const [messageList, setMessageList] = useState([]);
 
   const getMessages = async () => {
-    const per_id = user.per_id;
+    const per_id = user?.per_id;
     if (role === "admin") {
       let response = await fetch(`/api/message/all`, {
         method: "GET",

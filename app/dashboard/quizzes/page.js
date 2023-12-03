@@ -10,7 +10,7 @@ const QuizzesPage = () => {
   const user = session?.session?.user;
 
   const getQuizzes = async () => {
-    const trainee_id = user.per_id;
+    const trainee_id = user?.per_id;
 
     let response = await fetch(`/api/quiz?trainee_id=${trainee_id}`, {
       method: "GET",

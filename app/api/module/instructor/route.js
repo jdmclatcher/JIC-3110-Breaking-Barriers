@@ -4,12 +4,12 @@ import { NextResponse } from "next/server";
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const trainee_id = searchParams.get("trainee_id");
+    const instructor_id = searchParams.get("instructor_id");
 
     const { data, error } = await supabase
-      .from("trainee_modules")
+      .from("modules")
       .select("module_id, title")
-      .eq("trainee_id", trainee_id);
+      .eq("instructor_id", instructor_id);
 
     if (error) {
       console.log("Error getting modules: ", error.message);

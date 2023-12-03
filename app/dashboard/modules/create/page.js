@@ -14,13 +14,13 @@ const CreateModulePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user.role !== "admin") {
+    if (user?.role !== "admin") {
       alert("Error: Only admins can create modules");
       return;
     }
 
     const moduleData = {
-      administrator_id: user.per_id,
+      administrator_id: user?.per_id,
       instructor_id: instructorRef.current.value,
       module_title: titleRef.current.value,
       module_details: detailsRef.current.value,
