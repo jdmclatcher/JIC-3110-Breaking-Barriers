@@ -21,7 +21,7 @@ export default function Home() {
     });
 
     if (result?.error) {
-      alert(result);
+      alert("Check your credentials");
     }
     console.log(result);
 

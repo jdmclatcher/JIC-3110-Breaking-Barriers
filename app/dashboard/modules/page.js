@@ -55,14 +55,25 @@ const ModulesPage = () => {
 
   return (
     <div className="p-5">
-      <Link class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded" href="/dashboard">Back to Dashboard</Link>
-      <h1 className="block uppercase tracking-wide text-gray-700 text-4xl text-center mt-10 font-bold mb-2">Modules</h1>
+      <Link
+        className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded"
+        href="/dashboard"
+      >
+        Back to Dashboard
+      </Link>
+      <h1 className="block uppercase tracking-wide text-gray-700 text-4xl text-center mt-10 font-bold mb-2">
+        Modules
+      </h1>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex">
         {moduleList.map((module, idx) => {
           return (
             <div className="module-item" key={`module-${idx}`}>
-              <h2 className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2">{module.title}</h2>
-              <p className="block uppercase tracking-wide text-gray-700 text-m mb-2">{module.details}</p>
+              <h2 className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2">
+                {module.title}
+              </h2>
+              <p className="block uppercase tracking-wide text-gray-700 text-m mb-2">
+                {module.details}
+              </p>
               <button
                 className="mt-10 shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white py-2 px-4 rounded"
                 onClick={() => {
@@ -75,8 +86,11 @@ const ModulesPage = () => {
           );
         })}
       </div>
-      <div class="mt-10">
-      <Link className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded" href="/dashboard/modules/create">
+      <div className="mt-10">
+        <Link
+          className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded"
+          href="/dashboard/modules/create"
+        >
           Create New Module
         </Link>
       </div>

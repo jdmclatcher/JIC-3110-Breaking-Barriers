@@ -40,8 +40,15 @@ const QuizzesPage = () => {
 
   return (
     <div className="mt-2">
-      <Link class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard">Back to Dashboard</Link>
-      <h1 className="quizzes-header block uppercase tracking-wide ml-5 mt-5 text-gray-700 text-xl p-2 font-bold mb-2">Quizzes</h1>
+      <Link
+        className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
+        href="/dashboard"
+      >
+        Back to Dashboard
+      </Link>
+      <h1 className="quizzes-header block uppercase tracking-wide ml-5 mt-5 text-gray-700 text-xl p-2 font-bold mb-2">
+        Quizzes
+      </h1>
       <div className="quizzes-list">
         {quizList &&
           quizList.map((quiz, idx) => {
@@ -49,15 +56,22 @@ const QuizzesPage = () => {
               <div className="quiz-item" key={`quiz-${idx}`}>
                 <Link
                   href={`/dashboard/quizzes/${quiz.quiz_id}`}
-                  class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
+                  className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
                 >
                   {quiz.title}
                 </Link>
-                <p class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded">{quiz.description}</p>
+                <p className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded">
+                  {quiz.description}
+                </p>
               </div>
             );
           })}
-        <Link class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard/quizzes/create">Create Quiz</Link>
+        <Link
+          className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
+          href="/dashboard/quizzes/create"
+        >
+          Create Quiz
+        </Link>
       </div>
     </div>
   );
