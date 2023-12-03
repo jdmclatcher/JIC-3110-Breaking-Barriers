@@ -2,7 +2,6 @@
 import { useContext, useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { ModuleContext } from "@/contexts/ModuleContext";
 import "./Courses.css";
 
@@ -11,7 +10,6 @@ const InstructorCoursePage = () => {
   const user = session?.session?.user;
   const [courseList, setCourseList] = useState([]);
   const moduleId = useContext(ModuleContext);
-  console.log("asdf", moduleId);
 
   const getCourses = async () => {
     let response = await fetch(`/api/course?module_id=${moduleId}`, {
@@ -22,7 +20,6 @@ const InstructorCoursePage = () => {
     });
     let responseData = await response.json();
 
-    console.log(responseData);
     setCourseList(responseData.courseList);
   };
 

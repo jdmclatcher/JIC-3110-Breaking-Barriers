@@ -1,35 +1,45 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { ModuleContext } from "@/contexts/ModuleContext";
 
 const QuizzesPage = () => {
   const [quizList, setQuizList] = useState([]);
+  const moduleId = useContext(ModuleContext);
 
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  // const { data: session } = useSession();
+  // const user = session?.session?.user;
 
   const getQuizzes = async () => {
-    const trainee_id = user?.per_id;
-
-    let response = await fetch(`/api/quiz?trainee_id=${trainee_id}`, {
+    let response = await fetch(`/api/quiz?module_id=${moduleId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
     let responseData = await response.json();
-    console.log(responseData);
     setQuizList(responseData.quizList);
   };
 
   useEffect(() => {
-    getQuizzes();
-  }, []);
+    if (moduleId) {
+      getQuizzes();
+    }
+  }, [moduleId]);
+
+  if (!moduleId) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="border-2 rounded-md p-3 shadow-md text-xl">
+          Select a Module to get started.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="quizzes-container">
-      <Link href="/dashboard">Back to Dashboard</Link>
       <h1 className="quizzes-header">Quizzes</h1>
       <div className="quizzes-list">
         {quizList &&

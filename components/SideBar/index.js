@@ -72,7 +72,6 @@ const SideBar = ({ setModule }) => {
       return;
     }
     let responseData = await response.json();
-    console.log(responseData);
     if (!responseData || !responseData.moduleList) {
       console.error("Invalid or empty response data");
       return;

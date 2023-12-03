@@ -4,12 +4,12 @@ import { supabase } from "@/lib/initSupabase";
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const trainee_id = searchParams.get("trainee_id");
+    const module_id = searchParams.get("module_id");
 
     const { data, error } = await supabase
-      .from("view_quizzes_for_trainee")
+      .from("quizzes")
       .select("*")
-      .eq("trainee_per_id", trainee_id);
+      .eq("module_id", module_id);
 
     if (error) {
       console.log("Failed to fetch quizzes: ", error.message);
@@ -28,14 +28,22 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { instructor_id, quiz_title, quiz_description, quiz_questions } =
-      await request.json();
+    const {
+      instructor_id,
+      quiz_title,
+      quiz_description,
+      quiz_questions,
+      module_id,
+      course_id,
+    } = await request.json();
 
     const { data, error } = await supabase.rpc("f_create_quiz", {
       p_instructor_per_id: instructor_id,
       p_title: quiz_title,
       p_description: quiz_description,
       p_questions: quiz_questions,
+      p_module_id: module_id,
+      p_course_id: course_id,
     });
 
     if (error) {
