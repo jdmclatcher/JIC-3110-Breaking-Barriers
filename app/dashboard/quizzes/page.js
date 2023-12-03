@@ -8,12 +8,10 @@ const QuizzesPage = () => {
   const [quizList, setQuizList] = useState([]);
   const moduleId = useContext(ModuleContext);
 
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  // const { data: session } = useSession();
+  // const user = session?.session?.user;
 
   const getQuizzes = async () => {
-    const trainee_id = user?.per_id;
-
     let response = await fetch(`/api/quiz?module_id=${moduleId}`, {
       method: "GET",
       headers: {
