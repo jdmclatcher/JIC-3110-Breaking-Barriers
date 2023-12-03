@@ -17,8 +17,7 @@ export default function Home() {
     const result = await signIn("credentials", {
       email: emailRef.current.value,
       password: passwordRef.current.value,
-      callbackUrl: callbackUrl,
-      redirect: true,
+      redirect: false,
     });
 
     if (result?.error) {
