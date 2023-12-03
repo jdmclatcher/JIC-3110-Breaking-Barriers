@@ -28,9 +28,9 @@ const QuizzesPage = () => {
   }, []);
 
   return (
-    <div className="quizzes-container">
-      <Link href="/dashboard">Back to Dashboard</Link>
-      <h1 className="quizzes-header">Quizzes</h1>
+    <div className="mt-2">
+      <Link class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard">Back to Dashboard</Link>
+      <h1 className="quizzes-header block uppercase tracking-wide ml-5 mt-5 text-gray-700 text-xl p-2 font-bold mb-2">Quizzes</h1>
       <div className="quizzes-list">
         {quizList &&
           quizList.map((quiz, idx) => {
@@ -38,15 +38,15 @@ const QuizzesPage = () => {
               <div className="quiz-item" key={`quiz-${idx}`}>
                 <Link
                   href={`/dashboard/quizzes/${quiz.quiz_id}`}
-                  className="quiz-title"
+                  class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
                 >
                   {quiz.title}
                 </Link>
-                <p className="quiz-description">{quiz.description}</p>
+                <p class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded">{quiz.description}</p>
               </div>
             );
           })}
-        <Link href="/dashboard/quizzes/create">Create Quiz</Link>
+        <Link class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard/quizzes/create">Create Quiz</Link>
       </div>
     </div>
   );
