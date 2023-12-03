@@ -34,8 +34,6 @@ export async function POST(request) {
     const { administrator_id, module_title, module_details, instructor_id } =
       await request.json();
 
-    console.log(administrator_id, module_title, module_details, instructor_id);
-
     const { data, error } = await supabase.rpc(
       "f_create_module_and_assign_instructor",
       {
