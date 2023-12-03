@@ -98,7 +98,6 @@ const MessagesPage = () => {
     });
     let responseData = await response.json();
     alert(responseData.message);
-    console.log(responseData);
     if (responseData.status === 200) {
       setMessageList(messageList.filter((item) => item.message_id !== msg_id));
     }

@@ -10,12 +10,14 @@
 --  JSON array or object - questions (p_questions)
 -- Create a stored procedure to create a quiz
 -- Create a stored procedure to create a quiz
-DROP PROCEDURE IF EXISTS create_quiz(p_instructor_per_id INT, p_title VARCHAR(255), p_description TEXT, p_questions JSONB);
+DROP PROCEDURE IF EXISTS create_quiz(p_instructor_per_id INT, p_title VARCHAR(255), p_description TEXT, p_questions JSONB, p_module_id INT, p_course_id INT);
 CREATE OR REPLACE PROCEDURE create_quiz(
     p_instructor_per_id VARCHAR(100),
     p_title VARCHAR(255),
     p_description TEXT,
-    p_questions JSONB
+    p_questions JSONB,
+    p_module_id INT,
+    p_course_id INT
 ) LANGUAGE plpgsql AS $$
 DECLARE
     d_quiz_id INT;
@@ -33,11 +35,13 @@ BEGIN
     END IF;
 
     -- Insert the quiz information into the 'quizzes' table and assign it to the instructor
-    INSERT INTO quizzes (instructor_id, title, description)
+    INSERT INTO quizzes (instructor_id, title, description, module_id, course_id)
     VALUES (
             (SELECT per_id FROM instructor WHERE per_id = p_instructor_per_id),
             p_title,
-            p_description
+            p_description,
+            p_module_id,
+            p_course_id
     ) RETURNING quiz_id INTO d_quiz_id;
 
     -- Loop over JSON elements for questions
