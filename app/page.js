@@ -23,7 +23,6 @@ export default function Home() {
     if (result?.error) {
       alert("Check your credentials");
     }
-    console.log(result);
 
     if (result?.ok) {
       router.push(callbackUrl);

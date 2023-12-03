@@ -8,6 +8,7 @@ const DashboardPage = () => {
   const { data: session } = useSession();
   const user = session?.session?.user;
   const [moduleData, setModuleData] = useState();
+  console.log("asdf", user);
 
   const returnModule = () => {
     if (!moduleId) {
