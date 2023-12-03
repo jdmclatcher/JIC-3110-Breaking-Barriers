@@ -56,9 +56,9 @@ const CreateModulePage = () => {
   return (
     <div className="modules-container bg-orange-200 h-full">
       <div className="buttons flex p-5">
-      <Link class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard">Back to Dashboard</Link>
+      <Link class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard">Back to Dashboard</Link>
 
-      <Link class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard/modules">Back to Modules</Link>
+      <Link class="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard/modules">Back to Modules</Link>
       </div>
 
 
@@ -88,7 +88,7 @@ const CreateModulePage = () => {
               </select>
             </label>
             <div>
-              <button type="submit" class="mt-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded">Create Module</button>
+              <button type="submit" class="mt-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded">Create Module</button>
             </div>
           </form>
         </div>
