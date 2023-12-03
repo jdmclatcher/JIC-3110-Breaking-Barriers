@@ -40,11 +40,11 @@ export default function DashboardLayout({ children }) {
 
   if (isLoading) {
     return (
-      <div class="flex flex-col text-center bg-primary h-screen ">
+      <div className="flex flex-col text-center bg-primary h-screen ">
         <div className="m-auto" role="status">
           <svg
             aria-hidden="true"
-            class="inline w-32 h-32 text-gray-200 animate-spin dark:text-gray-600 fill-secondary"
+            className="inline w-32 h-32 text-gray-200 animate-spin dark:text-gray-600 fill-secondary"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +59,7 @@ export default function DashboardLayout({ children }) {
             />
           </svg>
           <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
           <h1 className="block text-white text-4xl font-bold mb-2">
             {" "}
             LOADING...{" "}

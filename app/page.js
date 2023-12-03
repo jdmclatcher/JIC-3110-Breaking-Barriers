@@ -12,23 +12,18 @@ export default function Home() {
   const handleForm = async (event) => {
     event.preventDefault();
 
-    const loginData = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
-
     const callbackUrl = "/dashboard";
 
     const result = await signIn("credentials", {
       email: emailRef.current.value,
       password: passwordRef.current.value,
-      callbackUrl: callbackUrl,
       redirect: false,
     });
 
     if (result?.error) {
-      alert(result.error);
+      alert(result);
     }
+    console.log(result);
 
     if (result?.ok) {
       router.push(callbackUrl);
