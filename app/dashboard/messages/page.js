@@ -15,28 +15,53 @@ const MessagesPage = () => {
 
   const getMessages = async () => {
     const per_id = user.per_id;
-    let response = await fetch(`/api/message?per_id=${per_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response) {
-      console.error("No response from fetch");
-      return;
+    if (role === "admin") {
+      let response = await fetch(`/api/message/all`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response) {
+        console.error("No response from fetch");
+        return;
+      }
+      let responseData = await response.json();
+      if (!responseData || !responseData.messageList) {
+        console.error("Invalid or empty response data");
+        return;
+      }
+      const messages = responseData.messageList;
+      for (let id in messages) {
+        const date = new Date(messages[id].created_at);
+        messages[id].created_at = date.toLocaleString();
+      }
+      console.log(messages);
+      setMessageList(messages);
+    } else if (role === "instructor") {
+      let response = await fetch(`/api/message?per_id=${per_id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response) {
+        console.error("No response from fetch");
+        return;
+      }
+      let responseData = await response.json();
+      if (!responseData || !responseData.messageList) {
+        console.error("Invalid or empty response data");
+        return;
+      }
+      const messages = responseData.messageList;
+      for (let id in messages) {
+        const date = new Date(messages[id].created_at);
+        messages[id].created_at = date.toLocaleString();
+      }
+      console.log(messages);
+      setMessageList(messages);
     }
-    let responseData = await response.json();
-    if (!responseData || !responseData.messageList) {
-      console.error("Invalid or empty response data");
-      return;
-    }
-    const messages = responseData.messageList;
-    for (let id in messages) {
-      const date = new Date(messages[id].created_at);
-      messages[id].created_at = date.toLocaleString();
-    }
-    console.log(messages);
-    setMessageList(messages);
   };
 
   const handleResolve = async (msg_id) => {
