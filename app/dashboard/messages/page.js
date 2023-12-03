@@ -113,39 +113,59 @@ const MessagesPage = () => {
 
   return (
     <div className="messages-container">
-      <Link href="/dashboard">Back to Dashboard</Link>
-      <h1 className="messges-header">Messages</h1>
-      <div className="messages-list">
-        {messageList.map((message, idx) => {
-          return (
-            <div className="message-item" key={`message-${idx}`}>
-              <h2>{message.instructor_id}</h2>
-              <p className="message-text">{message.text_content}</p>
-              <h2 className="message-date">{message.created_at}</h2>
-              <button
-                className="resolve-message-button"
-                onClick={() => {
-                  handleResolve(message.message_id);
-                }}
-              >
-                Resolve
-              </button>
-              <p>{message.resolved ? "resolved" : "not resolved"}</p>
-              <button
-                className="delete-message-button"
-                onClick={() => {
-                  deleteMessage(message.message_id);
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          );
-        })}
+      <div className="p-5">
+        <Link className="bg-gray-200 p-2 rounded-md" href="/dashboard">
+          Back to Dashboard
+        </Link>
+
+        <h1 className="messges-header pt-4 pl-4 text-2xl">Messages</h1>
       </div>
-      {role === "instructor" && (
-        <MessageForm updateMessageList={updateMessages} />
-      )}
+      <div className="messages-body">
+        <div class="messages-list grid grid-flow-row auto-rows-max gap-4">
+          {messageList.map((message, idx) => {
+            return (
+              <div
+                className="message-item grid grid-rows-3 grid-flow-col bg-gray-100 ml-6 mr-6 p-4 rounded-xl border-2 border-gray-200"
+                key={`message-${idx}`}
+              >
+                <div className="message-header grid grid-cols-2 border-b-2">
+                  <h2 className="message-instructor">
+                    {"Instructor: " + message.instructor_id}
+                  </h2>
+                  <h2 className="grid justify-items-end">
+                    {message.created_at}
+                  </h2>
+                </div>
+                <div className="message-body bg-gray-50 rounded-md mt-2">
+                  <p className="message-text p-2">{message.text_content}</p>
+                </div>
+                <div className="flex justify-end pt-4">
+                  <button
+                    className="resolve-message-button pr-3 mx-2 rounded-md bg-secondary px-3"
+                    onClick={() => {
+                      handleResolve(message.message_id);
+                    }}
+                  >
+                    Resolve
+                  </button>
+
+                  <button
+                    className="delete-message-button rounded-md bg-[#ef4444] px-3"
+                    onClick={() => {
+                      deleteMessage(message.message_id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {role === "instructor" && (
+          <MessageForm updateMessageList={updateMessages} />
+        )}
+      </div>
     </div>
   );
 };

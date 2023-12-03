@@ -58,6 +58,7 @@ export default function DashboardLayout({ children }) {
               fill="currentFill"
             />
           </svg>
+          <span class="sr-only">Loading...</span>
           <span className="sr-only">Loading...</span>
           <h1 className="block text-white text-4xl font-bold mb-2">
             {" "}
@@ -74,7 +75,7 @@ export default function DashboardLayout({ children }) {
         <div className="flex h-screen">
           <SideBar setModule={setModule} />
           <ModuleContext.Provider value={module}>
-            <div className="w-full">{children}</div>
+            <div className="w-full max-h-full overflow-auto">{children}</div>
           </ModuleContext.Provider>
         </div>
       </SessionProvider>
