@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   AiOutlineArrowLeft,
@@ -17,12 +17,13 @@ import {
   AiOutlineLogout,
   AiOutlineMessage,
 } from "react-icons/ai";
+import { UserContext } from "@/contexts/UserContext";
 
 const SideBar = ({ setModule }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [moduleList, setModuleList] = useState([]);
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
+  console.log("user", user);
 
   // Route links
   const homeLink = "/dashboard";
