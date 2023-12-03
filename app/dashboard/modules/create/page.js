@@ -54,39 +54,44 @@ const CreateModulePage = () => {
   }, []);
 
   return (
-    <div className="modules-container">
-      <Link href="/dashboard">Back to Dashboard</Link>
-      <div>
-        <Link href="/dashboard/modules">Back to Modules</Link>
+    <div className="modules-container bg-orange-200 h-full">
+      <div className="buttons flex p-5">
+      <Link class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard">Back to Dashboard</Link>
+
+      <Link class="m-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded" href="/dashboard/modules">Back to Modules</Link>
       </div>
-      <h1 className="modules-header">Create Module</h1>
-      <div className="modules-list">
-        <form onSubmit={handleSubmit} className="form">
-          <label htmlFor="email">
-            <p>Module Title</p>
-            <input ref={titleRef} required type="text" />
-          </label>
-          <label htmlFor="password">
-            <p>Module Details</p>
-            <input ref={detailsRef} required type="text" />
-          </label>
-          <label htmlFor="password">
-            <p>Assigned Instructor</p>
-            <select ref={instructorRef} required type="text">
-              <option value="">Select Below</option>
-              {instructorList.map((instructor, idx) => {
-                return (
-                  <option value={instructor.per_id} key={`instructor-${idx}`}>
-                    {instructor.first_name} {instructor.last_name}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
-          <div>
-            <button type="submit">Create Module</button>
-          </div>
-        </form>
+
+
+      <div className="p-2">
+        <h1 className="block uppercase tracking-wide text-gray-700 text-4xl text-center font-bold mb-2">Create Module</h1>
+        <div className="modules-list">
+          <form onSubmit={handleSubmit} className="form">
+            <label htmlFor="email" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              <p>Module Title</p>
+              <input ref={titleRef} required type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-orange-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"/>
+            </label>
+            <label htmlFor="password" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              <p>Module Details</p>
+              <input ref={detailsRef} required type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-orange-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" />
+            </label>
+            <label htmlFor="password">
+              <p className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Assigned Instructor</p>
+              <select ref={instructorRef} required type="text" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option value="">Select Below</option>
+                {instructorList.map((instructor, idx) => {
+                  return (
+                    <option value={instructor.per_id} key={`instructor-${idx}`}>
+                      {instructor.first_name} {instructor.last_name}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+            <div>
+              <button type="submit" class="mt-5 flex-shrink-0 bg-orange-400 hover:bg-orange-700 border-orange-400 hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded">Create Module</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
