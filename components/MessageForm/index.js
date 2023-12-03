@@ -35,22 +35,38 @@ const MessageForm = ({ updateMessageList }) => {
   };
 
   return (
-    <form className="message-form" onSubmit={(e) => handleSubmit(e)}>
-      <label htmlFor="message-subject">
-        <p>Subject:</p>
-        <input ref={messageSubject} required type="text" />
-      </label>
-      <label htmlFor="message-content">
-        <p>Message:</p>
-        <textarea
-          className="message-content-input"
-          ref={messageContent}
-          required
-          type="text"
-        />
-      </label>
-      <div>
-        <button className="submit-message-button" type="submit">
+    <form
+      className="flex flex-col bg-orange-200 m-6 p-6 rounded-xl"
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      <h1 className="m1 pb-3 border-b-2 border-amber-100">Create Message:</h1>
+      <div className="m-1">
+        <label htmlFor="message-subject">
+          <p>Subject:</p>
+          <input
+            className="w-1/3 rounded-md px-2"
+            ref={messageSubject}
+            required
+            type="text"
+          />
+        </label>
+      </div>
+      <div className="m-1">
+        <label htmlFor="message-content">
+          <p>Message:</p>
+          <textarea
+            className="message-content-input w-full rounded-md px-1"
+            ref={messageContent}
+            required
+            type="text"
+          />
+        </label>
+      </div>
+      <div className="">
+        <button
+          className="submit-message-button rounded-md bg-secondary px-3 py-1"
+          type="submit"
+        >
           Submit
         </button>
       </div>
