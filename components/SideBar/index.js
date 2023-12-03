@@ -1,7 +1,9 @@
 "use client";
+
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "@/contexts/UserContext";
 import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
@@ -11,21 +13,25 @@ import {
   AiOutlineFileUnknown,
   AiOutlineFolderOpen,
   AiOutlineHighlight,
+  AiOutlineHome,
   AiOutlineLogout,
   AiOutlineMessage,
 } from "react-icons/ai";
 
-const SideBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const modulesLink = "/dashboard/modules";
-  const coursesLink = "/dashboard/courses";
-  // CHANGE WHEN IMPLEMENTED
-  const pagesLink = "/dashboard";
-  const quizzesLink = "/dashboard/quizzes";
-  const gradesLink = "/dashboard/quiz-stats";
-  const filesLink = "/dashboard/files";
-  // CHANGE WHEN IMPLEMENTED
-  const messagesLink = "/dashboard";
+const SideBar = ({ setModule }) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [moduleList, setModuleList] = useState([]);
+  const user = useContext(UserContext);
+
+  // Route links
+  const homeLink = "/dashboard";
+  const modulesLink = homeLink + "/modules";
+  const coursesLink = homeLink + "/courses";
+  const pagesLink = homeLink + "/pages";
+  const quizzesLink = homeLink + "/quizzes";
+  const gradesLink = homeLink + "/quiz-stats";
+  const filesLink = homeLink + "/files";
+  const messagesLink = homeLink + "/messages";
 
   const handleSideBar = () => {
     setIsOpen(!isOpen);
@@ -34,6 +40,38 @@ const SideBar = () => {
   const handleLogout = () => {
     signOut();
   };
+
+  const handleModuleChange = (e) => {
+    e.preventDefault();
+    setModule(e.target.value);
+  };
+
+  const getModules = async () => {
+    const trainee_id = user?.per_id;
+    let response = await fetch(`/api/module/trainee?trainee_id=${trainee_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response) {
+      console.error("No response from fetch");
+      return;
+    }
+    let responseData = await response.json();
+    if (!responseData || !responseData.moduleList) {
+      console.error("Invalid or empty response data");
+      return;
+    }
+    console.log(responseData);
+    setModuleList(responseData.moduleList);
+  };
+
+  useEffect(() => {
+    if (user?.role === "trainee" || user?.role === "instructor") {
+      getModules();
+    }
+  }, [user]);
 
   return (
     <>
@@ -53,25 +91,44 @@ const SideBar = () => {
 
           <div className="my-2 bg-gray-600 h-[1px]" />
 
+          {(user?.role === "trainee" || user?.role == "instructor") && (
+            <select
+              className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer bg-secondary hover:bg-primary w-full text-white"
+              onChange={handleModuleChange}
+            >
+              <AiOutlineFileMarkdown className="text-white" size="20px" />
+              <option
+                className="text-[15px] ml-4 text-gray-200 font-bold float-right hover:bg-current"
+                value=""
+              >
+                Modules
+              </option>
+              {moduleList.map((m) => {
+                return <option value={m.module_id}>{m.module_title}</option>;
+              })}
+            </select>
+          )}
           <Link
-            href={modulesLink}
+            href={homeLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
           >
-            <AiOutlineFileMarkdown className="text-white" size="20px" />
-            <span className="text-[15px] ml-4 text-gray-200 font-bold float-right">
-              Modules
+            <AiOutlineHome className="text-white" size="20px" />
+            <span className="text-[15px] ml-4 text-gray-200 font-bold">
+              Home
             </span>
-            <svg
-              className="-mr-1 h-5 w-5 text-white ml-auto"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                clip-rule="evenodd"
-              />
-            </svg>
           </Link>
+          {user?.role === "admin" && (
+            <Link
+              href={modulesLink}
+              className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
+            >
+              <AiOutlineFileMarkdown className="text-white" size="20px" />
+              <span className="text-[15px] ml-4 text-gray-200 font-bold float-right">
+                Modules
+              </span>
+            </Link>
+          )}
+
           <Link
             href={coursesLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
@@ -151,13 +208,21 @@ const SideBar = () => {
           </div>
 
           <div className="my-2 bg-gray-600 h-[1px]" />
-
           <Link
-            href={modulesLink}
+            href={homeLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
           >
-            <AiOutlineFileMarkdown className="text-white" size="20px" />
+            <AiOutlineHome className="text-white" size="20px" />
           </Link>
+
+          {user?.role === "admin" && (
+            <Link
+              href={modulesLink}
+              className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
+            >
+              <AiOutlineFileMarkdown className="text-white" size="20px" />
+            </Link>
+          )}
           <Link
             href={coursesLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"

@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { ModuleContext } from "@/contexts/ModuleContext";
 import "./Courses.css";
 
 const CoursesPage = () => {
@@ -9,6 +10,8 @@ const CoursesPage = () => {
   const user = session?.session?.user;
   const [courseList, setCourseList] = useState([]);
   const instructor_id = user.per_id;
+  const moduleId = useContext(ModuleContext);
+  console.log("asdf", moduleId);
 
   const getCourses = async () => {
     let response = await fetch(`/api/course?instructor_id=${instructor_id}`, {

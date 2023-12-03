@@ -57,6 +57,34 @@ BEGIN
 END;
 $$;
 
+-- Procedure to assign trainees to a module:
+-- Drop the procedure if it exists
+DROP PROCEDURE IF EXISTS assign_trainee_to_module(
+    VARCHAR, INT
+);
+
+-- Create or replace the procedure
+CREATE OR REPLACE PROCEDURE assign_trainee_to_module(
+    i_trainee_id VARCHAR, i_module_id INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Ensure module exists
+    IF NOT EXISTS (SELECT 1 FROM modules WHERE module_id = i_module_id) THEN
+        -- Insert a new page
+        RAISE EXCEPTION 'Module does not exists';
+    END IF;
+
+    -- Ensure trainee exists
+    IF NOT EXISTS (SELECT 1 FROM trainees WHERE per_id = i_trainee_id) THEN
+        -- Insert a new page
+        RAISE EXCEPTION 'Trainee does not exists';
+    END IF;
+
+    INSERT INTO trainee_assigned_to_module (module_id, trainee_id)
+    VALUES (i_module_id, i_trainee_id);
+END;
+$$;
+
 -- Drop the procedure if it exists
 DROP PROCEDURE IF EXISTS delete_module(INT);
 

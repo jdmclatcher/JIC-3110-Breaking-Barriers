@@ -3,36 +3,59 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
+import { ModuleContext } from "@/contexts/ModuleContext";
+import { UserContext } from "@/contexts/UserContext";
 import SideBar from "@/components/SideBar";
 
 export default function DashboardLayout({ children }) {
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [module, setModule] = useState(null);
+  const [user, setUser] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    (async () => {
-      const validSession = await checkSession();
-      if (!validSession) {
-        router.push("/");
-      }
-
-      setIsSuccess(true);
-    })();
+    validateSession();
+    getUser();
   }, []);
 
-  if (!isSuccess) {
+  const validateSession = async () => {
+    const validSession = await checkSession();
+    if (!validSession) {
+      router.push("/");
+    }
+
+    setIsLoading(false);
+  };
+
+  const getUser = async () => {
+    const res = await fetch("/api/auth/session", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const { session } = await res.json();
+    setUser(session?.user);
+  };
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <SessionProvider>
-      <main>
-        <div className="flex h-screen">
-          <SideBar />
-          <div>{children}</div>
-        </div>
-      </main>
-    </SessionProvider>
+    <main>
+      <SessionProvider>
+        <UserContext.Provider value={user}>
+          <div className="flex h-screen">
+            <SideBar setModule={setModule} />
+            <ModuleContext.Provider value={module}>
+              <div className="w-full">{children}</div>
+            </ModuleContext.Provider>
+          </div>
+        </UserContext.Provider>
+      </SessionProvider>
+    </main>
   );
 }
 
