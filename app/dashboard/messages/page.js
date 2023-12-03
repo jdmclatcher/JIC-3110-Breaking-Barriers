@@ -1,13 +1,15 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import "./Messages.css";
+import MessageForm from "@/components/MessageForm";
+import { revalidatePath } from 'next/cache';
 
 const MessagesPage = () => {
     const { data: session } = useSession();
     const user = session?.session?.user;
-    const role = user.role;
+    const role = user.role
 
     const [messageList, setMessageList] = useState([
         {textContent: 'hello. this is a test.', createdAt: '12-2-2023 6:24 PM', instructorId:'instructor', resolved:false},
@@ -15,12 +17,13 @@ const MessagesPage = () => {
         {textContent: 'hello. i will be resolved.', createdAt: '12-2-2023 5:12 PM', instructorId:'instructor1', resolved:true}
     ]);
 
-    const handleResolve = () => {
-        console.log(user.per_id);
+    const handleResolve = async () => {
+
     }
+    
 
     useEffect(() => {
-        console.log(role)
+        
     }, []);   
 
 
@@ -46,9 +49,7 @@ const MessagesPage = () => {
                 })}
             </div>
             {role === 'instructor' && 
-                <div className='create-message-container'>
-                    TODO: Message form goes here                   
-                </div>      
+                <MessageForm/>  
             }
         </div>
     )
