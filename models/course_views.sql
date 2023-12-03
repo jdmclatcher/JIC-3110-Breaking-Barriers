@@ -36,13 +36,30 @@ DROP VIEW IF EXISTS trainee_modules;
 CREATE OR REPLACE VIEW trainee_modules AS
 SELECT
     m.module_id AS module_id,
-    m.title AS module_title,
-    m.details as module_details,
-    m.administrator_id as administrator_id,
-    m.instructor_id as instructor_id,
-    tm.trainee_id as trainee_id
+    m.title AS title,
+    m.details AS details,
+    m.administrator_id AS administrator_id,
+    m.instructor_id AS instructor_id,
+    p.first_name AS instructor_first_name,
+    p.last_name AS instructor_last_name,
+    tm.trainee_id AS trainee_id
 FROM modules m
-INNER JOIN trainee_assigned_to_module tm on m.module_id = tm.module_id;
+INNER JOIN trainee_assigned_to_module tm on m.module_id = tm.module_id
+LEFT JOIN person p on m.instructor_id = p.per_id;
+
+-- View for details on module
+DROP VIEW IF EXISTS module_details;
+CREATE OR REPLACE VIEW module_details AS
+SELECT
+    m.module_id AS module_id,
+    m.title AS title,
+    m.details AS details,
+    m.administrator_id AS administrator_id,
+    m.instructor_id AS instructor_id,
+    p.first_name AS instructor_first_name,
+    p.last_name AS instructor_last_name
+FROM modules m
+LEFT JOIN person p on m.instructor_id = p.per_id;
 
 -- View for instructors and trainees to view pages for a specific course
 DROP VIEW IF EXISTS course_pages;

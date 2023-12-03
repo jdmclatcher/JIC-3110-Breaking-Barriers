@@ -1,15 +1,16 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { ModuleContext } from "@/contexts/ModuleContext";
 
 const CreateCoursePage = () => {
   const [moduleList, setModuleList] = useState([]);
   const titleRef = useRef();
   const descriptionRef = useRef();
-  const moduleRef = useRef();
   const router = useRouter();
+  const moduleId = useContext(ModuleContext);
 
   const { data: session } = useSession();
   const user = session?.session?.user;
@@ -23,7 +24,7 @@ const CreateCoursePage = () => {
 
     const courseData = {
       instructor_id: user?.per_id,
-      module_id: moduleRef.current.value,
+      module_id: moduleId,
       course_title: titleRef.current.value,
       course_description: descriptionRef.current.value,
     };
@@ -72,7 +73,6 @@ const CreateCoursePage = () => {
 
   return (
     <div className="courses-container">
-      <Link href="/dashboard">Back to Dashboard</Link>
       <div>
         <Link href="/dashboard/courses">Back to Courses</Link>
       </div>
@@ -86,19 +86,6 @@ const CreateCoursePage = () => {
           <label htmlFor="password">
             <p>Course Description</p>
             <input ref={descriptionRef} required type="text" />
-          </label>
-          <label htmlFor="module">
-            <p>Module</p>
-            <select ref={moduleRef} required type="text">
-              <option value="">Select Below</option>
-              {moduleList.map((module, idx) => {
-                return (
-                  <option key={`module-${idx}`} value={module.module_id}>
-                    {module.title}
-                  </option>
-                );
-              })}
-            </select>
           </label>
           <div>
             <button type="submit">Create Course</button>

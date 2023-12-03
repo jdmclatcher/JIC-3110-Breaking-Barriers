@@ -10,7 +10,6 @@ export default function DashboardLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [module, setModule] = useState(null);
   const [session, setSession] = useState(null);
-  console.log(session);
   const router = useRouter();
 
   useEffect(() => {

@@ -47,9 +47,21 @@ const SideBar = ({ setModule }) => {
     setModule(e.target.value);
   };
 
-  const getModules = async () => {
-    const trainee_id = user?.per_id;
-    let response = await fetch(`/api/module/trainee?trainee_id=${trainee_id}`, {
+  const getModules = async (user) => {
+    if (!user?.role || user?.role === "admin") {
+      return;
+    }
+
+    let urlString;
+    if (user?.role === "trainee") {
+      urlString = `/api/module/trainee?trainee_id=${user?.per_id}`;
+    } else if (user?.role === "instructor") {
+      urlString = `/api/module/instructor?instructor_id=${user?.per_id}`;
+    } else {
+      return;
+    }
+
+    let response = await fetch(urlString, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -60,6 +72,7 @@ const SideBar = ({ setModule }) => {
       return;
     }
     let responseData = await response.json();
+    console.log(responseData);
     if (!responseData || !responseData.moduleList) {
       console.error("Invalid or empty response data");
       return;
@@ -68,9 +81,7 @@ const SideBar = ({ setModule }) => {
   };
 
   useEffect(() => {
-    if (user?.role === "trainee" || user?.role === "instructor") {
-      getModules();
-    }
+    getModules(user);
   }, [user]);
 
   return (
@@ -105,7 +116,7 @@ const SideBar = ({ setModule }) => {
               {moduleList.map((m) => {
                 return (
                   <option key={m.module_id} value={m.module_id}>
-                    {m.module_title}
+                    {m.title}
                   </option>
                 );
               })}
