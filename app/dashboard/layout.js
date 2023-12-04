@@ -37,9 +37,8 @@ export default function DashboardLayout({ children }) {
     });
 
     const resData = await res.json();
-    console.log("***", resData);
     setSession(resData.session);
-    setUserRole(resData.session.user);
+    setUserRole(resData?.session?.user);
   };
 
   if (isLoading) {
@@ -62,7 +61,7 @@ export default function DashboardLayout({ children }) {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
           <span className="sr-only">Loading...</span>
           <h1 className="block text-white text-4xl font-bold mb-2">
             {" "}

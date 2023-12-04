@@ -28,7 +28,10 @@ const TraineeOptionsForm = ({
   return (
     <>
       {questionType === "free_response" ? (
-        <textarea onChange={handleFreeResponseUpdate} />
+        <textarea
+          className="border-2 rounded-md p-2 w-full h-40"
+          onChange={handleFreeResponseUpdate}
+        />
       ) : (
         options.map((o, i) => {
           return (
@@ -40,7 +43,9 @@ const TraineeOptionsForm = ({
                 value={o.option_id}
                 onChange={handleSelectOption}
               />
-              <label for={o.option_id}>{o.option_text}</label>
+              <label className="pl-3" for={o.option_id}>
+                {o.option_text}
+              </label>
               <br />
             </>
           );

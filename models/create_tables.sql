@@ -63,6 +63,7 @@ CREATE TABLE questions (
     quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
     question_text TEXT NOT NULL,
     question_type VARCHAR(20) NOT NULL CHECK (question_type IN ('multiple_choice', 'free_response', 'select_all')),
+    question_weight INT NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );

@@ -16,8 +16,10 @@ SELECT
     q.quiz_id,
     q.question_text,
     q.question_type,
+    q.question_weight,
 	o.option_id,
-	o.option_text
+	o.option_text,
+    o.is_correct
 FROM
     questions q
 LEFT JOIN
@@ -94,6 +96,7 @@ SELECT
     q.question_id,
     q.question_text,
     q.question_type,
+    q.question_weight,
     qr2.response_text,
     qr2.selected_option_id
 FROM quiz_responses qr

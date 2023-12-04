@@ -1,16 +1,12 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { ModuleContext } from "@/contexts/ModuleContext";
-import { useSession } from "next-auth/react";
 import { UserContext } from "@/contexts/UserContext";
 
 const DashboardPage = () => {
   const moduleId = useContext(ModuleContext);
-  // const { data: session } = useSession();
-  // const user = session?.session?.user;
   const user = useContext(UserContext);
   const [moduleData, setModuleData] = useState();
-  // console.log("asdf", user);
 
   const returnModule = () => {
     if (!moduleId) {

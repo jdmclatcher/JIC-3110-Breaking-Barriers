@@ -1,13 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { UserContext } from "@/contexts/UserContext";
 import "./Modules.css";
 
 const ModulesPage = () => {
   const [moduleList, setmoduleList] = useState([]);
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
 
   const getModules = async () => {
     const administrator_id = user?.per_id;
@@ -55,12 +54,6 @@ const ModulesPage = () => {
 
   return (
     <div className="p-5">
-      <Link
-        className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded"
-        href="/dashboard"
-      >
-        Back to Dashboard
-      </Link>
       <h1 className="block uppercase tracking-wide text-gray-700 text-4xl text-center mt-10 font-bold mb-2">
         Modules
       </h1>
