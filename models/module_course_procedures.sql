@@ -75,7 +75,7 @@ BEGIN
     END IF;
 
     -- Ensure trainee exists
-    IF NOT EXISTS (SELECT 1 FROM trainees WHERE per_id = i_trainee_id) THEN
+    IF NOT EXISTS (SELECT 1 FROM trainee WHERE per_id = i_trainee_id) THEN
         -- Insert a new page
         RAISE EXCEPTION 'Trainee does not exists';
     END IF;

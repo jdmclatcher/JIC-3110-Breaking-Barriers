@@ -1,19 +1,15 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import TraineeQuizForm from "@/components/TraineeQuizForm";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { UserContext } from "@/contexts/UserContext";
-import Spinner from "@/components/Spinner";
+import CreateQuizForm from "@/components/CreateQuizForm";
 
-const TakeQuiz = ({ params }) => {
+const EditQuizPage = ({ params }) => {
   const quizId = params.quizId;
   const [quizTitle, setQuizTitle] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
+  const [quizCourse, setQuizCourse] = useState(null);
   const [questionList, setQuestionList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const user = useContext(UserContext);
-  const router = useRouter();
 
   const getQuizQuestions = async () => {
     let response = await fetch(`/api/quiz/question?quiz_id=${quizId}`, {
@@ -37,54 +33,35 @@ const TakeQuiz = ({ params }) => {
 
     setQuizTitle(responseData.title);
     setQuizDescription(responseData.description);
-  };
-
-  const checkSubmissions = async () => {
-    let response = await fetch(
-      `/api/submission/check?quiz_id=${quizId}&trainee_id=${user?.per_id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let responseData = await response.json();
-
-    if (response.status !== 200) {
-      alert(responseData.message);
-      router.push("/dashboard");
-      return;
-    }
-    setIsLoading(false);
+    setQuizCourse(responseData.course_id);
   };
 
   useEffect(() => {
-    checkSubmissions();
     getQuizQuestions();
     getQuizDetails();
   }, []);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
-    <div className="mt-5 ml-5 space-y-2">
+    <div className="mt-5 ml-5">
       <Link
         href="/dashboard/quizzes"
         className="bg-secondary text-white text-md rounded-md px-3 py-2 hover:bg-primary shadow-md"
       >
         Back to Quizzes
       </Link>
-      <h1 className="uppercase tracking-wide text-gray-700 text-3xl font-bold">
-        {quizTitle}
+      <h1 className="uppercase tracking-wide mt-5 text-gray-700 text-3xl p-2 font-bold mb-2">
+        Edit Quiz
       </h1>
-      <h2 className="text-gray-700 text-xl">{quizDescription}</h2>
-
-      <TraineeQuizForm questionList={questionList} quizId={quizId} />
+      <CreateQuizForm
+        prevQuizId={quizId}
+        prevQuizTitle={quizTitle}
+        prevQuizDescription={quizDescription}
+        prevQuizCourse={quizCourse}
+        prevQuestionList={questionList}
+        isEdit={true}
+      />
     </div>
   );
 };
 
-export default TakeQuiz;
+export default EditQuizPage;

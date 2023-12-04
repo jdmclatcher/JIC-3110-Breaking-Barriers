@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
   AiOutlineFileMarkdown,
-  AiOutlineFilePpt,
   AiOutlineFileText,
   AiOutlineFileUnknown,
   AiOutlineFolderOpen,
@@ -23,13 +21,11 @@ const SideBar = ({ setModule }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [moduleList, setModuleList] = useState([]);
   const user = useContext(UserContext);
-  console.log("user", user);
 
   // Route links
   const homeLink = "/dashboard";
   const modulesLink = homeLink + "/modules";
   const coursesLink = homeLink + "/courses";
-  const pagesLink = homeLink + "/pages";
   const quizzesLink = homeLink + "/quizzes";
   const gradesLink = homeLink + "/quiz-stats";
   const filesLink = homeLink + "/files";
@@ -153,15 +149,6 @@ const SideBar = ({ setModule }) => {
             </span>
           </Link>
           <Link
-            href={pagesLink}
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
-          >
-            <AiOutlineFilePpt className="text-white" size="20px" />
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">
-              Pages
-            </span>
-          </Link>
-          <Link
             href={quizzesLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
           >
@@ -188,15 +175,17 @@ const SideBar = ({ setModule }) => {
               Files
             </span>
           </Link>
-          <Link
-            href={messagesLink}
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
-          >
-            <AiOutlineMessage className="text-white" size="20px" />
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">
-              Messages
-            </span>
-          </Link>
+          {user?.role !== "trainee" && (
+            <Link
+              href={messagesLink}
+              className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
+            >
+              <AiOutlineMessage className="text-white" size="20px" />
+              <span className="text-[15px] ml-4 text-gray-200 font-bold">
+                Messages
+              </span>
+            </Link>
+          )}
 
           <div className="my-4 bg-gray-600 h-[1px]" />
 
@@ -244,12 +233,6 @@ const SideBar = ({ setModule }) => {
             <AiOutlineFileText className="text-white" size="20px" />
           </Link>
           <Link
-            href={pagesLink}
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
-          >
-            <AiOutlineFilePpt className="text-white" size="20px" />
-          </Link>
-          <Link
             href={quizzesLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
           >
@@ -267,12 +250,14 @@ const SideBar = ({ setModule }) => {
           >
             <AiOutlineFolderOpen className="text-white" size="20px" />
           </Link>
-          <Link
-            href={messagesLink}
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
-          >
-            <AiOutlineMessage className="text-white" size="20px" />
-          </Link>
+          {user?.role !== "trainee" && (
+            <Link
+              href={messagesLink}
+              className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
+            >
+              <AiOutlineMessage className="text-white" size="20px" />
+            </Link>
+          )}
 
           <div className="my-4 bg-gray-600 h-[1px]" />
 

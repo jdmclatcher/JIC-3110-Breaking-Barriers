@@ -1,13 +1,12 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { ModuleContext } from "@/contexts/ModuleContext";
+import { UserContext } from "@/contexts/UserContext";
 import "./Courses.css";
 
 const InstructorCoursePage = () => {
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
   const [courseList, setCourseList] = useState([]);
   const moduleId = useContext(ModuleContext);
 

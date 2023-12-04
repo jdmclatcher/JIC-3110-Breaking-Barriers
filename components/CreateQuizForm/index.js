@@ -2,17 +2,22 @@
 import { useState, useRef, useContext, useEffect } from "react";
 import QuestionForm from "./QuestionForm";
 import AddQuestionButton from "./AddQuestionButton";
-import { useSession } from "next-auth/react";
 import { ModuleContext } from "@/contexts/ModuleContext";
-import "./QuizForm.css";
+import { UserContext } from "@/contexts/UserContext";
 
-const QuizForm = ({ prevQuizName, prevQuestionList }) => {
-  const [questionList, setQuestionList] = useState(prevQuestionList);
+const CreateQuizForm = ({
+  prevQuizId,
+  prevQuizTitle,
+  prevQuizDescription,
+  prevQuizCourse,
+  prevQuestionList,
+  isEdit,
+}) => {
+  const [questionList, setQuestionList] = useState([...prevQuestionList]);
   const [courseList, setCourseList] = useState([]);
   const quizTitleRef = useRef();
   const quizDescriptionRef = useRef();
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
   const moduleId = useContext(ModuleContext);
   const courseRef = useRef();
 
@@ -31,8 +36,15 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
       module_id: moduleId,
       course_id: courseRef.current.value,
     };
+
+    let apiMethod = "POST";
+    if (isEdit) {
+      apiMethod = "PATCH";
+      quizData.quiz_id = prevQuizId;
+    }
+
     let response = await fetch("/api/quiz", {
-      method: "POST",
+      method: apiMethod,
       body: JSON.stringify(quizData),
       headers: {
         "Content-Type": "application/json",
@@ -43,16 +55,12 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
     alert(responseData.message);
   };
 
-  const handleCourse = (e) => {
-    e.preventDefault();
-    setCourse(e.target.value);
-  };
-
   useEffect(() => {
     if (moduleId) {
       getCourses();
+      setQuestionList([...prevQuestionList]);
     }
-  }, [moduleId]);
+  }, [moduleId, prevQuestionList]);
 
   const getCourses = async () => {
     const response = await fetch(`/api/course?module_id=${moduleId}`, {
@@ -66,21 +74,40 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
     setCourseList(responseData.courseList);
   };
 
+  if (!moduleId) {
+    return <div>Select a module to continue.</div>;
+  }
+
   return (
-    <form className="quiz-form" onSubmit={(e) => handleSubmit(e)}>
-      <div className="quiz-name-input">
-        <label>Quiz Name:</label>
-        <input type="text" ref={quizTitleRef} required />
-      </div>
+    <form className="flex flex-col m-5" onSubmit={(e) => handleSubmit(e)}>
+      <label className="font-medium text-lg">Quiz Name:</label>
+      <input
+        className="border-2 rounded-md p-2 border-gray-600 shadow-md"
+        type="text"
+        ref={quizTitleRef}
+        required
+        defaultValue={prevQuizTitle}
+      />
 
-      <div className="quiz-description-input">
-        <label>Quiz Description:</label>
-        <input type="text" ref={quizDescriptionRef} required />
-      </div>
+      <label className="font-medium text-lg">Quiz Description:</label>
+      <input
+        className="border-2 rounded-md p-2 border-gray-600 shadow-md"
+        type="text"
+        ref={quizDescriptionRef}
+        required
+        defaultValue={prevQuizDescription}
+      />
 
-      <label>Associated Course (Optional): </label>
-      <select ref={courseRef} type="text">
-        <option value={null}>Select a Course</option>
+      <label className="font-medium text-lg">
+        Associated Course (Optional):{" "}
+      </label>
+      <select
+        className="border-2 rounded-md p-2 mb-4 border-gray-600 shadow-md"
+        ref={courseRef}
+        type="text"
+        defaultValue={prevQuizCourse}
+      >
+        <option value={""}>Select a Course</option>
         {courseList &&
           courseList.map((c) => {
             return (
@@ -106,9 +133,13 @@ const QuizForm = ({ prevQuizName, prevQuestionList }) => {
         questionList={questionList}
         setQuestionList={setQuestionList}
       />
-      <input className="save-quiz-button" type="submit" />
+
+      <input
+        className="bg-green-700 text-white hover:bg-green-600 rounded-md px-3 py-2 shadow-md my-5"
+        type="submit"
+      />
     </form>
   );
 };
 
-export default QuizForm;
+export default CreateQuizForm;

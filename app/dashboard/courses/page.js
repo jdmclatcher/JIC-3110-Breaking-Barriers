@@ -1,14 +1,12 @@
 "use client";
-import { useSession } from "next-auth/react";
 import InstructorCoursePage from "@/components/InstructorCoursePage";
 import { useContext } from "react";
 import { ModuleContext } from "@/contexts/ModuleContext";
+import { UserContext } from "@/contexts/UserContext";
 
 const CoursesPage = () => {
-  const { data: session } = useSession();
-  const user = session?.session?.user;
   const moduleId = useContext(ModuleContext);
-  console.log(user);
+  const user = useContext(UserContext);
 
   if (user?.role === "admin") {
     return (
