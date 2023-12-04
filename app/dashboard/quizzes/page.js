@@ -70,9 +70,17 @@ const QuizzesPage = () => {
                 >
                   {quiz.title}
                 </Link>
-                <p className="text-lg font-medium rounded">
+                <p className="text-lg font-medium rounded pb-3">
                   {quiz.description}
                 </p>
+                {user?.role === "instructor" && (
+                  <Link
+                    href={`/dashboard/quizzes/submission/${quiz.quiz_id}`}
+                    className="bg-blue-700 hover:bg-blue-600 rounded-md shadow-md text-white px-3 py-1 m-1"
+                  >
+                    Submissions
+                  </Link>
+                )}
                 {user?.role === "instructor" && (
                   <div className="p-1 flex justify-between">
                     <Link

@@ -11,7 +11,7 @@ const TraineeQuizForm = ({ questionList, quizId }) => {
     e.preventDefault();
 
     let quizData = {
-      trainee_id: "test",
+      trainee_id: user?.per_id,
       quiz_id: quizId,
       question_responses: Object.values(questionResponses),
     };

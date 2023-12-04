@@ -43,6 +43,30 @@ INNER JOIN
 INNER JOIN
     person p ON i.per_id = p.per_id;
 
+-- View all quiz responses (for instructor use)
+DROP VIEW IF EXISTS view_all_quiz_responses;
+CREATE OR REPLACE VIEW view_all_quiz_responses AS
+SELECT
+    q.quiz_id,
+    qu.question_id,
+    qu.question_text,
+    qu.question_type,
+    qr.response_text,
+    qr.selected_option_id,
+    o.option_text,
+    o.is_correct,
+    qur.trainee_id
+FROM
+    quizzes q
+LEFT JOIN
+    questions qu on q.quiz_id = qu.quiz_id
+LEFT JOIN
+    question_responses qr ON qu.question_id = qr.question_id
+INNER JOIN
+    options o on qr.selected_option_id = o.option_id
+LEFT JOIN
+    quiz_responses qur ON qr.response_id = qur.response_id;
+
 -- View quizzes available to a instructor
 -- EXAMPLE USE (for instructor with per_id "test"):
 --      "SELECT * FROM view_quizzes_for_instructor WHERE instructor_per_id = 'test';"
@@ -115,7 +139,9 @@ SELECT
     qr.response_id AS quiz_response_id,
     qr.created_at AS submission_time,
     qr.quiz_score AS score,
+    qr.quiz_id AS quiz_id,
     q.title AS quiz_title,
+    p.per_id AS trainee_per_id,
     p.first_name AS trainee_first_name,
     p.last_name AS trainee_last_name
 FROM
