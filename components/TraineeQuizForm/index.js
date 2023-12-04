@@ -15,7 +15,6 @@ const TraineeQuizForm = ({ questionList, quizId }) => {
       quiz_id: quizId,
       question_responses: Object.values(questionResponses),
     };
-    // Remove hardcoded url
     let response = await fetch("/api/quiz/submit", {
       method: "POST",
       body: JSON.stringify(quizData),
@@ -36,12 +35,11 @@ const TraineeQuizForm = ({ questionList, quizId }) => {
       {questionList &&
         questionList.map((q, idx) => {
           return (
-            <div className="pb-4">
+            <div key={idx} className="pb-4">
               <p className="text-lg">
                 {idx + 1}. {q.question_text}
               </p>
               <TraineeOptionsForm
-                key={idx}
                 questionId={q.question_id}
                 questionType={q.question_type}
                 options={q.options}

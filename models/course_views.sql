@@ -42,10 +42,14 @@ SELECT
     m.instructor_id AS instructor_id,
     p.first_name AS instructor_first_name,
     p.last_name AS instructor_last_name,
-    tm.trainee_id AS trainee_id
+    tm.trainee_id AS trainee_id,
+    p2.first_name AS trainee_first_name,
+    p2.last_name AS trainee_last_name,
+    p2.email AS trainee_email
 FROM modules m
+LEFT JOIN person p on m.instructor_id = p.per_id
 INNER JOIN trainee_assigned_to_module tm on m.module_id = tm.module_id
-LEFT JOIN person p on m.instructor_id = p.per_id;
+LEFT JOIN person p2 on tm.trainee_id = p2.per_id;
 
 -- View for details on module
 DROP VIEW IF EXISTS module_details;
