@@ -57,6 +57,7 @@ const InstructorCoursePage = () => {
                   courseId: course.course_id,
                 }}
                 handleDelete={handleDelete}
+                key={`course-${idx}`}
               />
             );
           })}

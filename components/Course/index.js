@@ -66,7 +66,10 @@ const Course = ({ params, handleDelete }) => {
         {pageList &&
           pageList.map((page, idx) => {
             return (
-              <div className="page-item bg-white rounded-lg p-3 m-2 border-2">
+              <div
+                className="page-item bg-white rounded-lg p-3 m-2 border-2"
+                key={`page-${idx}`}
+              >
                 <Link
                   href={{
                     pathname: `/dashboard/pages/${page.page_id}`,
