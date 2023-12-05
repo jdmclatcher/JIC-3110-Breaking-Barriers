@@ -51,7 +51,7 @@ const Course = ({ params, handleDelete }) => {
         <Link
           className="justify-self-end p-2 hover:underline"
           href={{
-            pathname: "/dashboard/pages/create",
+            pathname: "/dashboard/course-pages/create",
             query: {
               courseId: courseId,
               courseTitle: courseTitle,
@@ -72,7 +72,7 @@ const Course = ({ params, handleDelete }) => {
               >
                 <Link
                   href={{
-                    pathname: `/dashboard/pages/${page.page_id}`,
+                    pathname: `/dashboard/course-pages/${page.page_id}`,
                   }}
                   className="hover:underline hover:text-amber-600"
                 >

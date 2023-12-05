@@ -21,7 +21,7 @@ export async function GET(request) {
 
     return NextResponse.json({ pageData: data, status: 200 });
   } catch (e) {
-    console.log("Unexpected error: ", error.message);
+    console.log("Unexpected error: ", e.message);
     return NextResponse.json(
       { message: "An unexpected error occurred" },
       { status: 400 }
