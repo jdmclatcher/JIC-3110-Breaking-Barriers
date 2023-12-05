@@ -44,9 +44,9 @@ const PagesPage = ({ params }) => {
     <div className="pages-container">
       <Link
         className="absolute m-3 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded-md"
-        href="/dashboard"
+        href="/dashboard/courses"
       >
-        Back to Dashboard
+        Back to Courses
       </Link>
       <div className="page-content pt-5 flex flex-col">
         <div className="header">
