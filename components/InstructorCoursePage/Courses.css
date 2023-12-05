@@ -1,45 +1,22 @@
-.courses-header {
-    font-size: 2rem;
-}
-
-.courses-list {
-    background-color: antiquewhite;
-    border-style: solid;
-    border-radius: 1rem;
-    padding: 1rem;
-    margin: 0.5rem;
-}
-
-.course-item {
-    border-style: solid;
-    border-radius: 1rem;
-    background-color: aquamarine;
-    padding: 1rem;
-    border-color: black;
-    margin: 1rem;
-    
-}
-
 .course-title {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .course-description {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .create-course-button {
-    border-style: solid;
-    background-color: greenyellow;
-    border-radius: 1rem;
-    padding: 0.5rem;
-    margin: 1rem;
+  border-style: solid;
+  background-color: greenyellow;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 1rem;
 }
 
 .delete-course-button {
-    border-style: solid;
-    background-color: rgb(207, 102, 102);
-    border-radius: 0.5rem;
-    padding: 0.2rem;
-    
+  border-style: solid;
+  background-color: rgb(207, 102, 102);
+  border-radius: 0.5rem;
+  padding: 0.2rem;
 }

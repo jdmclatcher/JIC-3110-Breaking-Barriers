@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ModuleContext } from "@/contexts/ModuleContext";
 import { UserContext } from "@/contexts/UserContext";
 import "./Courses.css";
+import Course from "@/components/Course";
 
 const InstructorCoursePage = () => {
   const user = useContext(UserContext);
@@ -43,29 +44,27 @@ const InstructorCoursePage = () => {
 
   return (
     <div className="courses-container">
-      <h1 className="courses-header">Courses</h1>
+      <h1 className="courses-header pl-8 pt-4 text-3xl">Courses</h1>
       <div className="courses-list">
         {courseList &&
           courseList.map((course, idx) => {
             return (
-              <div className="course-item" key={`course-${idx}`}>
-                <h2 className="course-title">{course.title}</h2>
-                <p className="course-description">{course.description}</p>
-                <button
-                  className="delete-course-button"
-                  onClick={() => {
-                    handleDelete(course.course_id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+              <Course
+                params={{
+                  courseIdx: idx,
+                  courseTitle: course.title,
+                  courseDesc: course.description,
+                  courseId: course.course_id,
+                }}
+                handleDelete={handleDelete}
+                key={`course-${idx}`}
+              />
             );
           })}
         {user?.role === "instructor" && (
           <Link
             href="/dashboard/courses/create"
-            className="create-course-button"
+            className="bg-secondary p-2 ml-8 rounded-lg hover:bg-[#facc15]"
           >
             Create course
           </Link>
