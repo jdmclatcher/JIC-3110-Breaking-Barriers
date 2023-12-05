@@ -39,10 +39,16 @@ const CreatePagesPage = ({ params }) => {
   };
 
   return (
-    <div>
+    <div className="ml-5 mt-5">
       <div className="header">
-        <h2>Module: {courseTitle}</h2>
-        <h1>Create Page:</h1>
+        <Link
+          className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
+          href="/dashboard/courses"
+        >
+          Back to courses
+        </Link>
+        <h2 className="font-bold text-xl mx-5 my-2">Module: {courseTitle}</h2>
+        <h1 className="font-bold text-lg mx-5 my-2">Create Page:</h1>
       </div>
       <div className="bg-gray-200 m-4 p-4 rounded-md">
         <form
@@ -54,7 +60,7 @@ const CreatePagesPage = ({ params }) => {
             <label htmlFor="title-input">
               <p>Title:</p>
               <input
-                className="title-input w-full rounded-md px-1"
+                className="title-input w-full rounded-md p-2 border-2 border-black shadow-md"
                 ref={titleRef}
                 required
                 type="text"
@@ -65,13 +71,15 @@ const CreatePagesPage = ({ params }) => {
           <label htmlFor="content-label">
             <p>Content:</p>
             <textarea
-              className="content-input w-full rounded-md px-1"
+              className="content-input w-full rounded-md px-1 h-60 p-1 border-2 border-black shadow-md"
               ref={contentRef}
               required
               type="text"
             />
           </label>
-          <button>Create Page</button>
+          <button className="bg-secondary rounded-md shadow-md px-2 py-1 my-2 hover:bg-orange-600">
+            Create Page
+          </button>
         </form>
       </div>
     </div>
