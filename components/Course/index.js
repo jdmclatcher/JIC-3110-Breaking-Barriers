@@ -47,19 +47,20 @@ const Course = ({ params, handleDelete }) => {
           <h2 className="course-title">{"Title: " + courseTitle}</h2>
           <p className="course-description">{"Description: " + courseDesc}</p>
         </div>
-
-        <Link
-          className="justify-self-end p-2 hover:underline"
-          href={{
-            pathname: "/dashboard/course-pages/create",
-            query: {
-              courseId: courseId,
-              courseTitle: courseTitle,
-            },
-          }}
-        >
-          + Create Page
-        </Link>
+        {role === "instructor" && (
+          <Link
+            className="justify-self-end p-2 hover:underline"
+            href={{
+              pathname: "/dashboard/course-pages/create",
+              query: {
+                courseId: courseId,
+                courseTitle: courseTitle,
+              },
+            }}
+          >
+            + Create Page
+          </Link>
+        )}
       </div>
 
       <div className="page-list grid grid-flow-row p-1">
@@ -82,16 +83,18 @@ const Course = ({ params, handleDelete }) => {
             );
           })}
       </div>
-      <div className="instructor-actions flex flex-row-reverse">
-        <button
-          className="py-1 px-2 bg-[#b91c1c] rounded-md self-end text-white hover:bg-[#dc2626]"
-          onClick={() => {
-            handleDelete(handleDelete(courseId));
-          }}
-        >
-          Delete Course
-        </button>
-      </div>
+      {role === "instructor" && (
+        <div className="instructor-actions flex flex-row-reverse">
+          <button
+            className="py-1 px-2 bg-[#b91c1c] rounded-md self-end text-white hover:bg-[#dc2626]"
+            onClick={() => {
+              handleDelete(handleDelete(courseId));
+            }}
+          >
+            Delete Course
+          </button>
+        </div>
+      )}
     </div>
   );
 };
