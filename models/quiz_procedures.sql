@@ -25,6 +25,7 @@ DECLARE
     d_option_record JSONB;
     d_question_text TEXT;
     d_question_type TEXT;
+    d_question_weight INT;
     d_option_text TEXT;
     d_is_correct BOOLEAN;
 BEGIN
@@ -50,10 +51,11 @@ BEGIN
         -- Extract values from the JSON object
         d_question_text := d_question_record->>'question_text';
         d_question_type := d_question_record->>'question_type';
+        d_question_weight := d_question_record->>'question_weight';
 
         -- Insert the question into the 'questions' table
-        INSERT INTO questions (quiz_id, question_text, question_type)
-        VALUES (d_quiz_id, d_question_text, d_question_type);
+        INSERT INTO questions (quiz_id, question_text, question_type, question_weight)
+        VALUES (d_quiz_id, d_question_text, d_question_type, d_question_weight);
 
         IF d_question_type = 'multiple_choice' or d_question_type= 'select_all' THEN
             -- Loop over the options for multiple choice questions
@@ -79,12 +81,14 @@ $$;
 --  String - description (p_description)
 --  JSON array or object - questions (p_questions)
 -- Create a stored procedure to edit a quiz
-DROP PROCEDURE IF EXISTS edit_quiz(p_quiz_id INT, p_title VARCHAR(255), p_description TEXT, p_questions JSONB);
+DROP PROCEDURE IF EXISTS edit_quiz(p_quiz_id INT, p_title VARCHAR(255), p_description TEXT, p_questions JSONB, p_module_id INT, p_course_id INT);
 CREATE OR REPLACE PROCEDURE edit_quiz(
     p_quiz_id INT,
     p_title VARCHAR(255),
     p_description TEXT,
-    p_questions JSONB
+    p_questions JSONB,
+    p_module_id INT,
+    p_course_id INT
 ) LANGUAGE plpgsql AS $$
 DECLARE
     d_question_record JSONB;
@@ -110,10 +114,11 @@ BEGIN
         -- Extract values from the JSON object
         d_question_text := d_question_record->>'question_text';
         d_question_type := d_question_record->>'question_type';
+        d_question_weight := d_question_record->>'question_weight';
 
         -- Insert the question into the 'questions' table
-        INSERT INTO questions (quiz_id, question_text, question_type)
-        VALUES (p_quiz_id, d_question_text, d_question_type);
+        INSERT INTO questions (quiz_id, question_text, question_type, question_weight)
+        VALUES (p_quiz_id, d_question_text, d_question_type, d_question_weight);
 
         IF d_question_type = 'multiple_choice' or d_question_type= 'select_all' THEN
             -- Loop over the options for multiple choice questions
@@ -165,5 +170,16 @@ BEGIN
             (d_response->>'selected_option_id')::INT
         );
     END LOOP;
+END;
+$$;
+
+DROP PROCEDURE IF EXISTS delete_quiz(i_quiz_id INT);
+CREATE OR REPLACE PROCEDURE delete_quiz(
+    i_quiz_id INT             -- Input: Quiz ID
+) LANGUAGE plpgsql AS $$
+BEGIN
+    -- Insert a new quiz response record
+    DELETE FROM quizzes
+    WHERE quiz_id = i_quiz_id;
 END;
 $$;

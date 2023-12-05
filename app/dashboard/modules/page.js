@@ -1,13 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { UserContext } from "@/contexts/UserContext";
 import "./Modules.css";
 
 const ModulesPage = () => {
   const [moduleList, setmoduleList] = useState([]);
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
 
   const getModules = async () => {
     const administrator_id = user?.per_id;
@@ -55,22 +54,22 @@ const ModulesPage = () => {
 
   return (
     <div className="p-5">
-      <Link
-        className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded"
-        href="/dashboard"
-      >
-        Back to Dashboard
-      </Link>
       <h1 className="block uppercase tracking-wide text-gray-700 text-4xl text-center mt-10 font-bold mb-2">
         Modules
       </h1>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex">
         {moduleList.map((module, idx) => {
           return (
-            <div className="module-item" key={`module-${idx}`}>
-              <h2 className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2">
+            <div
+              className="module-item shadow-md"
+              key={`module-${module.module_id}`}
+            >
+              <Link
+                href={`/dashboard/modules/${module.module_id}`}
+                className="block uppercase tracking-wide text-gray-700 text-m font-bold mb-2 hover:text-secondary"
+              >
                 {module.title}
-              </h2>
+              </Link>
               <p className="block uppercase tracking-wide text-gray-700 text-m mb-2">
                 {module.details}
               </p>
@@ -88,7 +87,7 @@ const ModulesPage = () => {
       </div>
       <div className="mt-10">
         <Link
-          className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 bg-secondary hover:border-orange-700 text-sm border-4 text-white p-3 rounded"
+          className="m-5 bg-secondary hover:bg-orange-700 bg-secondary text-sm text-white p-3 rounded"
           href="/dashboard/modules/create"
         >
           Create New Module

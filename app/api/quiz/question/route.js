@@ -25,12 +25,14 @@ export async function GET(request) {
           question_id: q.question_id,
           question_text: q.question_text,
           question_type: q.question_type,
+          question_weight: q.question_weight,
           options: [],
         };
       }
       questionsData[q.question_id].options.push({
         option_id: q.option_id,
         option_text: q.option_text,
+        is_correct: q.is_correct,
       });
     });
 

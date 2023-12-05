@@ -1,13 +1,9 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import "./MessageForm.css";
-import { revalidatePath } from "next/cache";
+import { useRef, useContext } from "react";
+import { UserContext } from "@/contexts/UserContext";
 
 const MessageForm = ({ updateMessageList }) => {
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
 
   const messageSubject = useRef("");
   const messageContent = useRef();

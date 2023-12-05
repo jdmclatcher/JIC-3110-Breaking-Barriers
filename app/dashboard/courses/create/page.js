@@ -1,9 +1,9 @@
 "use client";
 import { useRef, useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ModuleContext } from "@/contexts/ModuleContext";
+import { UserContext } from "@/contexts/UserContext";
 
 const CreateCoursePage = () => {
   const [moduleList, setModuleList] = useState([]);
@@ -11,9 +11,7 @@ const CreateCoursePage = () => {
   const descriptionRef = useRef();
   const router = useRouter();
   const moduleId = useContext(ModuleContext);
-
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,8 +1,0 @@
-.question-form-container {
-    border: solid;
-    border-radius: 1rem;
-    margin: 0.25rem;
-    padding: 0.25rem;
-    display: flex;
-    flex-direction: column;
-}

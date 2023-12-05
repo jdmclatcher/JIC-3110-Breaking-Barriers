@@ -1,16 +1,14 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { UserContext } from "@/contexts/UserContext";
 
 const CreateModulePage = () => {
   const [instructorList, setInstructorList] = useState([]);
   const titleRef = useRef();
   const detailsRef = useRef();
   const instructorRef = useRef();
-
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,13 +54,6 @@ const CreateModulePage = () => {
   return (
     <div className="modules-container bg-orange-200 h-full">
       <div className="buttons flex p-5">
-        <Link
-          className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
-          href="/dashboard"
-        >
-          Back to Dashboard
-        </Link>
-
         <Link
           className="m-5 flex-shrink-0 bg-secondary hover:bg-orange-700 border-secondary hover:border-orange-700 text-sm border-4 text-white py-1 px-2 rounded"
           href="/dashboard/modules"

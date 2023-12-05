@@ -1,14 +1,11 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
-import "./Messages.css";
+import { useState, useEffect, useRef, useContext } from "react";
 import MessageForm from "@/components/MessageForm";
-import { revalidatePath } from "next/cache";
+import { UserContext } from "@/contexts/UserContext";
+import "./Messages.css";
 
 const MessagesPage = () => {
-  const { data: session } = useSession();
-  const user = session?.session?.user;
+  const user = useContext(UserContext);
   const role = user?.role;
 
   const [messageList, setMessageList] = useState([]);
@@ -113,15 +110,11 @@ const MessagesPage = () => {
 
   return (
     <div className="messages-container">
-      <div className="p-5">
-        <Link className="bg-gray-200 p-2 rounded-md" href="/dashboard">
-          Back to Dashboard
-        </Link>
-
-        <h1 className="messges-header pt-4 pl-4 text-2xl">Messages</h1>
-      </div>
+      <h1 className="quizzes-header uppercase tracking-wide ml-5 mt-5 text-gray-700 text-3xl p-2 font-bold">
+        Messages
+      </h1>
       <div className="messages-body">
-        <div class="messages-list grid grid-flow-row auto-rows-max gap-4">
+        <div className="messages-list grid grid-flow-row auto-rows-max gap-4">
           {messageList.map((message, idx) => {
             return (
               <div
