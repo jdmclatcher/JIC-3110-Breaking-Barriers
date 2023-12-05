@@ -118,7 +118,7 @@ const TraineeSubmissionPage = ({ params }) => {
             );
           })
         ) : (
-          <div>asdf</div>
+          <div>Error loading submission. Please try again.</div>
         )}
       </div>
 

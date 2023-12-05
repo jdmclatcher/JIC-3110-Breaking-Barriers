@@ -76,19 +76,17 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex justify-center p-5">
+          <div className="flex flex-col justify-center p-5">
             <button
               onClick={handleForm}
               type="button"
-              className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-orange-400 w-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700"
+              className="rounded-md shadow-md bg-gradient-to-r from-orange-500 to-orange-400 py-2 font-medium uppercase m-3"
             >
               Login
             </button>
-          </div>
-          <div className="flex justify-center p-2">
+
             <Link
-              className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-orange-400 w-5/6 px-3 pb-1 pt-2.5 text-md font-medium uppercase leading-normal text-primary-700
-              flex justify-center"
+              className="rounded-md shadow-md bg-gradient-to-r from-orange-500 to-orange-400 py-2 font-medium uppercase flex justify-center m-3"
               href="/signup"
             >
               Create Account

@@ -10,7 +10,6 @@ import {
   AiOutlineFileText,
   AiOutlineFileUnknown,
   AiOutlineFolderOpen,
-  AiOutlineHighlight,
   AiOutlineHome,
   AiOutlineLogout,
   AiOutlineMessage,
@@ -27,7 +26,6 @@ const SideBar = ({ setModule }) => {
   const modulesLink = homeLink + "/modules";
   const coursesLink = homeLink + "/courses";
   const quizzesLink = homeLink + "/quizzes";
-  const gradesLink = homeLink + "/quiz-stats";
   const filesLink = homeLink + "/files";
   const messagesLink = homeLink + "/messages";
 
@@ -158,15 +156,6 @@ const SideBar = ({ setModule }) => {
             </span>
           </Link>
           <Link
-            href={gradesLink}
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
-          >
-            <AiOutlineHighlight className="text-white" size="20px" />
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">
-              Grades
-            </span>
-          </Link>
-          <Link
             href={filesLink}
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
           >
@@ -237,12 +226,6 @@ const SideBar = ({ setModule }) => {
             className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
           >
             <AiOutlineFileUnknown className="text-white" size="20px" />
-          </Link>
-          <Link
-            href={gradesLink}
-            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-primary"
-          >
-            <AiOutlineHighlight className="text-white" size="20px" />
           </Link>
           <Link
             href={filesLink}

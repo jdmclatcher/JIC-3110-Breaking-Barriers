@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import TraineeQuizForm from "@/components/TraineeQuizForm";
 import Link from "next/link";
 import CreateQuizForm from "@/components/CreateQuizForm";
 
